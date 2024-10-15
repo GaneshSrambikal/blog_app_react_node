@@ -17,7 +17,6 @@
 
 // module.exports = { validateCreateUser };
 
-
 // JOI
 const Joi = require('joi');
 
@@ -37,4 +36,10 @@ const createUserSchema = Joi.object({
   }).required(),
 });
 
-module.exports = {createUserSchema}
+// login validation
+const userLoginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+});
+
+module.exports = { createUserSchema, userLoginSchema };

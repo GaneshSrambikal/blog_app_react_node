@@ -1,16 +1,21 @@
 const {
   getAllUsers,
   getUserById,
-  createUser,
-} = require('../controllers/userController');
-const { validateCreateUser } = require('../validators/userValidator');
-const { validationResult } = require('express-validator');
+  registerUser,
+  loginUser,
+} = require('../../controllers/userController');
+
 const router = require('express').Router();
 
-// @desc    Create a new user
-// @route   POST /api/users
+// @desc    Register a New User
+// @route   POST /api/users/register
 // @access  Public
-router.post('/create', createUser);
+router.post('/register', registerUser);
+
+// @desc    login User
+// @route   POST /api/users/login
+// @access  Public
+router.post('/login', loginUser);
 
 // @desc    Get all users
 // @route   GET /api/users

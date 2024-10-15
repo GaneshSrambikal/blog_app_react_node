@@ -1,6 +1,10 @@
 const User = require('../models/userModel.js');
-const { createUserSchema } = require('../validators/userValidator.js');
-
+const {
+  createUserSchema,
+  userLoginSchema,
+} = require('../validators/userValidator.js');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
@@ -29,8 +33,7 @@ exports.getUserById = async (req, res, next) => {
   }
 };
 
-exports.createUser = async (req, res, next) => {
-  console.log('gets in controllers');
+exports.registerUser = async (req, res, next) => {
   try {
     const { error } = createUserSchema.validate(req.body);
 
@@ -68,5 +71,48 @@ exports.createUser = async (req, res, next) => {
       message: 'Error creating user',
       error: error.message,
     });
+  }
+};
+
+exports.loginUser = async (req, res, next) => {
+  // validate the req.body data {email, password}
+  const { error } = userLoginSchema.validate(req.body);
+
+  // if error in validation
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+  // get email and password
+  const { email, password } = req.body;
+  try {
+    // find user
+    const user = await User.findOne({ email });
+    // User not found
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid email or password!.' });
+    }
+    // if user exist compare the password
+    const isMatch = await bcrypt.compare(password, user.password);
+    // wrong/mismatch password
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+    // if email and password are OK generate JWT Token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '2h',
+    });
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.log('Error logging user', error);
+    next();
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
   }
 };

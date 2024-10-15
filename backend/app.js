@@ -1,7 +1,7 @@
 const app = require('express')();
 const morgan = require('morgan');
 const cors = require('cors');
-const userRouter = require('./routes/userRoutes');
+const userRouter = require('./routes/users/userRoutes')
 
 // Middleware setup
 // app.use(cors());
