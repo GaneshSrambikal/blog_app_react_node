@@ -24,6 +24,7 @@ const Joi = require('joi');
 const createUserSchema = Joi.object({
   username: Joi.string().required(),
   name: Joi.string().required(),
+  gender: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   dob: Joi.date().required(),

@@ -5,6 +5,7 @@ const {
 } = require('../validators/userValidator.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
@@ -23,15 +24,6 @@ exports.getAllUsers = async (req, res, next) => {
   }
 };
 
-exports.getUserById = async (req, res, next) => {
-  try {
-    console.log(`single user`);
-    return res.send('single user');
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-    next(error);
-  }
-};
 
 exports.registerUser = async (req, res, next) => {
   try {
@@ -41,7 +33,7 @@ exports.registerUser = async (req, res, next) => {
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
     }
-    const { username, name, email, password, dob, address } = req.body;
+    const { username, name, gender, email, password, dob, address } = req.body;
     // check if user exists with email
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -52,6 +44,7 @@ exports.registerUser = async (req, res, next) => {
     const user = new User({
       username,
       name,
+      gender,
       email,
       password,
       address,
@@ -111,6 +104,22 @@ exports.loginUser = async (req, res, next) => {
   } catch (error) {
     console.log('Error logging user', error);
     next();
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
+  }
+};
+
+// Get User Profile (protected)
+exports.getProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).select(['-password','-joined']); // -password excludes the password
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    next(error);
     return res
       .status(500)
       .json({ message: 'Server error', error: error.message });
