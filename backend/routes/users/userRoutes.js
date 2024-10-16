@@ -3,6 +3,7 @@ const {
   getUserById,
   registerUser,
   loginUser,
+  getProfile,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
@@ -23,9 +24,12 @@ router.post('/login', loginUser);
 // @access  Public
 router.get('/', protect, getAllUsers);
 
-//@desc     Get user by ID
-//@route    GET /api/users/:id
-// @access  Private
-router.get('/:id', protect, getUserById);
+
+
+// Profile management
+//@desc     Get user Profile
+//@route    GET /api/users/profile
+// @access  Private / Protected
+router.get('/profile', protect, getProfile);
 
 module.exports = router;
