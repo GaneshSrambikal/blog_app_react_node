@@ -1,11 +1,15 @@
+const crypto = require('crypto');
 const User = require('../models/userModel.js');
 const {
   createUserSchema,
   userLoginSchema,
   updateProfileSchema,
+  emailSchema,
+  passwordResetSchema,
 } = require('../validators/userValidator.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const sendEmail = require('../utils/sendEmail.js');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -70,7 +74,7 @@ exports.registerUser = async (req, res, next) => {
 exports.loginUser = async (req, res, next) => {
   // validate the req.body data {email, password}
   const { error } = userLoginSchema.validate(req.body);
-
+  // console.log(`${req.protocol}://${req.get(`host`)}`);
   // if error in validation
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
@@ -228,6 +232,121 @@ exports.deleteProfile = async (req, res, next) => {
 };
 
 //Password Management
-// Forget Password
+// Forgot Password
+exports.forgotPassword = async (req, res, next) => {
+  const { error } = emailSchema.validate(req.body);
 
+  if (error) {
+    return res
+      .status(404)
+      .json({ message: 'Validation error', error: error.message });
+  }
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: `No User found with email: ${email}` });
+    } else {
+      // Generate password reset token
+      const resetToken = crypto.randomBytes(20).toString('hex');
 
+      // set token and expiration on user document
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpire = Date.now() + 30 * 60 * 1000; // Token expires in 30 minutes
+      await user.save();
+
+      // send reset token via email
+      const resetUrl = `${req.protocol}://${req.get(
+        `host`
+      )}/api/users/reset-password/${resetToken}`;
+      const message = `You requested a password reset. Please click the following link to reset your password: ${resetUrl}`;
+
+      // send email
+      await sendEmail({
+        email: user.email,
+        subject: 'Password Reset Request',
+        text: message,
+        html: `<h1>You requested a password reset. Please click the following link to reset your password: <a href=${resetUrl}>reset password</a></h1>`,
+      });
+
+      return res.status(200).json({
+        message: 'Password reset link sent to email.',
+        link: resetUrl, // only for developer mode
+        resetToken: resetToken, // only for developer mode
+      });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
+  }
+};
+
+exports.resetPassword = async (req, res, next) => {
+  const { error } = passwordResetSchema.validate(req.body);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: 'Validation error', error: error.message });
+  }
+  const token = req.params.token;
+  const { password } = req.body;
+  console.log(password);
+  try {
+    // find the user with same token
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+    if (!user) {
+      return res.status(404).json({ message: 'Invalid/expired Token' });
+    } else {
+      // set password and unset token ,expired
+      user.password = password;
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+
+      // save user. password will be hashed at model level
+      await user.save();
+      return res
+        .status(200)
+        .json({ message: 'Password has been reset successfully' });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
+  }
+};
+
+exports.changePassword = async (req, res, next) => {
+  const { error } = passwordResetSchema.validate(req.body);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: 'Validation Error', error: error.message });
+  }
+  const { password } = req.body;
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'user not found' });
+    } else {
+      user.password = password;
+      await user.save();
+      return res.status(200).json({ message: 'Password changed.' });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
+  }
+};

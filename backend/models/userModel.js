@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-
-
 // Define the schema for user
 const userSchema = new mongoose.Schema({
   username: {
@@ -52,11 +50,20 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  isAdmin:{
+  isAdmin: {
     type: Boolean,
     required: true,
-    default: false
-  }
+    default: false,
+  },
+  resetPasswordToken: {
+    type: String,
+    default: undefined,
+    trim: true,
+  },
+  resetPasswordExpire: {
+    type: Date,
+    default: undefined,
+  },
 });
 
 // Pre-save middleware for password hashing
