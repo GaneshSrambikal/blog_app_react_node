@@ -40,4 +40,20 @@ const updateProfileSchema = Joi.object({
   dob: Joi.date().optional(),
 });
 
-module.exports = { createUserSchema, userLoginSchema, updateProfileSchema };
+// email validation for forgot password
+const emailSchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+
+// password validation for reset password
+const passwordResetSchema = Joi.object({
+  password: Joi.string().min(6).max(50).required(),
+});
+
+module.exports = {
+  createUserSchema,
+  userLoginSchema,
+  updateProfileSchema,
+  emailSchema,
+  passwordResetSchema,
+};
