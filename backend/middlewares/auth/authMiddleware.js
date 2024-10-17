@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../../models/userModel');
 
+// Protect route with jwt token
 const protect = async (req, res, next) => {
   let token;
 
@@ -16,6 +17,11 @@ const protect = async (req, res, next) => {
 
       // add user from payload
       req.user = await User.findById(decoded.id).select('-password');
+      if (!req.user) {
+        return res
+          .status(401)
+          .json({ message: 'user not found, not authorized' });
+      }
       next();
     } catch (error) {
       console.log('Not authorized');
@@ -24,9 +30,8 @@ const protect = async (req, res, next) => {
         .status(403)
         .json({ message: 'not authorized', errors: error.message });
     }
-  }
-  if (!token) {
-    return res.status(403).json({ message: 'Not authorized' });
+  } else {
+    return res.status(403).json({ message: 'Not authorized, token missing' });
   }
 };
 

@@ -1,30 +1,11 @@
-// const { check } = require('express-validator');
-
-// // validation rules for creating a user
-// const validateCreateUser = [
-//   check('username', 'Username is required.').notEmpty(),
-//   check('name', 'Name is required.').notEmpty(),
-//   check('dob', 'Date of Birth (DOB) is required.').notEmpty(),
-//   check('address.street', 'Street is required.').notEmpty(),
-//   check('address.city', 'City is required.').notEmpty(),
-//   check('address.country', 'Country is required.').notEmpty(),
-//   check('address.zip', 'Zip is required.').notEmpty(),
-//   check('email', 'Please include a valid email').isEmail,
-//   check('password', 'Password must be 6 or more character').isLength({
-//     min: 6,
-//   }),
-// ];
-
-// module.exports = { validateCreateUser };
-
 // JOI
 const Joi = require('joi');
 
-// Create Joi validation schema
+// Create Joi User validation schema
 const createUserSchema = Joi.object({
-  username: Joi.string().required(),
-  name: Joi.string().required(),
-  gender: Joi.string().required(),
+  username: Joi.string().min(2).max(50).required(),
+  name: Joi.string().min(2).max(30).required(),
+  gender: Joi.string().valid('male', 'female', 'other').required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   dob: Joi.date().required(),
@@ -35,6 +16,7 @@ const createUserSchema = Joi.object({
     country: Joi.string().required(),
     zip: Joi.string().required(),
   }).required(),
+  isAdmin: Joi.boolean().optional(),
 });
 
 // login validation
@@ -43,4 +25,19 @@ const userLoginSchema = Joi.object({
   password: Joi.string().required(),
 });
 
-module.exports = { createUserSchema, userLoginSchema };
+// Define the Joi schema for updating user profile
+const updateProfileSchema = Joi.object({
+  name: Joi.string().min(2).max(30).optional(),
+  email: Joi.string().email().optional(),
+  address: Joi.object({
+    street: Joi.string().optional(),
+    city: Joi.string().optional(),
+    state: Joi.string().optional(),
+    country: Joi.string().optional(),
+    zip: Joi.string().optional(),
+  }).optional(),
+  gender: Joi.string().valid('male', 'female', 'other').optional(),
+  dob: Joi.date().optional(),
+});
+
+module.exports = { createUserSchema, userLoginSchema, updateProfileSchema };
