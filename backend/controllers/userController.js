@@ -84,7 +84,7 @@ exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     // find user
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
     // User not found
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
@@ -301,7 +301,7 @@ exports.resetPassword = async (req, res, next) => {
     const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpire: { $gt: Date.now() },
-    });
+    }).select('+password');
     if (!user) {
       return res.status(404).json({ message: 'Invalid/expired Token' });
     } else {
@@ -366,12 +366,14 @@ exports.changePassword = async (req, res, next) => {
 
 // Follow another
 exports.followUser = async (req, res, next) => {
+  let message = '';
   try {
     // find the user with id
     const user = await User.findById(req.params.id).select('-password');
     // if not found
     if (!user) {
-      return res.status(404).json({ message: 'User not found!' });
+      message = 'User not found!';
+      return res.status(404).json({ message });
     }
     // check if current user exists in the user followers list
     if (!user.followers.includes(req.user.id)) {
@@ -379,8 +381,18 @@ exports.followUser = async (req, res, next) => {
       user.followers.push(req.user.id);
       // save document
       await user.save();
+
+      // set following user in current user
+      const currentUser = await User.findById(req.user.id).select('-password');
+      if (!currentUser.following.includes(req.params.id)) {
+        currentUser.following.push(req.params.id);
+        await currentUser.save();
+      }
+      return res.status(200).json({ message: `Following user: ${user.id}` });
+    } else {
+      message = 'Already following';
+      return res.status(200).json({ message: message });
     }
-    return res.status(200).json({ message: `Following user: ${user.id}` });
   } catch (error) {
     console.log(`Error: ${error.message}`);
     next(error);
@@ -391,14 +403,12 @@ exports.followUser = async (req, res, next) => {
 };
 
 // Unfollow user
-exports.unFollowUser = async(req,res,next) =>{
+exports.unFollowUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id);
 
-    if(!user){
-      return res.status(404).json({message: "User not found"})
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
