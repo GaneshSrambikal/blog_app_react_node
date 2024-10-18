@@ -7,6 +7,7 @@ const {
   emailSchema,
   passwordResetSchema,
   passwordChangeSchema,
+  objectIdSchema,
 } = require('../validators/userValidator.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -366,6 +367,12 @@ exports.changePassword = async (req, res, next) => {
 
 // Follow another
 exports.followUser = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
   let message = '';
   try {
     // find the user with id
@@ -404,6 +411,12 @@ exports.followUser = async (req, res, next) => {
 
 // Unfollow user
 exports.unFollowUser = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -441,22 +454,50 @@ exports.unFollowUser = async (req, res, next) => {
 
 // List Followers
 exports.listFollowers = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
   try {
-    // search the user and populate the followers with name and email fields
-    const user = await User.findById(req.params.id).populate(
-      'followers',
-      'name email'
-    );
+    // search the user
+    const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found!.' });
     }
-
-    return res.status(200).json({ followers: user.followers });
+    const listFollowers = (await user.populate('followers', 'name email'))
+      .followers;
+    return res.status(200).json({ followers: listFollowers });
   } catch (error) {
     console.log(`Error: ${error.message}`);
     next(error);
     return res
       .status(500)
       .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+exports.listFollowing = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'user not found' });
+    }
+    const listFollowing = (await user.populate('following', 'name email'))
+      .following;
+    return res.status(200).json({ following: listFollowing });
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'server error', error: error.message });
   }
 };

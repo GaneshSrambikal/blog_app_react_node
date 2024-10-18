@@ -13,6 +13,7 @@ const {
   followUser,
   unFollowUser,
   listFollowers,
+  listFollowing,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
@@ -87,5 +88,10 @@ router.post('/:id/unfollow', protect, unFollowUser);
 //@route    post /api/users/:id/followers
 // @access  Private / Protected
 router.post('/:id/followers', protect, listFollowers);
+
+//@desc     list users following
+//@route    post /api/users/:id/following
+// @access  Private / Protected
+router.post('/:id/following', protect, listFollowing);
 
 module.exports = router;

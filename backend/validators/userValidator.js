@@ -54,6 +54,10 @@ const passwordChangeSchema = Joi.object({
   password: Joi.string().min(6).max(50).required(),
 });
 
+const objectIdSchema = Joi.object({
+  id: Joi.string().hex().length(24).message('Incorrect user Id'),
+});
+
 module.exports = {
   createUserSchema,
   userLoginSchema,
@@ -61,4 +65,5 @@ module.exports = {
   emailSchema,
   passwordResetSchema,
   passwordChangeSchema,
+  objectIdSchema,
 };
