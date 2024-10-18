@@ -11,6 +11,7 @@ const {
   resetPassword,
   changePassword,
   followUser,
+  unFollowUser,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
@@ -75,5 +76,10 @@ router.post('/change-password', protect, changePassword);
 //@route    post /api/users/follow/:id
 // @access  Private / Protected
 router.post('/follow/:id', protect, followUser);
+
+//@desc     Unfollow another user
+//@route    post /api/users/unfollow/:id
+// @access  Private / Protected
+router.post('/unfollow/:id', protect, unFollowUser);
 
 module.exports = router;

@@ -406,9 +406,35 @@ exports.followUser = async (req, res, next) => {
 exports.unFollowUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
-
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-  } catch (error) {}
+    if (user.followers.includes(req.user.id)) {
+      const followers = user.followers.filter(
+        (follower) => follower.toString() !== req.user.id
+      );
+      user.followers = followers;
+      await user.save();
+
+      const currentUser = await User.findById(req.user.id);
+      if (currentUser.following.includes(req.params.id)) {
+        const following = currentUser.following.filter(
+          (following) => following.toString() !== req.params.id
+        );
+        currentUser.following = following;
+        await currentUser.save();
+      }
+      return res
+        .status(200)
+        .json({ message: `UnFollowed user ${req.params.id}` });
+    } else {
+      return res.status(200).json({ message: 'Already unfollowed.' });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
+  }
 };
