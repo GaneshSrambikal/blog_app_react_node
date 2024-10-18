@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6,
+    select: false,
   },
   address: {
     street: { type: String, trim: true },
@@ -50,6 +51,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   isAdmin: {
     type: Boolean,
     required: true,
@@ -80,7 +83,8 @@ userSchema.pre('save', async function (next) {
 });
 
 // compare the password
-userSchema.methods.comparePassword = async (enteredPassword) => {
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  console.log(enteredPassword, this.password);
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

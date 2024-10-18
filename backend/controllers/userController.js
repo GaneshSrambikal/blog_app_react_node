@@ -6,6 +6,8 @@ const {
   updateProfileSchema,
   emailSchema,
   passwordResetSchema,
+  passwordChangeSchema,
+  objectIdSchema,
 } = require('../validators/userValidator.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -83,7 +85,7 @@ exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     // find user
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
     // User not found
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
@@ -105,7 +107,6 @@ exports.loginUser = async (req, res, next) => {
         email: user.email,
       },
     });
-    console.log(req.cookies);
   } catch (error) {
     console.log('Error logging user', error);
     next();
@@ -301,7 +302,7 @@ exports.resetPassword = async (req, res, next) => {
     const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpire: { $gt: Date.now() },
-    });
+    }).select('+password');
     if (!user) {
       return res.status(404).json({ message: 'Invalid/expired Token' });
     } else {
@@ -326,19 +327,29 @@ exports.resetPassword = async (req, res, next) => {
 };
 
 exports.changePassword = async (req, res, next) => {
-  const { error } = passwordResetSchema.validate(req.body);
+  const { error } = passwordChangeSchema.validate(req.body);
   if (error) {
     return res
       .status(400)
       .json({ message: 'Validation Error', error: error.message });
   }
-  const { password } = req.body;
+  const { password, currentPassword } = req.body;
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select('+password');
     if (!user) {
       return res.status(404).json({ message: 'user not found' });
     } else {
+      // compare password : defined at Model
+      const isMatch = await user.comparePassword(currentPassword);
+      console.log(isMatch);
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ message: 'Current password is incorrect' });
+      }
+      // set password to document
       user.password = password;
+      // save document
       await user.save();
       return res.status(200).json({ message: 'Password changed.' });
     }
@@ -348,5 +359,145 @@ exports.changePassword = async (req, res, next) => {
     return res
       .status(500)
       .json({ message: 'Server error', error: error.message });
+  }
+};
+
+// User Interactions:
+// Following and Followers management
+
+// Follow another
+exports.followUser = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
+  let message = '';
+  try {
+    // find the user with id
+    const user = await User.findById(req.params.id).select('-password');
+    // if not found
+    if (!user) {
+      message = 'User not found!';
+      return res.status(404).json({ message });
+    }
+    // check if current user exists in the user followers list
+    if (!user.followers.includes(req.user.id)) {
+      // push the current user id to followers list
+      user.followers.push(req.user.id);
+      // save document
+      await user.save();
+
+      // set following user in current user
+      const currentUser = await User.findById(req.user.id).select('-password');
+      if (!currentUser.following.includes(req.params.id)) {
+        currentUser.following.push(req.params.id);
+        await currentUser.save();
+      }
+      return res.status(200).json({ message: `Following user: ${user.id}` });
+    } else {
+      message = 'Already following';
+      return res.status(200).json({ message: message });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// Unfollow user
+exports.unFollowUser = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (user.followers.includes(req.user.id)) {
+      const followers = user.followers.filter(
+        (follower) => follower.toString() !== req.user.id
+      );
+      user.followers = followers;
+      await user.save();
+
+      const currentUser = await User.findById(req.user.id);
+      if (currentUser.following.includes(req.params.id)) {
+        const following = currentUser.following.filter(
+          (following) => following.toString() !== req.params.id
+        );
+        currentUser.following = following;
+        await currentUser.save();
+      }
+      return res
+        .status(200)
+        .json({ message: `UnFollowed user ${req.params.id}` });
+    } else {
+      return res.status(200).json({ message: 'Already unfollowed.' });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
+  }
+};
+
+// List Followers
+exports.listFollowers = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
+  try {
+    // search the user
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found!.' });
+    }
+    const listFollowers = (await user.populate('followers', 'name email'))
+      .followers;
+    return res.status(200).json({ followers: listFollowers });
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+exports.listFollowing = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: `ObjectId Error`, error: error.message });
+  }
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'user not found' });
+    }
+    const listFollowing = (await user.populate('following', 'name email'))
+      .following;
+    return res.status(200).json({ following: listFollowing });
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'server error', error: error.message });
   }
 };
