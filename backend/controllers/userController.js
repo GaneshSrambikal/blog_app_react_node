@@ -438,3 +438,25 @@ exports.unFollowUser = async (req, res, next) => {
       .json({ message: 'Server error', error: error.message });
   }
 };
+
+// List Followers
+exports.listFollowers = async (req, res, next) => {
+  try {
+    // search the user and populate the followers with name and email fields
+    const user = await User.findById(req.params.id).populate(
+      'followers',
+      'name email'
+    );
+    if (!user) {
+      return res.status(404).json({ message: 'User not found!.' });
+    }
+
+    return res.status(200).json({ followers: user.followers });
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};

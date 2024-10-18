@@ -12,6 +12,7 @@ const {
   changePassword,
   followUser,
   unFollowUser,
+  listFollowers,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
@@ -73,13 +74,18 @@ router.post('/change-password', protect, changePassword);
 // User Interactions
 
 //@desc     Follow another user
-//@route    post /api/users/follow/:id
+//@route    post /api/users/:id/follow
 // @access  Private / Protected
-router.post('/follow/:id', protect, followUser);
+router.post('/:id/follow', protect, followUser);
 
 //@desc     Unfollow another user
-//@route    post /api/users/unfollow/:id
+//@route    post /api/users/:id/unfollow
 // @access  Private / Protected
-router.post('/unfollow/:id', protect, unFollowUser);
+router.post('/:id/unfollow', protect, unFollowUser);
+
+//@desc     list users followers
+//@route    post /api/users/:id/followers
+// @access  Private / Protected
+router.post('/:id/followers', protect, listFollowers);
 
 module.exports = router;
