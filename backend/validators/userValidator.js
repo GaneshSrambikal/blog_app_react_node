@@ -49,6 +49,10 @@ const emailSchema = Joi.object({
 const passwordResetSchema = Joi.object({
   password: Joi.string().min(6).max(50).required(),
 });
+const passwordChangeSchema = Joi.object({
+  currentPassword: Joi.string().required(),
+  password: Joi.string().min(6).max(50).required(),
+});
 
 module.exports = {
   createUserSchema,
@@ -56,4 +60,5 @@ module.exports = {
   updateProfileSchema,
   emailSchema,
   passwordResetSchema,
+  passwordChangeSchema,
 };

@@ -10,6 +10,7 @@ const {
   forgotPassword,
   resetPassword,
   changePassword,
+  followUser,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
@@ -32,7 +33,7 @@ router.post('/logout', logoutUser);
 // @desc    Get all users
 // @route   GET /api/users
 // @access  Public
-router.get('/', protect, getAllUsers);
+// router.get('/', protect, getAllUsers);
 
 // Profile management
 
@@ -67,5 +68,12 @@ router.post('/reset-password/:token', resetPassword);
 //@route    post /api/users/change-password
 // @access  Private / Protected
 router.post('/change-password', protect, changePassword);
+
+// User Interactions
+
+//@desc     Follow another user
+//@route    post /api/users/follow/:id
+// @access  Private / Protected
+router.post('/follow/:id', protect, followUser);
 
 module.exports = router;

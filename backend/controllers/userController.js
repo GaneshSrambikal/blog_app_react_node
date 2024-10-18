@@ -6,6 +6,7 @@ const {
   updateProfileSchema,
   emailSchema,
   passwordResetSchema,
+  passwordChangeSchema,
 } = require('../validators/userValidator.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -105,7 +106,6 @@ exports.loginUser = async (req, res, next) => {
         email: user.email,
       },
     });
-    console.log(req.cookies);
   } catch (error) {
     console.log('Error logging user', error);
     next();
@@ -326,19 +326,29 @@ exports.resetPassword = async (req, res, next) => {
 };
 
 exports.changePassword = async (req, res, next) => {
-  const { error } = passwordResetSchema.validate(req.body);
+  const { error } = passwordChangeSchema.validate(req.body);
   if (error) {
     return res
       .status(400)
       .json({ message: 'Validation Error', error: error.message });
   }
-  const { password } = req.body;
+  const { password, currentPassword } = req.body;
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select('+password');
     if (!user) {
       return res.status(404).json({ message: 'user not found' });
     } else {
+      // compare password : defined at Model
+      const isMatch = await user.comparePassword(currentPassword);
+      console.log(isMatch);
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ message: 'Current password is incorrect' });
+      }
+      // set password to document
       user.password = password;
+      // save document
       await user.save();
       return res.status(200).json({ message: 'Password changed.' });
     }
@@ -350,3 +360,45 @@ exports.changePassword = async (req, res, next) => {
       .json({ message: 'Server error', error: error.message });
   }
 };
+
+// User Interactions:
+// Following and Followers management
+
+// Follow another
+exports.followUser = async (req, res, next) => {
+  try {
+    // find the user with id
+    const user = await User.findById(req.params.id).select('-password');
+    // if not found
+    if (!user) {
+      return res.status(404).json({ message: 'User not found!' });
+    }
+    // check if current user exists in the user followers list
+    if (!user.followers.includes(req.user.id)) {
+      // push the current user id to followers list
+      user.followers.push(req.user.id);
+      // save document
+      await user.save();
+    }
+    return res.status(200).json({ message: `Following user: ${user.id}` });
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// Unfollow user
+exports.unFollowUser = async(req,res,next) =>{
+  try {
+    const user = await User.findById(req.params.id)
+
+    if(!user){
+      return res.status(404).json({message: "User not found"})
+    }
+  } catch (error) {
+    
+  }
+}
