@@ -9,4 +9,7 @@ const updateBlogSchema = Joi.object({
   content: Joi.string().min(10).required(),
 });
 
-module.exports = { createBlogSchema, updateBlogSchema };
+const commentSchema = Joi.object({
+  comment: Joi.string().min(1).max(80).required(),
+});
+module.exports = { createBlogSchema, updateBlogSchema, commentSchema };

@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const {
   createBlogSchema,
   updateBlogSchema,
+  commentSchema,
 } = require('../validators/blogValidator');
 const { objectIdSchema } = require('../validators/userValidator');
 
@@ -177,6 +178,45 @@ exports.likeBlogById = async (req, res, next) => {
       return res
         .status(200)
         .json({ message: `Like the blog post ${req.params.id}` });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// comment on a blog post by id
+exports.commentOnBlog = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: 'Validation Error', error: error.message });
+  }
+  try {
+    const { error } = commentSchema.validate(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ message: 'Validation Error', error: error.message });
+    }
+    const { comment } = req.body;
+    const blog = await Blog.findById(req.params.id);
+    if (blog) {
+      const newComment = {
+        text: comment,
+        user: req.user.id,
+      };
+      blog.comments.push(newComment);
+      await blog.save();
+      return res.status(200).json({ message: 'comment added.' });
+    } else {
+      return res
+        .status(404)
+        .json({ message: `No Blog post with id ${req.params.id} exists.` });
     }
   } catch (error) {
     console.log(`Error: ${error.message}`);
