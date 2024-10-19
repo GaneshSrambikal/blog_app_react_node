@@ -7,12 +7,17 @@ const {
   commentOnBlog,
   deleteCommentOnBlog,
   searchBlogByTitle,
+  getAllBlogs,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
 const router = require('express').Router();
 
-
+// Get all blogs
+//@desc     Get all blog
+//@route    get /api/blogs
+// @access  Public
+router.get('/', getAllBlogs);
 // Create a blog
 //@desc     Create a blog
 //@route    post /api/blogs/create-blog

@@ -1,13 +1,16 @@
-const app = require('express')();
+const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const userRouter = require('./routes/users/userRoutes');
 const adminRouter = require('./routes/users/adminRoutes');
 const blogRouter = require('./routes/blog/blogRoutes');
+const app = express();
+
+app.use(express.json());
 // Middleware setup
-// app.use(cors());
+app.use(cors());
 app.use(morgan('dev'));
-app.use(require('express').json());
+app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {
