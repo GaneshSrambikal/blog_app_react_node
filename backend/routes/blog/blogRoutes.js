@@ -2,6 +2,8 @@ const {
   createBlog,
   getBlogById,
   updateBlogById,
+  deleteBlogById,
+  likeBlogById,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
@@ -25,9 +27,20 @@ router.get('/:id', getBlogById);
 //@route    PUT /api/blogs/:id
 // @access  Private / Protected
 router.put('/:id', protect, updateBlogById);
+
 // Delete a blog
+//@desc     delete a blog by Id .Only the author can delete his/hers blogs
+//@route    DELETE /api/blogs/:id
+// @access  Private / Protected
+router.delete('/:id', protect, deleteBlogById);
+
 // search a blog
+
 // like a blog
+//@desc     Like a blog by Blog Id
+//@route    POST /api/blogs/:id/like
+// @access  Private / Protected
+router.post('/:id/like', protect, likeBlogById);
 // comment on blog
 
 module.exports = router;
