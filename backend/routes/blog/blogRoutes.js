@@ -1,4 +1,8 @@
-const { createBlog, getBlogById } = require('../../controllers/blogController');
+const {
+  createBlog,
+  getBlogById,
+  updateBlogById,
+} = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
 const router = require('express').Router();
@@ -17,10 +21,10 @@ router.post('/create-blog', protect, createBlog);
 router.get('/:id', getBlogById);
 
 // Update a blog
-//@desc     Update a blog by Id
+//@desc     Update a blog by Id .Only the author can update his/hers blogs
 //@route    PUT /api/blogs/:id
 // @access  Private / Protected
-router.put('/:id');
+router.put('/:id', protect, updateBlogById);
 // Delete a blog
 // search a blog
 // like a blog
