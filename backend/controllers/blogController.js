@@ -265,3 +265,42 @@ exports.deleteCommentOnBlog = async (req, res, next) => {
       .json({ message: 'Server Error', error: error.message });
   }
 };
+
+// Search A blog by Title
+exports.searchBlogByTitle = async (req, res, next) => {
+  try {
+    const searchTerm = req.query.title || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const blogs = await Blog.find({
+      title: { $regex: searchTerm, $options: 'i' },
+    })
+      .skip(skip)
+      .limit(limit);
+
+    const totalBlogCount = await Blog.countDocuments({
+      title: { $regex: searchTerm, $options: 'i' },
+    });
+
+    if (blogs.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'No Blogs found with the given title' });
+    }
+
+    return res.status(200).json({
+      blogs: blogs,
+      totalBlogs: totalBlogCount,
+      currentPage: page,
+      totalPages: Math.ceil(totalBlogCount / limit),
+    });
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};
