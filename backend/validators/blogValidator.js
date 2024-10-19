@@ -12,4 +12,13 @@ const updateBlogSchema = Joi.object({
 const commentSchema = Joi.object({
   comment: Joi.string().min(1).max(80).required(),
 });
-module.exports = { createBlogSchema, updateBlogSchema, commentSchema };
+const deleteCommentSchema = Joi.object({
+  commentId: Joi.string().hex().length(24).message('Invalid comment id'),
+  blogId: Joi.string().hex().length(24).message('Invalid Blog id'),
+});
+module.exports = {
+  createBlogSchema,
+  updateBlogSchema,
+  commentSchema,
+  deleteCommentSchema,
+};

@@ -5,6 +5,7 @@ const {
   deleteBlogById,
   likeBlogById,
   commentOnBlog,
+  deleteCommentOnBlog,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
@@ -48,5 +49,11 @@ router.post('/:id/like', protect, likeBlogById);
 //@route    POST /api/blogs/:id/comment
 // @access  Private / Protected
 router.post('/:id/comment', protect, commentOnBlog);
+
+// delete a comment on blog
+//@desc     delete comment a blog by comment Id
+//@route    POST /api/blogs/delete/:id/comment
+// @access  Private / Protected
+router.delete('/:blogId/comment/:commentId', protect, deleteCommentOnBlog);
 
 module.exports = router;

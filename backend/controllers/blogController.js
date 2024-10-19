@@ -4,6 +4,7 @@ const {
   createBlogSchema,
   updateBlogSchema,
   commentSchema,
+  deleteCommentSchema,
 } = require('../validators/blogValidator');
 const { objectIdSchema } = require('../validators/userValidator');
 
@@ -217,6 +218,44 @@ exports.commentOnBlog = async (req, res, next) => {
       return res
         .status(404)
         .json({ message: `No Blog post with id ${req.params.id} exists.` });
+    }
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// delete a comment
+exports.deleteCommentOnBlog = async (req, res, next) => {
+  const { error } = deleteCommentSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: 'Validation Error', error: error.message });
+  }
+  const { commentId, blogId } = req.params;
+  try {
+    const blog = await Blog.findById(blogId);
+    if (blog) {
+      const comment = blog.comments.id(commentId);
+      if (!comment) {
+        return res.status(404).json({ message: 'No comments found' });
+      }
+      if (comment.user.toString() !== req.user.id) {
+        return res
+          .status(403)
+          .json({ message: 'Not Authorized to delete comment' });
+      }
+      comment.deleteOne();
+      await blog.save();
+      return res.status(200).json({ message: 'Comment deleted successfully.' });
+    } else {
+      return res
+        .status(404)
+        .json({ message: `No Blog with id: ${blogId} exists.` });
     }
   } catch (error) {
     console.log(`Error: ${error.message}`);
