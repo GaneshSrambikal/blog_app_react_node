@@ -5,10 +5,13 @@ const {
   deleteBlogById,
   likeBlogById,
   commentOnBlog,
+  deleteCommentOnBlog,
+  searchBlogByTitle,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 
 const router = require('express').Router();
+
 
 // Create a blog
 //@desc     Create a blog
@@ -21,21 +24,19 @@ router.post('/create-blog', protect, createBlog);
 //@desc     GEt a blog by Id
 //@route    post /api/blogs/:id
 // @access  Public
-router.get('/:id', getBlogById);
+router.get('/blog/:id', getBlogById);
 
 // Update a blog
 //@desc     Update a blog by Id .Only the author can update his/hers blogs
 //@route    PUT /api/blogs/:id
 // @access  Private / Protected
-router.put('/:id', protect, updateBlogById);
+router.put('/blog/:id', protect, updateBlogById);
 
 // Delete a blog
 //@desc     delete a blog by Id .Only the author can delete his/hers blogs
 //@route    DELETE /api/blogs/:id
 // @access  Private / Protected
-router.delete('/:id', protect, deleteBlogById);
-
-// search a blog
+router.delete('/blog/:id', protect, deleteBlogById);
 
 // like a blog
 //@desc     Like a blog by Blog Id
@@ -48,5 +49,18 @@ router.post('/:id/like', protect, likeBlogById);
 //@route    POST /api/blogs/:id/comment
 // @access  Private / Protected
 router.post('/:id/comment', protect, commentOnBlog);
+
+// delete a comment on blog
+//@desc     delete comment a blog by comment Id
+//@route    POST /api/blogs/delete/:id/comment
+// @access  Private / Protected
+router.delete('/:blogId/comment/:commentId', protect, deleteCommentOnBlog);
+
+// search a blog
+// like a blog
+//@desc     Search a blog by Title
+//@route    GET /api/blogs/search
+// @access  Public
+router.get('/search', searchBlogByTitle);
 
 module.exports = router;
