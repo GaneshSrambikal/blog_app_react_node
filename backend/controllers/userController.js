@@ -131,6 +131,8 @@ exports.logoutUser = async (req, res, next) => {
   }
 };
 
+
+
 // Profile Management
 // Get User Profile (protected)
 exports.getProfile = async (req, res, next) => {

@@ -28,6 +28,7 @@ exports.createBlog = async (req, res, next) => {
       const newBlog = new Blog({
         title,
         author: req.user.id,
+
         content,
       });
       const savedBlog = await newBlog.save();
@@ -274,9 +275,40 @@ exports.searchBlogByTitle = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const blogs = await Blog.find({
+    // Adding more fields to filter result
+
+    // sorting
+    const sortBy = req.query.sortBy || 'createdAt';
+    const order = req.query.order === 'asc' ? 1 : -1;
+    const sortOrder = { [sortBy]: order };
+
+    // filtering by author and date range
+    const author = req.query.author;
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+
+    // build filter query
+    const filterQuery = {
       title: { $regex: searchTerm, $options: 'i' },
-    })
+    };
+
+    if (author) {
+      filterQuery.author = author; // Ensure the author ID is passed correctly as an ObjectId
+    }
+
+    // date range i.e (2024-05-01 to 2024-05-30)
+    if (startDate || endDate) {
+      filterQuery.createdAt = {};
+      if (startDate) {
+        filterQuery.createdAt.$gte = new Date(startDate);
+      }
+      if (endDate) {
+        filterQuery.createAt.$lte = new Date(endDate);
+      }
+    }
+
+    const blogs = await Blog.find(filterQuery)
+      .sort(sortOrder)
       .skip(skip)
       .limit(limit);
 
@@ -289,12 +321,18 @@ exports.searchBlogByTitle = async (req, res, next) => {
         .status(404)
         .json({ message: 'No Blogs found with the given title' });
     }
+    const totalPages = Math.ceil(totalBlogCount / limit);
+    if (page > totalPages) {
+      return res.status(404).json({
+        message: `Page ${page} does not exist. Only ${totalPages} available.`,
+      });
+    }
 
     return res.status(200).json({
       blogs: blogs,
       totalBlogs: totalBlogCount,
       currentPage: page,
-      totalPages: Math.ceil(totalBlogCount / limit),
+      totalPages,
     });
   } catch (error) {
     console.log(`Error: ${error.message}`);
