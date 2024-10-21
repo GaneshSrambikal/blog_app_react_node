@@ -83,33 +83,39 @@ exports.loginUser = async (req, res, next) => {
   }
   // get email and password
   const { email, password } = req.body;
+  // console.log(email, password);
   try {
     // find user
     const user = await User.findOne({ email }).select('+password');
+    // console.log(user);
     // User not found
     if (!user) {
-      return res.status(400).json({ message: 'User not found' });
+      return res.status(400).json({ message: 'Invalid Email / Password' });
+    } else {
+      // if user exist compare the password
+      // const isMatch = await user.comparePassword(password);
+      const isMatch = await bcrypt.compare(password, user.password);
+      // console.log(isMatch);
+      // wrong/mismatch password
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid email or password' });
+      }
+      // if email and password are OK generate JWT Token
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: '2h',
+      });
+      res.status(200).json({
+        token,
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+        },
+      });
     }
-    // if user exist compare the password
-    const isMatch = await bcrypt.compare(password, user.password);
-    // wrong/mismatch password
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid email or password' });
-    }
-    // if email and password are OK generate JWT Token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '2h',
-    });
-    res.status(200).json({
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-      },
-    });
   } catch (error) {
     console.log('Error logging user', error);
-    next();
+    next(error);
     return res
       .status(500)
       .json({ message: 'Server error', error: error.message });
@@ -130,8 +136,6 @@ exports.logoutUser = async (req, res, next) => {
       .json({ message: 'Server Error', error: error.message });
   }
 };
-
-
 
 // Profile Management
 // Get User Profile (protected)
