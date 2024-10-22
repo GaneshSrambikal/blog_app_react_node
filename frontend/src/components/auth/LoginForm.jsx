@@ -120,7 +120,7 @@ const LoginForm = () => {
             )}
             {password.length > 1 && (
               <span className='login-password'>
-                <a href='/reset-password'>forgot password?</a>
+                <a href='/forgot-password'>forgot password?</a>
               </span>
             )}
           </div>
