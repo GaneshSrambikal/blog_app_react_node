@@ -74,14 +74,15 @@ const ForgotPasswordForm = () => {
       <div className='login-container'>
         <div className='login-fm-header'>
           <h2>Reset your password</h2>
-          {!sentEmail ? <p>
-            To reset your password, enter your email below and submit. An email
-            will be sent to you with instructions about how to complete the
-            process.
-          </p>
-          :
-          <p>A reset password link has been sent to your email.</p>
-          }
+          {!sentEmail ? (
+            <p>
+              To reset your password, enter your email below and submit. An
+              email will be sent to you with instructions about how to complete
+              the process.
+            </p>
+          ) : (
+            <p>A reset password link has been sent to your email.</p>
+          )}
         </div>
         <form onSubmit={handleSubmit} className='login-form'>
           {!sentEmail && (
@@ -114,7 +115,7 @@ const ForgotPasswordForm = () => {
             ) : isLoading ? (
               <button
                 type='button'
-                className=' submit-button submit-loding-btn'
+                className=' submit-button submit-loading-btn'
                 disabled
               >
                 <TailSpin
