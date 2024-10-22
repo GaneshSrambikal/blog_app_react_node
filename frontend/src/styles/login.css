@@ -158,9 +158,14 @@ input.error {
   background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 1) 0%,
+    rgb(255, 255, 255) 0%,
     rgba(0, 6, 116, 0.9024859943977591) 93%
   );
+  /* background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 6, 116, 0.9024859943977591) 93%
+  ); */
 }
 .login-showcase-ilst {
   /* overflow: hidden; */

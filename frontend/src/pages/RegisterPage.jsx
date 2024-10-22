@@ -1,5 +1,5 @@
 import RegisterForm from '../components/auth/RegisterForm';
-import LoginIlls from '../assets/images/loginbghuman.svg';
+import RegisterIlls from '../assets/images/registerhumanhero.svg';
 const RegisterPage = () => {
   return (
     <div className='login-main-div'>
@@ -7,7 +7,7 @@ const RegisterPage = () => {
       <div className='register-showcase'>
         <div className='register-showcase-ilst'>
           <div className='ilst-imgs'>
-            <img src={LoginIlls} alt='register-bg-human' />
+            <img src={RegisterIlls} alt='register-bg-human' />
             <div className='ilst-imgs-des'>
               <span>
                 illustration:{' '}

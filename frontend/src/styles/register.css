@@ -134,9 +134,9 @@ input.error {
   height: 100vh;
 }
 .register-div {
-  flex: 50%;
+  flex: 30%;
   background-color: rgb(255, 255, 255);
-  overflow-x: hidden;
+  overflow-y: scroll;
 }
 .register-branding {
   padding: 1rem;
@@ -187,9 +187,15 @@ input.error {
   background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 6, 116, 0.9024859943977591) 93%
+    rgb(245 245 245) 0%,
+    rgba(0, 112, 116, 0.902) 93%
   );
+  /* background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    rgb(39 120 66) 0%,
+    rgb(18 190 39 / 90%) 93%
+  ); */
 }
 .register-showcase-ilst {
   /* overflow: hidden; */
