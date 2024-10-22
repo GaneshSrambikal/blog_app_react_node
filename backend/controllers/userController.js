@@ -310,7 +310,7 @@ exports.resetPassword = async (req, res, next) => {
       resetPasswordExpire: { $gt: Date.now() },
     }).select('+password');
     if (!user) {
-      return res.status(404).json({ message: 'Invalid/expired Token' });
+      return res.status(404).json({ message: 'Password reset expired.' });
     } else {
       // set password and unset token ,expired
       user.password = password;

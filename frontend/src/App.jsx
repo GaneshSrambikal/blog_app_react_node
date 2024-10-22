@@ -1,11 +1,19 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
 import Register from './components/auth/Register';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
-import ResetPassword from './pages/ResetPassword';
-import ChangePassword from './pages/ChangePassword';
+// import ResetPassword from './pages/ForgotPasswordPage';
+// import ChangePassword from './pages/ChangePassword';
 import LandingPage from './pages/LandingPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -15,8 +23,10 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/change-password' element={<ChangePassword />} />
+        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+        <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
+        <Route path='/reset-password/*' element={<Navigate to='/login' />} />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

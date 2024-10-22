@@ -45,12 +45,20 @@ input.error {
   font-size: 1rem;
   cursor: pointer;
   font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.submit-button span {
+  margin-right: 0.3rem;
 }
 
 .submit-button:hover {
   background-color: #2a2a2b;
 }
-
+.submit-loding-btn {
+  cursor: not-allowed;
+}
 .server-error {
   color: rgb(235, 77, 77);
   font-weight: 400;
@@ -156,12 +164,13 @@ input.error {
 }
 .login-showcase-ilst {
   /* overflow: hidden; */
-  width: 800px;
+  width: 600px;
   height: auto;
-  max-width: 900px;
+  margin-right: 1rem;
+  /* max-width: 900px; */
   /* background-color: aqua; */
   position: absolute;
-  right: -10%;
+  right: 0;
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -179,7 +188,7 @@ input.error {
   position: absolute;
   bottom: 0;
   /* right: 30%; */
-  left: -10%;
+  left: 0;
 }
 .login-showcase-ilst .ilst-imgs-des span {
   color: #e9e9e9;
@@ -201,4 +210,35 @@ input.error {
   .login-showcase {
     display: none;
   }
+}
+/* forgot password */
+.success-redirect-timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.success-redirect-timer svg {
+  margin-right: 0.6rem;
+}
+/* Reset Password */
+.reset-pass-validate {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.reset-pass-validate svg {
+  margin-right: 0.4rem;
+}
+.reset-disable {
+  cursor: not-allowed;
+  background-color: #999;
+}
+.reset-disable:hover {
+  background-color: #999;
+}
+.reset-success-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
 }
