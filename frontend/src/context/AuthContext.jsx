@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('blog_AuthToken');
-
     if (token) {
       try {
         const decoded = jwtDecode(token);

@@ -1,10 +1,10 @@
 // import React from 'react'
-import '../styles/login.css';
-import LoginIlls from '../assets/images/loginbghuman.svg';
-import LoginForm from '../components/auth/LoginForm';
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import LoginIlls from '../assets/images/loginbghuman.svg';
+import LoginForm from '../components/auth/LoginForm';
+import '../styles/login.css';
 const LoginPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();

@@ -1,4 +1,3 @@
-// import React from 'react'
 import '../../styles/login.css';
 import { useState } from 'react';
 import axios from 'axios';
@@ -6,6 +5,7 @@ import { LuEye, LuEyeOff } from 'react-icons/lu';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../validators/auth/loginValidator';
 import { useAuth } from '../../context/AuthContext';
+import InputComponent from '../ui/InputComponent';
 const LoginForm = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -26,7 +26,12 @@ const LoginForm = () => {
       [name]: value,
     });
   };
-
+  const togglePass = () => {
+    setShowPassword(!showPassword);
+  };
+  const getInputClass = (fieldName) => {
+    return errors[fieldName] ? 'input-error' : '';
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateLoginForm(formData);
@@ -42,7 +47,7 @@ const LoginForm = () => {
         // Handle successful login, e.g., redirect or store token
         // const token = response.data.token;
         // localStorage.setItem('blog_AuthToken', token);
-        login(response.data.token, response.data.user);
+        login(response.data.token);
         navigate('/home');
       } catch (error) {
         console.log(error);
@@ -51,12 +56,6 @@ const LoginForm = () => {
     }
   };
 
-  const togglePass = () => {
-    setShowPassword(!showPassword);
-  };
-  const getInputClass = (fieldName) => {
-    return errors[fieldName] ? 'input-error' : '';
-  };
   return (
     <div className='login-div'>
       <div className='login-branding'>
@@ -68,33 +67,31 @@ const LoginForm = () => {
           <p>Enter your credentials to access your account</p>
         </div>
         <form onSubmit={handleSubmit} className='login-form'>
+          {/* Server Errors */}
           <div className='form-group'>
             {errors.server && (
               <span className='server-error'>{errors.server}</span>
             )}
           </div>
+          {/* Success register message */}
           <div className='form-group'>
             {location.state?.message && (
               <p className='success-login'>{location.state?.message}</p>
             )}
           </div>
-          <div className='form-group'>
-            <label htmlFor='email' className='login-email'>
-              Email
-            </label>
-            <input
-              type='email'
-              id='email'
-              name='email'
-              value={formData.email}
-              onChange={handleInputChange}
-              className={`${getInputClass('email')}`}
-            />
-            {errors.email && (
-              <span className='error-message'>{errors.email}</span>
-            )}
-          </div>
+          {/* Email */}
+          <InputComponent
+            label={'Email'}
+            type={'email'}
+            id={'email'}
+            name={'email'}
+            value={formData.email}
+            onChange={handleInputChange}
+            className={`${getInputClass('email')}`}
+            error={errors.email}
+          />
 
+          {/* Password */}
           <div className='form-group login-password-group'>
             <label htmlFor='password'>Password</label>
             <div className='login-password-wrapper'>
@@ -113,6 +110,7 @@ const LoginForm = () => {
             {errors.password && (
               <span className='error-message'>{errors.password}</span>
             )}
+            {/* Forgot  Password Link */}
             {formData.password.length > 1 && (
               <span className='login-password'>
                 <a href='/forgot-password'>forgot password?</a>
