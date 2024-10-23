@@ -4,6 +4,7 @@ import { validateRegisterForm } from '../../validators/auth/registerValidator';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TailSpin } from 'react-loader-spinner';
+import InputComponent from '../ui/InputComponent';
 const RegisterForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -71,21 +72,20 @@ const RegisterForm = () => {
           <p>Enter your credentials to create your account</p>
         </div>
         <form onSubmit={handleSubmit} className='register-form'>
-          <div className='form-group'>
-            <label htmlFor='name'>
-              Name<span className='label-required'>*</span>
-            </label>
-            <input
-              type='text'
-              name='name'
-              value={formData.name}
-              onChange={handleChange}
-              className={getInputClass('name')}
-            />
-            {errors.name && <p className='error-message'>{errors.name}</p>}
-          </div>
+          {/* name */}
+          <InputComponent
+            type='text'
+            name='name'
+            id='name'
+            label='Name'
+            value={formData.name}
+            onChange={handleChange}
+            className={`${getInputClass('name')}`}
+            error={errors.name}
+            required={true}
+          />
+          {/* Gender */}
           <div className='form-groups'>
-            {/* Gender */}
             <div className='form-group'>
               <label htmlFor='gender'>
                 Gender<span className='label-required'>*</span>
@@ -126,50 +126,43 @@ const RegisterForm = () => {
             {errors.gender && <p className='error-message'>{errors.gender}</p>}
           </div>
 
-          <div className='form-group'>
-            <label htmlFor='address'>
-              Address<span className='label-required'>*</span>
-            </label>
-            <input
-              type='text'
-              name='address'
-              value={formData.address}
-              onChange={handleChange}
-              className={`${getInputClass('address')}`}
-            />
-            {errors.address && (
-              <p className='error-message'>{errors.address}</p>
-            )}
-          </div>
-          <div className='form-group'>
-            <label htmlFor='email'>
-              Email<span className='label-required'>*</span>
-            </label>
-            <input
-              type='email'
-              name='email'
-              value={formData.email}
-              onChange={handleChange}
-              className={`${getInputClass('email')}`}
-            />
-            {errors.email && <p className='error-message'>{errors.email}</p>}
-          </div>
+          {/* Address */}
+          <InputComponent
+            type='text'
+            name='address'
+            id='address'
+            label='Address'
+            value={formData.address}
+            onChange={handleChange}
+            className={`${getInputClass('address')}`}
+            error={errors.address}
+            required={true}
+          />
 
-          <div className='form-group'>
-            <label htmlFor='username'>
-              Username<span className='label-required'>*</span>
-            </label>
-            <input
-              type='text'
-              name='username'
-              value={formData.username}
-              onChange={handleChange}
-              className={`${getInputClass('username')}`}
-            />
-            {errors.username && (
-              <p className='error-message'>{errors.username}</p>
-            )}
-          </div>
+          {/* Email */}
+          <InputComponent
+            type='email'
+            name='email'
+            id='email'
+            label='Email'
+            value={formData.email}
+            onChange={handleChange}
+            className={`${getInputClass('email')}`}
+            error={errors.email}
+            required={true}
+          />
+          {/* Username */}
+          <InputComponent
+            type='text'
+            name='username'
+            id='username'
+            label='Username'
+            value={formData.username}
+            onChange={handleChange}
+            className={`${getInputClass('username')}`}
+            error={errors.username}
+            required={true}
+          />
 
           <div className='form-group'>
             <label htmlFor='password'>
@@ -217,5 +210,4 @@ const RegisterForm = () => {
     </div>
   );
 };
-
 export default RegisterForm;
