@@ -1,68 +1,65 @@
 import { useState } from 'react';
-import Joi from 'joi';
 import '../../styles/register.css';
+import { validateRegisterForm } from '../../validators/auth/registerValidator';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { TailSpin } from 'react-loader-spinner';
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    name: '',
     username: '',
     email: '',
     password: '',
+    address: '',
+    gender: '',
+    dob: '',
   });
-  const [error, setError] = useState(null);
-
-  // Joi schema for validation
-  const schema = Joi.object({
-    username: Joi.string().min(3).max(30).required().messages({
-      'string.base': 'Username must be a string',
-      'string.empty': 'Username is required',
-      'string.min': 'Username must be at least 3 characters',
-      'any.required': 'Username is required',
-    }),
-    email: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required()
-      .messages({
-        'string.email': 'Email must be valid',
-        'string.empty': 'Email is required',
-        'any.required': 'Email is required',
-      }),
-    password: Joi.string()
-      .min(6)
-      .required()
-      .custom((value, helpers) => {
-        const email = helpers.state.ancestors[0].email;
-        const regex = new RegExp(email, 'i');
-        if (regex.test(value)) {
-          return helpers.message('Password cannot contain the email address');
-        }
-        return value;
-      })
-      .messages({
-        'string.empty': 'Password is required',
-        'string.min': 'Password must be at least 6 characters',
-      }),
-  });
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { error } = schema.validate(formData);
-    if (error) {
-      setError(error.details[0].message);
-      return;
-    }
-
-    setError(null);
-    // Submit the form data (e.g., API call)
-    console.log('Form submitted:', formData);
-  };
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // Handle input change
   const handleChange = (e) => {
+    setErrors({});
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const validationErrors = validateRegisterForm(formData);
+    if (validationErrors) {
+      setErrors(validationErrors);
+      setIsLoading(false);
+    } else {
+      setErrors({});
+      // Submit the form data (e.g., API call)
+      console.log('Form submitted:', formData);
+      try {
+        const response = await axios.post('/api/users/register', formData);
+        console.log('User created', response.data);
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate('/login', {
+            state: { message: 'You have been registered. Login now.' },
+          });
+        }, 3000);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+        setErrors({ server: error.response.data.message });
+      }
+    }
+  };
+
+  const getInputClass = (fieldName) => {
+    return errors[fieldName] ? 'input-error' : '';
+  };
+
   return (
     <div className='register-div'>
       <div className='register-branding'>
@@ -75,25 +72,31 @@ const RegisterForm = () => {
         </div>
         <form onSubmit={handleSubmit} className='register-form'>
           <div className='form-group'>
-            <label htmlFor='name'>Name</label>
+            <label htmlFor='name'>
+              Name<span className='label-required'>*</span>
+            </label>
             <input
               type='text'
               name='name'
               value={formData.name}
               onChange={handleChange}
-              required
+              className={getInputClass('name')}
             />
+            {errors.name && <p className='error-message'>{errors.name}</p>}
           </div>
           <div className='form-groups'>
             {/* Gender */}
             <div className='form-group'>
-              <label htmlFor='gender'>Gender</label>
+              <label htmlFor='gender'>
+                Gender<span className='label-required'>*</span>
+              </label>
               <select
                 name='gender'
                 value={formData.gender}
                 onChange={handleChange}
-                required
-                className='register-form-gender-select'
+                className={`register-form-gender-select ${getInputClass(
+                  'gender'
+                )}`}
               >
                 <option value=''>Select Gender</option>
                 <option value='male'>Male</option>
@@ -103,56 +106,107 @@ const RegisterForm = () => {
             </div>
 
             <div className='form-group'>
-              <label htmlFor='dob'>Date of Birth</label>
+              <label htmlFor='dob'>
+                Date of Birth<span className='label-required'>*</span>
+              </label>
               <input
                 type='date'
                 name='dob'
                 value={formData.dob}
                 onChange={handleChange}
-                required
+                min='1980-01-01'
+                max={new Date().toISOString().split('T')[0]}
+                className={`${getInputClass('dob')}`}
               />
             </div>
           </div>
+          {/* errors for gender and dob */}
+          <div className='form-group'>
+            {errors.dob && <p className='error-message'>{errors.dob}</p>}
+            {errors.gender && <p className='error-message'>{errors.gender}</p>}
+          </div>
 
           <div className='form-group'>
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='address'>
+              Address<span className='label-required'>*</span>
+            </label>
+            <input
+              type='text'
+              name='address'
+              value={formData.address}
+              onChange={handleChange}
+              className={`${getInputClass('address')}`}
+            />
+            {errors.address && (
+              <p className='error-message'>{errors.address}</p>
+            )}
+          </div>
+          <div className='form-group'>
+            <label htmlFor='email'>
+              Email<span className='label-required'>*</span>
+            </label>
             <input
               type='email'
               name='email'
               value={formData.email}
               onChange={handleChange}
-              required
+              className={`${getInputClass('email')}`}
             />
+            {errors.email && <p className='error-message'>{errors.email}</p>}
           </div>
 
           <div className='form-group'>
-            <label htmlFor='username'>Username</label>
+            <label htmlFor='username'>
+              Username<span className='label-required'>*</span>
+            </label>
             <input
               type='text'
               name='username'
               value={formData.username}
               onChange={handleChange}
-              required
+              className={`${getInputClass('username')}`}
             />
+            {errors.username && (
+              <p className='error-message'>{errors.username}</p>
+            )}
           </div>
 
           <div className='form-group'>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password'>
+              Password<span className='label-required'>*</span>
+            </label>
             <input
               type='password'
               name='password'
               value={formData.password}
               onChange={handleChange}
-              required
+              className={`${getInputClass('password')}`}
             />
+            {errors.password && (
+              <p className='error-message'>{errors.password}</p>
+            )}
           </div>
-
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          
+          <div className='form-group'>
+            {errors.server && <p className='error-message'>{errors.server}</p>}
+          </div>
+          {isLoading ? (
+            <button type='button' className='submit-button register-submit-btn'>
+              <TailSpin
+                visible={true}
+                height='20'
+                width='20'
+                color='#FFF'
+                ariaLabel='tail-spin-loading'
+                radius='1'
+                wrapperStyle={{}}
+                wrapperClass=''
+              />
+            </button>
+          ) : (
             <button type='submit' className='submit-button register-submit-btn'>
               Register
             </button>
-          
+          )}
         </form>
         <div className='register-fm-footer'>
           <p>

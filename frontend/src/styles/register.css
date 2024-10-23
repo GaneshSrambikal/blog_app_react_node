@@ -26,7 +26,10 @@ label {
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
-
+label .label-required {
+  color: rgb(241, 48, 48);
+  font-weight: 600;
+}
 input {
   width: 100%;
   padding: 0.5rem;
@@ -34,8 +37,9 @@ input {
   border-radius: 4px;
 }
 
-input.error {
-  border-color: red;
+.input-error {
+  border-color: 2px solid red;
+  background-color: #ffe6e6;
 }
 .register-form-gender-select {
   width: 140%;
@@ -221,9 +225,10 @@ input.error {
 .register-showcase-ilst .ilst-imgs-des {
   text-align: left;
   position: absolute;
-  bottom: 0;
+  bottom: 3px;
   /* right: 30%; */
-  left: 0;
+  left: -65px;
+  /* transform: rotate(270deg); */
 }
 .register-showcase-ilst .ilst-imgs-des span {
   color: #e9e9e9;

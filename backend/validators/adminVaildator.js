@@ -8,13 +8,7 @@ const createAdminSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   dob: Joi.date().required(),
-  address: Joi.object({
-    street: Joi.string().required(),
-    city: Joi.string().required(),
-    state: Joi.string().required(),
-    country: Joi.string().required(),
-    zip: Joi.string().required(),
-  }).required(),
+  address: Joi.string().required(),
   isAdmin: Joi.boolean().required(),
 });
 

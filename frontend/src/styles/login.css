@@ -34,6 +34,14 @@ input.error {
   color: red;
   font-size: 0.875rem;
 }
+.success-login {
+  color: green;
+  font-size: 0.8rem;
+  background-color: #a9ffa9;
+  padding: 0.2rem;
+  border-radius: 4px;
+  text-align: center;
+}
 
 .submit-button {
   width: 100%;
@@ -193,7 +201,7 @@ input.error {
   position: absolute;
   bottom: 0;
   /* right: 30%; */
-  left: 0;
+  left: -55px;
 }
 .login-showcase-ilst .ilst-imgs-des span {
   color: #e9e9e9;
