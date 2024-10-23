@@ -4,7 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { LoginSchema } from '../../validators/auth/loginValidator';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +12,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInputChange = (e, name) => {
     setErrors({});
@@ -85,6 +86,11 @@ const LoginForm = () => {
           <p>Enter your credentials to access your account</p>
         </div>
         <form onSubmit={handleSubmit} className='login-form'>
+          <div className='form-group'>
+            {location.state?.message && (
+              <p className='success-login'>{location.state?.message}</p>
+            )}
+          </div>
           <div className='form-group'>
             <label htmlFor='email' className='login-email'>
               Email
