@@ -2,12 +2,12 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { checkToken } from '../utils/checkToken';
-import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
+  const { user } = useAuth();
   const [blogs, setBlogs] = useState([]);
-  const navigate = useNavigate();
   const fetchBlog = async () => {
     try {
       const res = await axios.get('/api/blogs');
@@ -22,21 +22,19 @@ const Home = () => {
   useEffect(() => {
     fetchBlog();
   }, []);
-  // check token
-  useEffect(() => {
-    if (!checkToken()) {
-      navigate('/login');
-    }
-  }, [navigate]);
   return (
-    <div>
-      <h1>Home</h1>
-      <ul>
-        {blogs.map((blog, index) => {
-          return <li key={index}>{blog.title}</li>;
-        })}
-      </ul>
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <h1>Home</h1>
+        <h2>Welcome, {user?.name}</h2>
+        <ul>
+          {blogs.map((blog, index) => {
+            return <li key={index}>{blog.title}</li>;
+          })}
+        </ul>
+      </div>
+    </>
   );
 };
 

@@ -2,7 +2,18 @@
 import '../styles/login.css';
 import LoginIlls from '../assets/images/loginbghuman.svg';
 import LoginForm from '../components/auth/LoginForm';
+import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.id) {
+      navigate('/home');
+    }
+  });
   return (
     <div className='login-main-div'>
       {/* Login Component */}
