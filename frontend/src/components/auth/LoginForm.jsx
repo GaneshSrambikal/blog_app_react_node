@@ -2,78 +2,60 @@
 import '../../styles/login.css';
 import { useState } from 'react';
 import axios from 'axios';
-import { LoginSchema } from '../../validators/auth/loginValidator';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { validateLoginForm } from '../../validators/auth/loginValidator';
+import { useAuth } from '../../context/AuthContext';
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
 
-  const handleInputChange = (e, name) => {
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleInputChange = (e) => {
     setErrors({});
-    const { value } = e.target;
-    if (name === 'email') {
-      setEmail(value);
-    } else {
-      setPassword(value);
-    }
-  };
-  const validate = () => {
-    const { error } = LoginSchema.validate(
-      { email, password },
-      { abortEarly: false }
-    );
-    if (!error) return null;
-    const errors = {};
-    error.details.forEach((detail) => {
-      errors[detail.path[0]] = detail.message;
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
-    return errors;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = validateLoginForm(formData);
     if (validationErrors) {
       setErrors(validationErrors);
-      return;
-    }
-
-    setErrors({}); // Clear previous errors
-    try {
-      const response = await axios.post('/api/users/login', {
-        email,
-        password,
-      });
-      console.log('Login successful:', response.data);
-      // Handle successful login, e.g., redirect or store token
-      const token = response.data.token;
-      localStorage.setItem('blog_AuthToken', token);
-      navigate('/home');
-    } catch (error) {
-      console.error('Login failed:', error.response.data.message);
-      if (error.response.data.message.includes('email')) {
-        setErrors({ email: error.response.data.message });
-        console.log(error, errors);
-      } else if (error.response.data.message.includes('password')) {
-        setErrors({ password: error.response.data.message });
-        console.log(error, errors);
-      } else {
-        setErrors({
-          email: error.response.data.message,
-          password: error.response.data.message,
-        });
-        console.log(error, errors);
+      console.log(validationErrors);
+    } else {
+      console.log('Form submitted:', formData);
+      setErrors({}); // Clear previous errors
+      try {
+        const response = await axios.post('/api/users/login', formData);
+        console.log('Login successful:', response.data);
+        // Handle successful login, e.g., redirect or store token
+        // const token = response.data.token;
+        // localStorage.setItem('blog_AuthToken', token);
+        login(response.data.token, response.data.user);
+        navigate('/home');
+      } catch (error) {
+        console.log(error);
+        setErrors({ server: error.response.data.message });
       }
     }
   };
+
   const togglePass = () => {
-    console.log(showPassword);
     setShowPassword(!showPassword);
+  };
+  const getInputClass = (fieldName) => {
+    return errors[fieldName] ? 'input-error' : '';
   };
   return (
     <div className='login-div'>
@@ -87,6 +69,11 @@ const LoginForm = () => {
         </div>
         <form onSubmit={handleSubmit} className='login-form'>
           <div className='form-group'>
+            {errors.server && (
+              <span className='server-error'>{errors.server}</span>
+            )}
+          </div>
+          <div className='form-group'>
             {location.state?.message && (
               <p className='success-login'>{location.state?.message}</p>
             )}
@@ -98,9 +85,10 @@ const LoginForm = () => {
             <input
               type='email'
               id='email'
-              value={email}
-              onChange={(e) => handleInputChange(e, 'email')}
-              className={errors.email ? 'error' : ''}
+              name='email'
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`${getInputClass('email')}`}
             />
             {errors.email && (
               <span className='error-message'>{errors.email}</span>
@@ -113,9 +101,10 @@ const LoginForm = () => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 id='password'
-                value={password}
-                onChange={(e) => handleInputChange(e, 'password')}
-                className={errors.password ? 'error' : ''}
+                value={formData.password}
+                name='password'
+                onChange={handleInputChange}
+                className={`${getInputClass('password')}`}
               />
               <span className='login-toggle-password' onClick={togglePass}>
                 {showPassword ? <LuEye /> : <LuEyeOff />}
@@ -124,16 +113,13 @@ const LoginForm = () => {
             {errors.password && (
               <span className='error-message'>{errors.password}</span>
             )}
-            {password.length > 1 && (
+            {formData.password.length > 1 && (
               <span className='login-password'>
                 <a href='/forgot-password'>forgot password?</a>
               </span>
             )}
           </div>
 
-          {errors.server && (
-            <span className='error-message server-error'>{errors.server}</span>
-          )}
           <div className='form-group'>
             <button type='submit' className='submit-button'>
               Login

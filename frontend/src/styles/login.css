@@ -71,7 +71,8 @@ input.error {
   color: rgb(235, 77, 77);
   font-weight: 400;
   margin-top: 1rem;
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 .login-fm-header {

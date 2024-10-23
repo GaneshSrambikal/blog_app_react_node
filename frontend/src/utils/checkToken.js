@@ -25,3 +25,6 @@ export const checkToken = () => {
     return false;
   }
 };
+export const removeToken = () => {
+  localStorage.removeItem('blog_AuthToken');
+};
