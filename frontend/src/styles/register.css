@@ -65,6 +65,7 @@ input {
 }
 
 .submit-button {
+  text-decoration: none;
   width: 100%;
   padding: 0.5rem;
   background-color: #151616;

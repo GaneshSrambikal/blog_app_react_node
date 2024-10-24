@@ -26,7 +26,7 @@ input {
   border-radius: 4px;
 }
 
-input.error {
+input .error {
   border-color: red;
 }
 
@@ -44,6 +44,7 @@ input.error {
 }
 
 .submit-button {
+  text-decoration: none;
   width: 100%;
   padding: 0.5rem;
   background-color: #151616;
