@@ -10,6 +10,7 @@ body {
 }
 button,
 input,
+textarea,
 select {
   font-family: 'Poppins', sans-serif;
   font-style: normal;

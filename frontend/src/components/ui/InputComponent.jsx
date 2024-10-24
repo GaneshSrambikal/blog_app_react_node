@@ -10,6 +10,26 @@ const InputComponent = (props) => {
     required,
     ...rest
   } = props;
+  if (type === 'textarea') {
+    return (
+      <div>
+        {label && (
+          <label htmlFor={name}>
+            {label}
+            {required && <span className='label-required'>*</span>}
+          </label>
+        )}
+        <textarea
+          type={type}
+          value={value}
+          id={id}
+          name={name}
+          onChange={onChange}
+          {...rest}
+        ></textarea>
+      </div>
+    );
+  }
   return (
     <div className='form-group'>
       {label && (

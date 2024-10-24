@@ -1,5 +1,18 @@
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.edit-profile-textarea {
+  resize: vertical;
+  max-height: 250px;
+  min-height: 100px;
+}
+textarea.error {
+}
 .user-profile-container {
-  width: 800px;
+  max-width: 800px;
   margin: auto;
   padding: 2rem;
   display: flex;
@@ -96,4 +109,40 @@ hr {
     width: 5rem;
     height: 5rem;
   }
+}
+/* edit profile */
+.edit-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* flex-direction: column; */
+  /* background-color: #3eb7cc; */
+  padding: 2rem;
+}
+.edit-profile-form-c {
+  /* background-color: aquamarine; */
+  width: 100%;
+  max-width: 450px;
+  /* margin: auto; */
+  margin-top: 0.2rem;
+  margin-left: 3rem;
+  padding: 2rem;
+  border-radius: 8px;
+}
+.edit-profile-form-header {
+  margin-bottom: 2rem;
+}
+.edit-profile-form-header h1 {
+}
+.edit-profile-avatar-c {
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50%;
+  background-color: coral;
+  color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  
 }
