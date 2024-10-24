@@ -45,14 +45,25 @@ const UpdateProfilePage = () => {
             <InputComponent
               type='textarea'
               label='About'
-              id='email'
-              name='email'
+              id='about'
+              name='about'
               value={formData && formData.about}
               onChange={handleChange}
-              className={`${getInputClass('email')} edit-profile-textarea`}
+              className={`${getInputClass('about')} edit-profile-textarea`}
               error={errors.about}
               required={false}
               placeholder='Introduce yourself...'
+            />
+            {/* title */}
+            <InputComponent
+              type='select'
+              id='title'
+              name='title'
+              label='Title'
+              value={formData.title}
+              onChange={handleChange}
+              className={`${getInputClass('title')} edit-profile-title-select`}
+              error={errors.title}
             />
             {/* Email*/}
             <InputComponent

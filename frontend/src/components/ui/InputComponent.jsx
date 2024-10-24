@@ -12,7 +12,7 @@ const InputComponent = (props) => {
   } = props;
   if (type === 'textarea') {
     return (
-      <div>
+      <div className='form-group'>
         {label && (
           <label htmlFor={name}>
             {label}
@@ -27,6 +27,28 @@ const InputComponent = (props) => {
           onChange={onChange}
           {...rest}
         ></textarea>
+      </div>
+    );
+  }
+  if (type === 'select') {
+    return (
+      <div className='form-group'>
+        {label && (
+          <label htmlFor={name}>
+            {label}
+            {required && <span className='label-required'>*</span>}
+          </label>
+        )}
+        <select name={name} id={id} value={value} onChange={onChange} {...rest}>
+          <option value=''>Select Title</option>
+          <option value='software engineer'>Software Engineer</option>
+          <option value='chef'>Chef</option>
+          <option value='food blogger'>food blogger</option>
+          <option value='coffee enthusiast'>Coffee enthusiast</option>
+          <option value='vlogger'>Vlogger</option>
+          <option value='content creator'>Content Creator</option>
+          <option value='writer'>writer</option>
+        </select>
       </div>
     );
   }

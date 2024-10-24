@@ -144,5 +144,16 @@ hr {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  
+}
+.edit-profile-avatar-c p {
+  color: aliceblue;
+}
+.edit-profile-title-select {
+    width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-weight: 300;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
 }
