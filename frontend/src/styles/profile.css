@@ -1,0 +1,99 @@
+.user-profile-container {
+  width: 800px;
+  margin: auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  /* background-color: cadetblue; */
+}
+.profile-c-container {
+  /* background-color: aqua; */
+  display: flex;
+}
+.profile-c-avatar-circle {
+  background-color: blueviolet;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  font-size: 2rem;
+}
+.profile-c-user-details {
+  margin-left: 2rem;
+  text-align: left;
+
+  display: flex;
+  flex-direction: column;
+}
+.profile-c-user-details p {
+  color: gray;
+}
+.profile-c-user-details .pc-user-details-loctn {
+  display: flex;
+  margin-top: 0.4rem;
+}
+.pc-user-details-loctn div {
+  display: flex;
+  align-items: center;
+  color: gray;
+}
+.pc-user-details-loctn div:nth-child(2) {
+  padding-left: 1rem;
+}
+.pc-user-details-loctn div p {
+  font-size: 15px;
+  margin-left: 5px;
+  font-weight: 300;
+}
+.pc-user-details-connections {
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.pc-user-details-connections div {
+  display: flex;
+  flex-direction: row;
+}
+.pc-user-details-connections div p {
+  margin-left: 5px;
+}
+.pc-user-details-connections div:nth-child(2),
+.pc-user-details-connections div:nth-child(3) {
+  /* background-color: burlywood; */
+  margin-left: 1rem;
+}
+.pc-user-details-edit-btn-c {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+hr {
+  border: 0.1 #333;
+}
+@media screen and (max-width: 768px) {
+  .profile-c-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .profile-c-user-details {
+    text-align: center;
+    margin-top: 1rem;
+    margin-left: 0;
+  }
+  .pc-user-details-loctn {
+    justify-content: center;
+  }
+  .pc-user-details-connections {
+    justify-content: center;
+  }
+  .user-profile-container {
+    /* width: 768px; */
+    width: auto;
+  }
+  .profile-c-avatar-circle {
+    width: 5rem;
+    height: 5rem;
+  }
+}

@@ -15,8 +15,9 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
-
 import ProtectedRoute from './routes/ProtectedRoute';
+import ProfilePage from './pages/profile/ProfilePage';
+import UpdateProfilePage from './pages/profile/UpdateProfilePage';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
         <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
         <Route path='/reset-password/*' element={<Navigate to='/login' />} />
         <Route path='*' element={<NotFoundPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/profile/edit' element={<UpdateProfilePage />} />
         {/* Protected Routes */}
         <Route
           path='/home'

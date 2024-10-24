@@ -22,6 +22,7 @@ const Home = () => {
   useEffect(() => {
     fetchBlog();
   }, []);
+  if (!blogs) return <div>Loading...</div>;
   return (
     <>
       <Navbar />
