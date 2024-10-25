@@ -1,12 +1,13 @@
 // import React from 'react'
 
 import axios from 'axios';
+import { useContext } from 'react';
 // import { removeToken } from '../utils/checkToken';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 const Navbar = () => {
-  const { logout } = useAuth();
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleSignout = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const Navbar = () => {
   return (
     <div>
       Navbar
+      <Link to='/profile'>Profile</Link>
       <button onClick={handleSignout}>Signout</button>
     </div>
   );

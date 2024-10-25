@@ -30,17 +30,13 @@ function App() {
         <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
         <Route path='/reset-password/*' element={<Navigate to='/login' />} />
         <Route path='*' element={<NotFoundPage />} />
-        <Route path='/profile' element={<ProfilePage />} />
-        <Route path='/profile/edit' element={<UpdateProfilePage />} />
+
         {/* Protected Routes */}
-        <Route
-          path='/home'
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/home' element={<HomePage />} />
+          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/profile/edit' element={<UpdateProfilePage />} />
+        </Route>
       </Routes>
     </Router>
   );

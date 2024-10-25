@@ -1,8 +1,9 @@
-import { AuthContext } from '../../context/AuthContext';
+
 
 import ProfileComponent from '../../components/profile/ProfileComponent';
 import { useContext } from 'react';
 import '../../styles/profile.css'
+import AuthContext from '../../context/AuthContext';
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
   //   const [blogs, setBlogs] = useState([]);

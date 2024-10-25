@@ -14,7 +14,7 @@ const protect = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
       // verify
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+      console.log('docoded token =>', decoded);
       // add user from payload
       req.user = await User.findById(decoded.id).select('-password');
       if (!req.user) {
@@ -25,13 +25,15 @@ const protect = async (req, res, next) => {
       next();
     } catch (error) {
       console.log('Not authorized');
-      next(error);
-      return res
-        .status(403)
+
+      res
+        .status(401)
         .json({ message: 'not authorized', errors: error.message });
     }
   } else {
-    return res.status(403).json({ message: 'Not authorized, token missing' });
+    res.status(404).json({ message: 'Not authorized, token missing' });
+
+    return;
   }
 };
 

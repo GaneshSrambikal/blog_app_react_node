@@ -1,19 +1,21 @@
 // import React from 'react'
-import { useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import { useAuth } from '../context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import LoginIlls from '../assets/images/loginbghuman.svg';
 import LoginForm from '../components/auth/LoginForm';
 import '../styles/login.css';
+import AuthContext from '../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 const LoginPage = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
+  // const { user } = useAuth();
+  // const navigate = useNavigate();
+  const { isAuthenticated, loading } = useContext(AuthContext);
+ 
+  console.log(isAuthenticated, loading);
+  if (isAuthenticated) return <Navigate to='/home' />;
 
-  useEffect(() => {
-    if (user?.id) {
-      navigate('/home');
-    }
-  });
   return (
     <div className='login-main-div'>
       {/* Login Component */}
