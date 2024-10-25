@@ -138,9 +138,9 @@ exports.loginUser = async (req, res, next) => {
 
 exports.logoutUser = async (req, res, next) => {
   try {
-    req.headers.authorization = undefined;
-    res.clearCookie('token');
-    console.log(req.headers.authorization);
+    // req.headers.authorization = undefined;
+    // res.clearCookie('token');
+    // console.log(req.headers.authorization);
     res.status(200).json({ message: 'User Logged out' });
   } catch (error) {
     console.log(`Error: ${error.message}`);
@@ -159,9 +159,11 @@ exports.getProfile = async (req, res, next) => {
       '-password',
       '-joined',
     ]); // -password excludes the password
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error) {
     console.log(error.message);
     next(error);

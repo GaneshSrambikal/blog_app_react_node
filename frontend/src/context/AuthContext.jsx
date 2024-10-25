@@ -1,46 +1,123 @@
 import { jwtDecode } from 'jwt-decode';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
+import axios from 'axios';
+import { checkToken, removeToken, setToken } from '../utils/checkToken';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
+
+const initialState = {
+  user: null,
+  token: localStorage.getItem('blog_AuthToken') || null,
+  isAuthenticated: false,
+  loading: true,
+};
+
+const actionTypes = {
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT',
+  LOAD_USER: 'LOAD_USER',
+};
+const authReducer = (state, action) => {
+  switch (action.type) {
+    case actionTypes.LOGIN:
+      return {
+        ...state,
+        user: action.payload.decoded,
+        token: action.payload.token,
+        isAuthenticated: true,
+        loading: false,
+      };
+    case actionTypes.LOGOUT:
+      return {
+        ...state,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        loading: true,
+      };
+    case actionTypes.LOAD_USER:
+      return {
+        ...state,
+        user: action.payload.userData,
+        token: action.payload.token,
+        isAuthenticated: true,
+        loading: false,
+      };
+    case actionTypes.SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    const token = localStorage.getItem('blog_AuthToken');
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-
-        setUser(decoded);
-      } catch (error) {
-        localStorage.removeItem('blog_AuthToken');
-        setUser(null);
-        console.log(error);
+    const loadUser = async () => {
+      const token = localStorage.getItem('blog_AuthToken');
+      if (checkToken(token)) {
+        try {
+          const res = await axios.get('/api/users/profile', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          console.log('in load user:res', res.data);
+          const userData = res.data;
+          dispatch({
+            type: actionTypes.LOAD_USER,
+            payload: { userData, token },
+          });
+          console.log('in try of load user', initialState);
+        } catch (error) {
+          console.log(error);
+          dispatch({ type: actionTypes.LOGOUT });
+        }
+      } else {
+        dispatch({ type: actionTypes.LOGOUT });
       }
-    }
+      // Set loading to false after checking the user
+      dispatch({ type: actionTypes.SET_LOADING, payload: false });
+    };
+    loadUser();
+    console.log('after loading user:', initialState);
+    
   }, []);
-  //   login
-  const login = (resToken) => {
-    // console.log(token);
-    localStorage.setItem('blog_AuthToken', JSON.stringify(resToken));
-    const decoded = jwtDecode(resToken);
-
-    setUser(decoded);
+  const loginUser = async (credentials) => {
+    try {
+      const res = await axios.post('/api/users/login', credentials);
+      const { token } = res.data;
+      setToken(token);
+      const decoded = jwtDecode(token);
+      console.log(decoded);
+      dispatch({
+        type: actionTypes.LOGIN,
+        payload: { decoded, token },
+      });
+      // console.log(initialState);
+    } catch (error) {
+      console.error(error.response?.data?.message);
+      throw error;
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('blog_AuthToken');
-    setUser(null);
+    try {
+      removeToken();
+      dispatch({
+        type: actionTypes.LOGOUT,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
-
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ ...state, loginUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export default AuthContext;

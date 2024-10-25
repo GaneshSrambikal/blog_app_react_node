@@ -1,12 +1,12 @@
 // import React from 'react'
 
-import { useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useContext, useEffect, useState } from 'react';
 import { getInitials } from '../../utils/formatNames';
 import InputComponent from '../../components/ui/InputComponent';
+import AuthContext from '../../context/AuthContext';
 
 const UpdateProfilePage = () => {
-  const { user } = useAuth();
+  const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState(user);
   const [errors, setErrors] = useState({});
   console.log(formData);

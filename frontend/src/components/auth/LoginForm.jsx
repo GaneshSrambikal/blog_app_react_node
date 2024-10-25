@@ -1,13 +1,13 @@
 import '../../styles/login.css';
-import { useState } from 'react';
-import axios from 'axios';
+import { useContext, useState } from 'react';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../validators/auth/loginValidator';
-import { useAuth } from '../../context/AuthContext';
 import InputComponent from '../ui/InputComponent';
+import AuthContext from '../../context/AuthContext';
+
 const LoginForm = () => {
-  const { login } = useAuth();
+  const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({
@@ -42,16 +42,12 @@ const LoginForm = () => {
       console.log('Form submitted:', formData);
       setErrors({}); // Clear previous errors
       try {
-        const response = await axios.post('/api/users/login', formData);
-        console.log('Login successful:', response.data);
-        // Handle successful login, e.g., redirect or store token
-        // const token = response.data.token;
-        // localStorage.setItem('blog_AuthToken', token);
-        login(response.data.token);
+        await loginUser(formData);
         navigate('/home');
       } catch (error) {
-        console.log(error);
-        setErrors({ server: error.response.data.message });
+        console.log(error.response);
+        setErrors({ server: error.response?.data?.message });
+        // console.log(errors);
       }
     }
   };

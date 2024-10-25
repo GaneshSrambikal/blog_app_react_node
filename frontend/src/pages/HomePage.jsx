@@ -1,13 +1,14 @@
 // import React from 'react'
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-import { useAuth } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 
 const Home = () => {
-  const { user } = useAuth();
+  const { user } = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
+  console.log(user);
   const fetchBlog = async () => {
     try {
       const res = await axios.get('/api/blogs');

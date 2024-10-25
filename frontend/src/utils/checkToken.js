@@ -28,3 +28,7 @@ export const checkToken = () => {
 export const removeToken = () => {
   localStorage.removeItem('blog_AuthToken');
 };
+
+export const setToken = (token) => {
+  localStorage.setItem('blog_AuthToken', token);
+};
