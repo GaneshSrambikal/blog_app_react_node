@@ -4,12 +4,17 @@ import { useContext, useEffect, useState } from 'react';
 import { getInitials } from '../../utils/formatNames';
 import InputComponent from '../../components/ui/InputComponent';
 import AuthContext from '../../context/AuthContext';
+import axios from 'axios';
+import { validateUpdateForm } from '../../validators/profile/updateValidator';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateProfilePage = () => {
-  const { user } = useContext(AuthContext);
+  const { user, token, dispatch } = useContext(AuthContext);
   const [formData, setFormData] = useState(user);
   const [errors, setErrors] = useState({});
-  console.log(formData);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  console.log('form data', formData);
   useEffect(() => {
     setFormData(user);
   }, [user]);
@@ -25,15 +30,47 @@ const UpdateProfilePage = () => {
   const getInputClass = (fieldName) => {
     return errors[fieldName] ? 'input-error' : '';
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const newUserData = {
+      name: formData.name,
+      address: formData.address,
+      dob: formData.dob,
+      gender: formData.gender,
+      title: formData.title,
+      about: formData.about,
+    };
+    const validationErrors = validateUpdateForm(newUserData);
+    if (validationErrors) {
+      setErrors(validationErrors);
+    } else {
+      setErrors({});
+      try {
+        const updatedUser = await axios.put('/api/users/profile', newUserData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (updatedUser.statusText == 'OK') {
+          dispatch({
+            type: 'LOAD_USER',
+            payload: { userData: updatedUser.data.user, token },
+          });
+          console.log('dispatch sent', user);
+          navigate('/profile');
+        }
+        console.log('updatedUser', updatedUser.data.user);
+      } catch (error) {
+        console.log(error);
+        setErrors({ server: error && error.response?.data?.message });
+        console.log(errors);
+      }
+    }
     console.log('Submitted:', formData);
   };
   if (!user) return <div>Loading</div>;
   return (
     <div className='edit-profile-container'>
       <div className='edit-profile-avatar-c'>
-        <p>{formData && getInitials(formData.name)}</p>
+        <p>{formData?.name && getInitials(formData?.name)}</p>
       </div>
       <div className='edit-profile-form-c'>
         <div className='edit-profile-form-header'>
@@ -101,6 +138,7 @@ const UpdateProfilePage = () => {
               className={`${getInputClass('username')}`}
               error={errors.username}
               required={true}
+              disabled
             />
             {/* Gender */}
             <div className='form-groups'>
@@ -158,6 +196,13 @@ const UpdateProfilePage = () => {
               error={errors.address}
               required={true}
             />
+
+            {/* update btn */}
+            <div className='edit-profile-update-btn-c'>
+              <button type='submit' className='submit-button'>
+                Update Profile
+              </button>
+            </div>
           </form>
         )}
       </div>

@@ -20,7 +20,7 @@ const ProfileComponent = ({ user }) => {
         </div>
         <div className='profile-c-user-details'>
           <h1>{profile.name}</h1>
-          <p>Full-stack developer</p>
+          <p>{profile.title}</p>
           <div className='pc-user-details-loctn'>
             <div>
               <CiLocationOn />

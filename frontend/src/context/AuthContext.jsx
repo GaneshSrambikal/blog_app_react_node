@@ -83,7 +83,6 @@ export const AuthProvider = ({ children }) => {
     };
     loadUser();
     console.log('after loading user:', initialState);
-    
   }, []);
   const loginUser = async (credentials) => {
     try {
@@ -114,7 +113,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
   return (
-    <AuthContext.Provider value={{ ...state, loginUser, logout }}>
+    <AuthContext.Provider value={{ ...state, dispatch, loginUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

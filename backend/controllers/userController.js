@@ -155,10 +155,7 @@ exports.logoutUser = async (req, res, next) => {
 // Get User Profile (protected)
 exports.getProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).select([
-      '-password',
-      '-joined',
-    ]); // -password excludes the password
+    const user = await User.findById(req.user.id).select(['-password', '-__v']); // -password excludes the password
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -181,29 +178,40 @@ exports.updateProfile = async (req, res, next) => {
       .status(400)
       .json({ message: 'Fill the missing fields', error: error.message });
   }
-  const { name, email, address, dob, gender } = req.body;
+  const { name, address, dob, gender, title, about } = req.body;
   try {
     const user = await User.findById(req.user.id).select([
       '-password',
-      '-joined',
+      '-followers',
+      '-following',
     ]);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     if (user) {
       user.name = name || user.name;
-      user.email = email || user.email;
       user.gender = gender || user.gender;
       user.address = address || user.address;
       user.dob = dob || user.dob;
+      user.title = title;
+      user.about = about;
 
       const updatedUser = await user.save();
 
       return res.status(200).json({
         message: 'updated successfully',
-        _id: updatedUser._id,
-        name: updatedUser.name,
-        email: updatedUser.email,
+        user: {
+          _id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          address: updatedUser.address,
+          gender: updatedUser.gender,
+          dob: updatedUser.dob,
+          title: updatedUser.title,
+          about: updatedUser.about,
+          username: updatedUser.username,
+          joined: updatedUser.joined,
+        },
       });
     } else {
       return res.status(404).json({ message: 'User not found' });
