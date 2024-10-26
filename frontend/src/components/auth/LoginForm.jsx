@@ -46,6 +46,9 @@ const LoginForm = () => {
         navigate('/home');
       } catch (error) {
         console.log(error.response);
+        if (error.response.status === 500) {
+          setErrors({ server: error.response?.statusText });
+        }
         setErrors({ server: error.response?.data?.message });
         // console.log(errors);
       }

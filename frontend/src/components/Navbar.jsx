@@ -1,31 +1,88 @@
 // import React from 'react'
 
 import axios from 'axios';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 // import { removeToken } from '../utils/checkToken';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
-
+import { MdOutlineMenuOpen } from 'react-icons/md';
+import { RxAvatar } from 'react-icons/rx';
+import { RiLogoutBoxRLine } from 'react-icons/ri';
+import '../styles/navbar.css';
 const Navbar = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
   const handleSignout = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/users/logout');
       logout();
+      const response = await axios.post('/api/users/logout');
       navigate('/login');
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+  // listen for outside div clicks
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   return (
-    <div>
-      Navbar
-      <Link to='/profile'>Profile</Link>
-      <button onClick={handleSignout}>Signout</button>
-    </div>
+    <>
+      <nav className='navbar'>
+        <div className='navbar-brand'>
+          <Link to='/'>
+            <h2>Blog_App</h2>
+          </Link>
+        </div>
+
+        <div className='navbar-avatar' onClick={toggleDropdown}>
+          <img
+            src='https://avatar.iran.liara.run/public'
+            alt='navbar-avatar'
+            className='navbar-avatar-img'
+          />
+          <MdOutlineMenuOpen
+            className='navbar-menu-icon'
+            onClick={toggleDropdown}
+          />
+          {showDropdown && (
+            <div className='navbar-dropdown' ref={dropdownRef}>
+              <p>Signed in as: {user.email}</p>
+              <ul>
+                <li>
+                  <NavLink
+                    to='/profile'
+                    className={({ isActive }) =>
+                      isActive ? 'navbar-navlinks-active' : 'navbar-navlinks'
+                    }
+                  >
+                    <RxAvatar /> profile
+                  </NavLink>
+                </li>
+                <li onClick={handleSignout}>
+                  <RiLogoutBoxRLine />
+                  sign out
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
+      </nav>
+    </>
   );
 };
 

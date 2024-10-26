@@ -3,6 +3,7 @@ import { createContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { checkToken, removeToken, setToken } from '../utils/checkToken';
 
+
 const AuthContext = createContext();
 
 const initialState = {
@@ -55,35 +56,31 @@ const authReducer = (state, action) => {
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-
-  useEffect(() => {
-    const loadUser = async () => {
-      const token = localStorage.getItem('blog_AuthToken');
-      if (checkToken(token)) {
-        try {
-          const res = await axios.get('/api/users/profile', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          console.log('in load user:res', res.data);
-          const userData = res.data;
-          dispatch({
-            type: actionTypes.LOAD_USER,
-            payload: { userData, token },
-          });
-          console.log('in try of load user', initialState);
-        } catch (error) {
-          console.log(error);
-          dispatch({ type: actionTypes.LOGOUT });
-        }
-      } else {
+  
+  const loadUser = async () => {
+    const token = localStorage.getItem('blog_AuthToken');
+    if (checkToken(token)) {
+      try {
+        const res = await axios.get('/api/users/profile', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log('in load user:res', res.data);
+        const userData = res.data;
+        dispatch({
+          type: actionTypes.LOAD_USER,
+          payload: { userData, token },
+        });
+        console.log('in try of load user', initialState);
+      } catch (error) {
+        console.log(error);
         dispatch({ type: actionTypes.LOGOUT });
       }
-      // Set loading to false after checking the user
-      dispatch({ type: actionTypes.SET_LOADING, payload: false });
-    };
-    loadUser();
-    console.log('after loading user:', initialState);
-  }, []);
+    } else {
+      dispatch({ type: actionTypes.LOGOUT });
+    }
+    // Set loading to false after checking the user
+    dispatch({ type: actionTypes.SET_LOADING, payload: false });
+  };
   const loginUser = async (credentials) => {
     try {
       const res = await axios.post('/api/users/login', credentials);
@@ -112,8 +109,14 @@ export const AuthProvider = ({ children }) => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    
+    loadUser();
+    console.log('after loading user:', initialState);
+  }, []);
   return (
-    <AuthContext.Provider value={{ ...state, dispatch, loginUser, logout }}>
+    <AuthContext.Provider value={{ ...state, dispatch, loginUser, logout,loadUser }}>
       {children}
     </AuthContext.Provider>
   );

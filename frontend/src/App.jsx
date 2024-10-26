@@ -19,13 +19,16 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import ProfilePage from './pages/profile/ProfilePage';
 import UpdateProfilePage from './pages/profile/UpdateProfilePage';
 import Layout from './pages/Layout';
+import PublicRoutes from './routes/PublicRoutes';
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<LandingPage />} />
+          <Route element={<PublicRoutes />}>
+            <Route path='/' element={<LandingPage />} />
+          </Route>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/forgot-password' element={<ForgotPasswordPage />} />

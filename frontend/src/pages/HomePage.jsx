@@ -2,11 +2,11 @@
 
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
 import AuthContext from '../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 const Home = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   console.log(user);
   const fetchBlog = async () => {
@@ -23,18 +23,21 @@ const Home = () => {
   useEffect(() => {
     fetchBlog();
   }, []);
-  if (!blogs) return <div>Loading...</div>;
+  if (!user) return <Navigate to='/login' />;
+  if (loading) return <div>Loading...</div>;
   return (
     <>
-      {/* <Navbar /> */}
+      
       <div>
         <h1>Home</h1>
         <h2>Welcome, {user?.name}</h2>
-        <ul>
-          {blogs.map((blog, index) => {
-            return <li key={index}>{blog.title}</li>;
-          })}
-        </ul>
+        {blogs && (
+          <ul>
+            {blogs.map((blog, index) => {
+              return <li key={index}>{blog.title}</li>;
+            })}
+          </ul>
+        )}
       </div>
     </>
   );
