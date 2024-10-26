@@ -26,6 +26,8 @@ const updateProfileSchema = Joi.object({
   address: Joi.string().optional(),
   gender: Joi.string().valid('male', 'female', 'other').optional(),
   dob: Joi.date().optional(),
+  title: Joi.string().allow('').optional(),
+  about: Joi.string().allow('').optional(),
 });
 
 // email validation for forgot password

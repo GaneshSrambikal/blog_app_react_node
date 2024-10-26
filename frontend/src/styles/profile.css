@@ -43,6 +43,7 @@ textarea.error {
 }
 .profile-c-user-details p {
   color: gray;
+  text-transform: capitalize;
 }
 .profile-c-user-details .pc-user-details-loctn {
   display: flex;
@@ -149,11 +150,14 @@ hr {
   color: aliceblue;
 }
 .edit-profile-title-select {
-    width: 100%;
+  width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-weight: 300;
   font-family: 'Poppins', sans-serif;
   font-style: normal;
+}
+.edit-profile-update-btn-c {
+  margin-top: 2rem;
 }
