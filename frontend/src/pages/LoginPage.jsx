@@ -2,20 +2,21 @@
 // import { useEffect } from 'react';
 // import { useAuth } from '../context/AuthContext';
 // import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import LoginIlls from '../assets/images/loginbghuman.svg';
 import LoginForm from '../components/auth/LoginForm';
 import '../styles/login.css';
 import AuthContext from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 const LoginPage = () => {
-  // const { user } = useAuth();
-  // const navigate = useNavigate();
-  const { isAuthenticated, loading } = useContext(AuthContext);
- 
+  const { isAuthenticated, loading, loadUser } = useContext(AuthContext);
+  useEffect(() => {
+    loadUser();
+  }, []);
   console.log(isAuthenticated, loading);
+  // User should only see login page if not logged in
   if (isAuthenticated) return <Navigate to='/home' />;
-
+  if (loading) return <div>loading</div>;
   return (
     <div className='login-main-div'>
       {/* Login Component */}

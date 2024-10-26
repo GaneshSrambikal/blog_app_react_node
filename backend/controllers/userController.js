@@ -129,7 +129,7 @@ exports.loginUser = async (req, res, next) => {
     }
   } catch (error) {
     console.log('Error logging user', error);
-    next(error);
+    // next(error);
     return res
       .status(500)
       .json({ message: 'Server error', error: error.message });
@@ -141,6 +141,7 @@ exports.logoutUser = async (req, res, next) => {
     // req.headers.authorization = undefined;
     // res.clearCookie('token');
     // console.log(req.headers.authorization);
+    res.set('Cache-Control', 'no-store');
     res.status(200).json({ message: 'User Logged out' });
   } catch (error) {
     console.log(`Error: ${error.message}`);
