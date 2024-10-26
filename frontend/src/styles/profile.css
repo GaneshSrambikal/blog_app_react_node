@@ -47,16 +47,18 @@ textarea.error {
 }
 .profile-c-user-details .pc-user-details-loctn {
   display: flex;
+  flex-direction: column;
   margin-top: 0.4rem;
+  justify-content: space-between;
 }
 .pc-user-details-loctn div {
   display: flex;
   align-items: center;
   color: gray;
 }
-.pc-user-details-loctn div:nth-child(2) {
+/* .pc-user-details-loctn div:nth-child(2) {
   padding-left: 1rem;
-}
+} */
 .pc-user-details-loctn div p {
   font-size: 15px;
   margin-left: 5px;
@@ -98,6 +100,7 @@ hr {
   }
   .pc-user-details-loctn {
     justify-content: center;
+    align-items: center;
   }
   .pc-user-details-connections {
     justify-content: center;

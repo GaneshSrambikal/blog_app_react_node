@@ -26,7 +26,7 @@ const Home = () => {
   if (!blogs) return <div>Loading...</div>;
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div>
         <h1>Home</h1>
         <h2>Welcome, {user?.name}</h2>

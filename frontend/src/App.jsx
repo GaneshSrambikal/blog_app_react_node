@@ -18,27 +18,36 @@ import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 import ProfilePage from './pages/profile/ProfilePage';
 import UpdateProfilePage from './pages/profile/UpdateProfilePage';
+import Layout from './pages/Layout';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-        <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
-        <Route path='/reset-password/*' element={<Navigate to='/login' />} />
-        <Route path='*' element={<NotFoundPage />} />
+    <>
+      <Router>
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+          <Route
+            path='/reset-password/:token'
+            element={<ResetPasswordPage />}
+          />
+          <Route path='/reset-password/*' element={<Navigate to='/login' />} />
+          <Route path='*' element={<NotFoundPage />} />
 
-        {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route path='/home' element={<HomePage />} />
-          <Route path='/profile' element={<ProfilePage />} />
-          <Route path='/profile/edit' element={<UpdateProfilePage />} />
-        </Route>
-      </Routes>
-    </Router>
+          {/* Routes with Navbar */}
+          <Route element={<Layout />}>
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path='/home' element={<HomePage />} />
+              <Route path='/profile' element={<ProfilePage />} />
+              <Route path='/profile/edit' element={<UpdateProfilePage />} />
+            </Route>
+          </Route>
+        </Routes>
+      </Router>
+    </>
   );
 }
 

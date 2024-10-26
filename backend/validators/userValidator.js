@@ -22,7 +22,6 @@ const userLoginSchema = Joi.object({
 // Define the Joi schema for updating user profile
 const updateProfileSchema = Joi.object({
   name: Joi.string().min(2).max(30).optional(),
-  email: Joi.string().email().optional(),
   address: Joi.string().optional(),
   gender: Joi.string().valid('male', 'female', 'other').optional(),
   dob: Joi.date().optional(),
