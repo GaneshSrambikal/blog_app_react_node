@@ -14,9 +14,10 @@ const {
   unFollowUser,
   listFollowers,
   listFollowing,
+  uploadAvatar,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
-
+const upload = require('../../middlewares/uploadMiddleware');
 const router = require('express').Router();
 
 // @desc    Register a New User
@@ -93,5 +94,12 @@ router.post('/:id/followers', protect, listFollowers);
 //@route    post /api/users/:id/following
 // @access  Private / Protected
 router.post('/:id/following', protect, listFollowing);
+
+// Upload Files
+
+//@desc     Upload User Avatar
+//@route    post /api/users/upload-avatar
+// @access  Private / Protected
+router.post('/upload-avatar', protect, upload.single('image'), uploadAvatar);
 
 module.exports = router;

@@ -34,6 +34,11 @@ textarea.error {
   color: aliceblue;
   font-size: 2rem;
 }
+.profile-c-avatar-circle img {
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .profile-c-user-details {
   margin-left: 2rem;
   text-align: left;
@@ -148,6 +153,11 @@ hr {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+}
+.edit-profile-avatar-c img {
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .edit-profile-avatar-c p {
   color: aliceblue;

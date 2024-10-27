@@ -1,19 +1,18 @@
-// import React from 'react'
-
 import axios from 'axios';
 import { useContext, useEffect, useRef, useState } from 'react';
-// import { removeToken } from '../utils/checkToken';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import { MdOutlineMenuOpen } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import '../styles/navbar.css';
+
 const Navbar = () => {
   const { logout, user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+
   const handleSignout = async (e) => {
     e.preventDefault();
     try {
@@ -25,9 +24,11 @@ const Navbar = () => {
       console.log(error);
     }
   };
+
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+
   // listen for outside div clicks
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -50,11 +51,20 @@ const Navbar = () => {
         </div>
 
         <div className='navbar-avatar' onClick={toggleDropdown}>
-          <img
-            src='https://avatar.iran.liara.run/public'
-            alt='navbar-avatar'
-            className='navbar-avatar-img'
-          />
+          {user?.avatar_url ? (
+            <img
+              src={user.avatar_url}
+              alt='navbar-avatar'
+              className='navbar-avatar-img'
+            />
+          ) : (
+            <div className='navbar-avatar-initials'>
+              {user?.name
+                .split(' ')
+                .map((n) => n[0])
+                .join('')}
+            </div>
+          )}
           <MdOutlineMenuOpen
             className='navbar-menu-icon'
             onClick={toggleDropdown}

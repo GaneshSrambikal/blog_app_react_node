@@ -12,7 +12,7 @@ const UpdateProfilePage = () => {
   const { user, token, dispatch } = useContext(AuthContext);
   const [formData, setFormData] = useState(user);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   console.log('form data', formData);
   useEffect(() => {
@@ -70,7 +70,11 @@ const UpdateProfilePage = () => {
   return (
     <div className='edit-profile-container'>
       <div className='edit-profile-avatar-c'>
-        <p>{formData?.name && getInitials(formData?.name)}</p>
+        {formData.avatar_url ? (
+          <img src={formData.avatar_url} alt='profile-avatar' />
+        ) : (
+          <p>{formData?.name && getInitials(formData?.name)}</p>
+        )}
       </div>
       <div className='edit-profile-form-c'>
         <div className='edit-profile-form-header'>
@@ -137,7 +141,7 @@ const UpdateProfilePage = () => {
               onChange={handleChange}
               className={`${getInputClass('username')}`}
               error={errors.username}
-              required={true}
+              required={false}
               disabled
             />
             {/* Gender */}

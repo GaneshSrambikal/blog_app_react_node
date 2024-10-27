@@ -1,13 +1,16 @@
 import ProfileComponent from '../../components/profile/ProfileComponent';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import '../../styles/profile.css';
 import AuthContext from '../../context/AuthContext';
 const ProfilePage = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loadUser } = useContext(AuthContext);
   //   const [blogs, setBlogs] = useState([]);
 
   //   const fetchUser = await axios.get;
   user && console.log(user);
+  useEffect(() => {
+    loadUser();
+  }, []);
   if (!user) return <div>Loading...</div>;
   return (
     <div className='user-profile-container'>

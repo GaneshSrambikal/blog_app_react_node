@@ -55,6 +55,9 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  avatar_url: {
+    type: String,
+  },
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   isAdmin: {

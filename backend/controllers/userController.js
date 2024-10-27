@@ -263,6 +263,29 @@ exports.deleteProfile = async (req, res, next) => {
   }
 };
 
+// Upload Profile Avatar
+exports.uploadAvatar = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found!' });
+    }
+    user.avatar_url = req.file.path;
+    await user.save();
+    return res.status(200).json({
+      message: 'File Upload successfully',
+      profieAvatarUrl: req.file.path,
+    });
+  } catch (error) {
+    console.log(error);
+    next();
+    return res.status(500).json({
+      message: 'Failed to upload profile picture.',
+      error: error.message,
+    });
+  }
+};
+
 //Password Management
 // Forgot Password
 exports.forgotPassword = async (req, res, next) => {
