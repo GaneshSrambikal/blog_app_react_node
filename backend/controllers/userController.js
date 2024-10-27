@@ -12,6 +12,9 @@ const {
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendEmail.js');
+const {
+  getRandomAvatarbyGender,
+} = require('../utils/constants/avatars.js');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -212,6 +215,7 @@ exports.updateProfile = async (req, res, next) => {
           about: updatedUser.about,
           username: updatedUser.username,
           joined: updatedUser.joined,
+          avatar_url: updatedUser.avatar_url,
         },
       });
     } else {
@@ -271,10 +275,59 @@ exports.uploadAvatar = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found!' });
     }
     user.avatar_url = req.file.path;
-    await user.save();
+    const newData = await user.save();
     return res.status(200).json({
       message: 'File Upload successfully',
       profieAvatarUrl: req.file.path,
+      user: {
+        _id: newData.id,
+        name: newData.name,
+        username: newData.username,
+        email: newData.email,
+        address: newData.address,
+        gender: newData.gender,
+        dob: newData.dob,
+        avatar_url: newData.avatar_url,
+        title: newData.title,
+        about: newData.about,
+        joined: newData.joined,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    next();
+    return res.status(500).json({
+      message: 'Failed to upload profile picture.',
+      error: error.message,
+    });
+  }
+};
+
+// Generate Random Avatar
+exports.generateAvatar = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.avatar_url = getRandomAvatarbyGender(user.gender);
+    const newData = await user.save();
+    return res.status(200).json({
+      message: 'File Upload successfully',
+      user: {
+        _id: newData.id,
+        name: newData.name,
+        username: newData.username,
+        email: newData.email,
+        address: newData.address,
+        gender: newData.gender,
+        dob: newData.dob,
+        avatar_url: newData.avatar_url,
+        title: newData.title,
+        about: newData.about,
+        joined: newData.joined,
+      },
     });
   } catch (error) {
     console.log(error);

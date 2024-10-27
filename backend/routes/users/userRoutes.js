@@ -15,6 +15,7 @@ const {
   listFollowers,
   listFollowing,
   uploadAvatar,
+  generateAvatar,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const upload = require('../../middlewares/uploadMiddleware');
@@ -102,4 +103,8 @@ router.post('/:id/following', protect, listFollowing);
 // @access  Private / Protected
 router.post('/upload-avatar', protect, upload.single('image'), uploadAvatar);
 
+// @desc     Generate Random Avatar
+// @route    get /api/users/generate-avatar
+// @access  Private / Protected
+router.get('/generate-avatar', protect, generateAvatar);
 module.exports = router;
