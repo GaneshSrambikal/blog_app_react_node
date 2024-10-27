@@ -13,10 +13,14 @@ const ProfileComponent = ({ user }) => {
     <>
       <div className='profile-c-container'>
         <div className='profile-c-avatar-circle'>
-          {profile.name
-            .split(' ')
-            .map((n) => n[0])
-            .join('')}
+          {profile.avatar_url ? (
+            <img src={profile.avatar_url} alt='profile-avatar' />
+          ) : (
+            profile.name
+              .split(' ')
+              .map((n) => n[0])
+              .join('')
+          )}
         </div>
         <div className='profile-c-user-details'>
           <h1>{profile.name}</h1>
@@ -41,7 +45,7 @@ const ProfileComponent = ({ user }) => {
               <p>following</p>
             </div>
             <div>
-              <p>{0}</p>
+              <p>{10000}</p>
               <p>posts</p>
             </div>
           </div>

@@ -18,6 +18,15 @@
   align-items: center;
   cursor: pointer;
 }
+.navbar-avatar .navbar-avatar-initials {
+  background-color: coral;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .navbar .navbar-avatar img {
   width: 40px;
   height: 40px;
@@ -48,7 +57,7 @@
 .navbar-avatar .navbar-dropdown ul li:nth-child(2) {
   border-top: 1px solid #dddddd;
   /* margin-top: 0.1rem; */
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }
 
 .navbar-dropdown ul li a,
