@@ -1,11 +1,12 @@
-const resizeImage = (file, size, filename){
+import imageResize from 'image-resize';
+const resizeImage = async (file, size, filename) => {
   const resizedImg = await imageResize(file, {
     format: 'png',
     width: size,
     height: size,
   });
-  return base64ToFile(resizedImg, filename)
-}
+  return base64ToFile(resizedImg, filename);
+};
 
 const base64ToFile = (base64String, filename) => {
   // Split the base64 string to get the MIME type and data
@@ -23,7 +24,7 @@ const base64ToFile = (base64String, filename) => {
   // Create a new File object
   return new File([uint8Array], filename, { type: mime });
 };
-export  {base64ToFile, resizeImage};
+export { base64ToFile, resizeImage };
 //   // Usage
 //   const base64String = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...";
 //   const file = base64ToFile(base64String, 'image.png');

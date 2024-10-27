@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import { getInitials } from '../../utils/formatNames';
 import InputComponent from '../../components/ui/InputComponent';
 import AuthContext from '../../context/AuthContext';
@@ -10,21 +10,34 @@ import { TbPhotoEdit } from 'react-icons/tb';
 import { resizeImage } from '../../utils/resizeImage';
 const UpdateProfilePage = () => {
   const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
-  // const uploadUrl = import.meta.env.VITE_CLOUDINARY_UPLOAD_URL;
   const { user, token, dispatch, loadUser } = useContext(AuthContext);
   const [formData, setFormData] = useState(user);
   const [errors, setErrors] = useState({});
-  // const [image, setImage] = useState(null);
   const [loadingUpload, setLoadingUpload] = useState(false);
-  const [showUploadAction, setShowUploadAction] = useState(true);
-  // const [loading, setLoading] = useState(false);
+  const [loadingGenerate, setLoadingGenerate] = useState(false);
+  const [showUploadAction, setShowUploadAction] = useState(false);
   const navigate = useNavigate();
-  console.log('form data', formData);
+  const avatarActionRef = useRef(null);
   useEffect(() => {
     loadUser();
   }, []);
   useEffect(() => {
     setFormData(user);
+  }, []);
+  // listen for outside div clicks
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        avatarActionRef.current &&
+        !avatarActionRef.current.contains(e.target)
+      ) {
+        setShowUploadAction(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
   // Handle input change
   const handleChange = (e) => {
@@ -43,17 +56,13 @@ const UpdateProfilePage = () => {
   };
   const handleInputSubmit = async (img) => {
     if (img) {
-      // const image = await Jimp.read(img);
-      // image.resize({ w: 200, h: 200 });
       const avatarFormData = new FormData();
       avatarFormData.append('image', img);
       avatarFormData.append('upload_preset', preset);
       console.log('im here');
       setLoadingUpload(true);
       try {
-        // const res = await axios.post(uploadUrl, formData);
-        // const imageUrl = res.data.secure_url;
-
+      
         // update user profile
         const updatedUser = await axios.post(
           '/api/users/upload-avatar',
@@ -67,6 +76,7 @@ const UpdateProfilePage = () => {
           payload: { userData: updatedUser.data.user, token },
         });
         setLoadingUpload(false);
+        handleUploadAction();
         console.log('updated profile picture', updatedUser);
       } catch (error) {
         console.log(error);
@@ -79,7 +89,7 @@ const UpdateProfilePage = () => {
     console.log('actually file', file);
     if (file) {
       // resize image for image optimization
-      const resized = resizeImage(
+      const resized = await resizeImage(
         file,
         200,
         `${formData.username + Date.now().toString()}.png`
@@ -124,12 +134,32 @@ const UpdateProfilePage = () => {
     }
     console.log('Submitted:', formData);
   };
+  const handleGenerateAvatar = async () => {
+    setLoadingGenerate(true);
+    try {
+      const res = await axios.get('/api/users/generate-avatar', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({
+        type: 'LOAD_USER',
+        payload: { userData: res.data.user, token },
+      });
+      setLoadingGenerate(false);
+      handleUploadAction();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      setLoadingGenerate(false);
+    }
+  };
   if (!user) return <div>Loading</div>;
   return (
     <div className='edit-profile-container'>
       <div className='edit-profile-avatar-c'>
         {formData.avatar_url ? (
-          loadingUpload ? (
+          loadingUpload || loadingGenerate ? (
             <div>loading</div>
           ) : (
             <img src={user.avatar_url} alt='profile-avatar' />
@@ -144,7 +174,10 @@ const UpdateProfilePage = () => {
           <TbPhotoEdit />
         </div>
         {showUploadAction && (
-          <div className='edit-profile-avatar-action-menu'>
+          <div
+            className='edit-profile-avatar-action-menu'
+            ref={avatarActionRef}
+          >
             <div className='edit-profile-file-upload'>
               <input
                 type='file'
@@ -158,16 +191,16 @@ const UpdateProfilePage = () => {
               </label>
             </div>
             <div>
-              <button>generate avatar</button>
+              {loadingGenerate ? (
+                <button disabled>
+                  {loadingGenerate ? 'loading' : 'generate avatar'}
+                </button>
+              ) : (
+                <button onClick={handleGenerateAvatar}>
+                  {loadingGenerate ? 'loading' : 'generate avatar'}
+                </button>
+              )}
             </div>
-            {/* <ul>
-              <li>
-                <button>generate avatar</button>
-              </li>
-              <li>
-                <button>files</button>
-              </li>
-            </ul> */}
           </div>
         )}
       </div>
