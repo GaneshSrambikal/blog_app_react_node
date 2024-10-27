@@ -34,6 +34,7 @@
   object-fit: cover;
 }
 .navbar .navbar-avatar .navbar-dropdown {
+  z-index: 10;
   position: absolute;
   top: 100%;
   right: 0;

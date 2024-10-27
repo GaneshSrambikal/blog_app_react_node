@@ -1,5 +1,4 @@
 // import React from 'react'
-
 import { useContext, useEffect, useState } from 'react';
 import { getInitials } from '../../utils/formatNames';
 import InputComponent from '../../components/ui/InputComponent';
@@ -7,17 +6,26 @@ import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 import { validateUpdateForm } from '../../validators/profile/updateValidator';
 import { useNavigate } from 'react-router-dom';
-
+import { TbPhotoEdit } from 'react-icons/tb';
+import { resizeImage } from '../../utils/resizeImage';
 const UpdateProfilePage = () => {
-  const { user, token, dispatch } = useContext(AuthContext);
+  const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
+  // const uploadUrl = import.meta.env.VITE_CLOUDINARY_UPLOAD_URL;
+  const { user, token, dispatch, loadUser } = useContext(AuthContext);
   const [formData, setFormData] = useState(user);
   const [errors, setErrors] = useState({});
+  // const [image, setImage] = useState(null);
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [showUploadAction, setShowUploadAction] = useState(true);
   // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   console.log('form data', formData);
   useEffect(() => {
+    loadUser();
+  }, []);
+  useEffect(() => {
     setFormData(user);
-  }, [user]);
+  }, []);
   // Handle input change
   const handleChange = (e) => {
     setErrors({});
@@ -30,6 +38,56 @@ const UpdateProfilePage = () => {
   const getInputClass = (fieldName) => {
     return errors[fieldName] ? 'input-error' : '';
   };
+  const handleUploadAction = () => {
+    setShowUploadAction(!showUploadAction);
+  };
+  const handleInputSubmit = async (img) => {
+    if (img) {
+      // const image = await Jimp.read(img);
+      // image.resize({ w: 200, h: 200 });
+      const avatarFormData = new FormData();
+      avatarFormData.append('image', img);
+      avatarFormData.append('upload_preset', preset);
+      console.log('im here');
+      setLoadingUpload(true);
+      try {
+        // const res = await axios.post(uploadUrl, formData);
+        // const imageUrl = res.data.secure_url;
+
+        // update user profile
+        const updatedUser = await axios.post(
+          '/api/users/upload-avatar',
+          avatarFormData,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        dispatch({
+          type: 'LOAD_USER',
+          payload: { userData: updatedUser.data.user, token },
+        });
+        setLoadingUpload(false);
+        console.log('updated profile picture', updatedUser);
+      } catch (error) {
+        console.log(error);
+        setLoadingUpload(false);
+      }
+    }
+  };
+  const handleFileInput = async (e) => {
+    const file = e.target.files[0];
+    console.log('actually file', file);
+    if (file) {
+      // resize image for image optimization
+      const resized = resizeImage(
+        file,
+        200,
+        `${formData.username + Date.now().toString()}.png`
+      );
+      handleInputSubmit(resized);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newUserData = {
@@ -71,9 +129,46 @@ const UpdateProfilePage = () => {
     <div className='edit-profile-container'>
       <div className='edit-profile-avatar-c'>
         {formData.avatar_url ? (
-          <img src={formData.avatar_url} alt='profile-avatar' />
+          loadingUpload ? (
+            <div>loading</div>
+          ) : (
+            <img src={user.avatar_url} alt='profile-avatar' />
+          )
         ) : (
           <p>{formData?.name && getInitials(formData?.name)}</p>
+        )}
+        <div
+          className='edit-profile-avatar-icon-c'
+          onClick={handleUploadAction}
+        >
+          <TbPhotoEdit />
+        </div>
+        {showUploadAction && (
+          <div className='edit-profile-avatar-action-menu'>
+            <div className='edit-profile-file-upload'>
+              <input
+                type='file'
+                id='avatarInput'
+                accept='image/*'
+                onChange={handleFileInput}
+                disabled={loadingUpload}
+              />
+              <label htmlFor='avatarInput' className='avatar-input-label'>
+                {loadingUpload ? 'loading' : 'Choose File'}
+              </label>
+            </div>
+            <div>
+              <button>generate avatar</button>
+            </div>
+            {/* <ul>
+              <li>
+                <button>generate avatar</button>
+              </li>
+              <li>
+                <button>files</button>
+              </li>
+            </ul> */}
+          </div>
         )}
       </div>
       <div className='edit-profile-form-c'>
