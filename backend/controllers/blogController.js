@@ -45,7 +45,11 @@ exports.createBlog = async (req, res, next) => {
     if (user) {
       const newBlog = new Blog({
         title,
-        author: req.user.id,
+        author: {
+          id: req.user.id,
+          name: req.user.name,
+          avatar_url: user.avatar_url,
+        },
 
         content,
       });

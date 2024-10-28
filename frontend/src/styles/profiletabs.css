@@ -1,0 +1,141 @@
+/* Profile tabs */
+.profile-tabs {
+  /* background-color: aqua; */
+  margin-top: 1rem;
+}
+.p-tabs-container {
+  background-color: rgb(236, 236, 236);
+  padding: 0.5rem 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  width: 300px;
+  margin-bottom: 1rem;
+}
+.p-tabs-container .p-tabs-btn {
+  background-color: rgb(236, 236, 236);
+  width: 100%;
+  border: 0;
+  padding: 0.3rem;
+  text-transform: capitalize;
+  border-radius: 5px;
+  font-weight: 400;
+  color: rgb(115, 115, 115);
+  cursor: pointer;
+  transition: 0.1s ease-in;
+}
+
+.p-tabs-container .p-tabs-btn:nth-child(2),
+.p-tabs-container .p-tabs-btn:nth-child(3) {
+  margin-left: 0.5rem;
+}
+.p-tabs-btn.active {
+  background-color: rgb(249, 249, 249);
+  color: #333;
+  font-weight: 500;
+}
+
+/* Profile Details */
+.profile-details-c {
+  display: flex;
+  flex-direction: column;
+}
+.profile-details-about-c {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px dashed #afafaf;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+.profile-details-c h2 {
+  margin-bottom: 1rem;
+}
+.profile-details-about-c p {
+  /* font-size: 0.8rem; */
+  margin-top: 1rem;
+}
+
+/* Profile blogs */
+.profile-blogs-container {
+  /* background-color: aqua; */
+}
+.profile-blogs-container .profile-blogs-c {
+  /* padding: 1rem; */
+}
+.profile-blogs-container .profile-blogs-c ul {
+  list-style: none;
+  margin-top: 1rem;
+}
+.profile-blogs-card-c {
+  background-color: rgb(249, 249, 249);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px dashed #8c8c8c;
+  border-radius: 5px;
+}
+.profile-blogs-card-c .profile-b-card-header {
+  display: flex;
+  align-items: center;
+}
+.profile-blogs-card-c .profile-b-card-header .profile-b-card-avatar {
+  background-color: rgb(71, 209, 183);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: aliceblue;
+}
+.profile-b-card-header .profile-b-card-avatar img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-blogs-card-c .profile-b-card-header .profile-b-card-u-info {
+  margin-left: 1rem;
+}
+.profile-blogs-card-c .profile-b-card-header .profile-b-card-u-info p {
+  font-weight: 500;
+}
+.profile-blogs-card-c
+  .profile-b-card-header
+  .profile-b-card-u-info
+  p:nth-child(2) {
+  color: gray;
+  font-size: 12px;
+  font-weight: 300;
+}
+.profile-blogs-card-c .profile-b-card-body {
+  margin-top: 1rem;
+  /* background-color: chocolate; */
+}
+.profile-blogs-card-c .profile-b-card-body h2 {
+  margin-bottom: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+.profile-blogs-card-c .profile-b-card-body h2 a {
+  text-decoration: none;
+  color: #333;
+}
+.profile-blogs-card-c .profile-b-card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+.profile-blogs-card-c .profile-b-card-footer div:nth-child(2) {
+  margin-left: 1rem;
+}
+.profile-blogs-card-c .profile-b-card-footer div {
+  display: flex;
+  align-items: center;
+  color: #4c4c4c;
+  font-size: 14px;
+}
+.profile-blogs-card-c .profile-b-card-footer div svg {
+  margin-right: 0.5rem;
+}
