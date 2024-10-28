@@ -24,7 +24,11 @@ const BlogSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  author: {
+    id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    name: { type: String, required: true },
+    avatar_url: { type: String },
+  },
   createdAt: {
     type: Date,
     default: Date.now,

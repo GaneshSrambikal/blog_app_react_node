@@ -91,6 +91,12 @@
   font-size: 14px;
   color: aliceblue;
 }
+.profile-b-card-header .profile-b-card-avatar img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .profile-blogs-card-c .profile-b-card-header .profile-b-card-u-info {
   margin-left: 1rem;
 }
