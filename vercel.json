@@ -3,9 +3,6 @@
     { "src": "frontend/package.json", "use": "@vercel/static-build" },
     { "src": "/package.json", "use": "@vercel/node" }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/backend/$1" },
-    { "src": "/(.*)", "dest": "/frontend/$1" }
-  ],
+  
   "rewrites": [{ "source": "/api/(.*)", "destination": "/backend/api/$1" }]
 }
