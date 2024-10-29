@@ -1,5 +1,5 @@
 {
-    "projects": {
+    
       "frontend": {
         "root": "./frontend",
         "buildCommand": "npm run build",
@@ -21,7 +21,7 @@
           }
         ]
       }
-    },
+    ,
     "rewrites": [
       { "source": "/api/(.*)", "destination": "/backend/api/$1" }
     ]
