@@ -1,5 +1,5 @@
 // import React from 'react'
-import { FaRegHeart, FaHeart, FaRegCommentAlt } from 'react-icons/fa';
+import { FaRegHeart, FaRegCommentAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { getJoinedDate } from '../../utils/formatDates';
 import { getInitials } from '../../utils/formatNames';

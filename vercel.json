@@ -1,0 +1,29 @@
+{
+    "projects": {
+      "frontend": {
+        "root": "./frontend",
+        "buildCommand": "npm run build",
+        "outputDirectory": "dist"
+      },
+      "backend": {
+        "root": "./backend",
+        "buildCommand": "npm install",
+        "outputDirectory": "dist",
+        "functions": {
+          "api/*": {
+            "runtime": "nodejs18.x"
+          }
+        },
+        "routes": [
+          {
+            "src": "/api/(.*)",
+            "dest": "/backend/api/$1"
+          }
+        ]
+      }
+    },
+    "rewrites": [
+      { "source": "/api/(.*)", "destination": "/backend/api/$1" }
+    ]
+  }
+  

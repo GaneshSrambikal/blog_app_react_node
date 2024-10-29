@@ -6,6 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+const react_base_url = import.meta.env.REACT_APP_API_BASE_URL;
 const ResetPasswordForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -66,7 +67,7 @@ const ResetPasswordForm = () => {
       setErrors({}); // Clear previous errors
       try {
         const response = await axios.post(
-          `/api/users/reset-password/${token}`,
+          `${react_base_url}/users/reset-password/${token}`,
           {
             password,
           }

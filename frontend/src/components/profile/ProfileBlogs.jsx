@@ -4,13 +4,14 @@ import { useContext, useState, useEffect } from 'react';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 import ProfileBlogCard from './ProfileBlogCard';
+const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const ProfileBlogs = () => {
   const { user, loading } = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   console.log('Blogs', blogs);
   const fetchBlog = async () => {
     try {
-      const res = await axios.get('/api/blogs');
+      const res = await axios.get(`${react_base_url}/blogs`);
       console.log(res.data);
       if (res) {
         setBlogs(res.data.blogs);

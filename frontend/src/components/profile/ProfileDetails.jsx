@@ -8,9 +8,10 @@ const ProfileDetails = () => {
   const { user, loading } = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   console.log('Blogs', blogs);
+  const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const fetchBlog = async () => {
     try {
-      const res = await axios.get('/api/blogs');
+      const res = await axios.get(`${react_base_url}/blogs`);
       console.log(res.data);
       if (res) {
         setBlogs(res.data.blogs);
