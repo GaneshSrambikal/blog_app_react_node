@@ -3,7 +3,6 @@ import { createContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { checkToken, removeToken, setToken } from '../utils/checkToken';
 
-
 const AuthContext = createContext();
 
 const initialState = {
@@ -56,12 +55,12 @@ const authReducer = (state, action) => {
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  
+  const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const loadUser = async () => {
     const token = localStorage.getItem('blog_AuthToken');
     if (checkToken(token)) {
       try {
-        const res = await axios.get('/api/users/profile', {
+        const res = await axios.get(`${react_base_url}/users/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log('in load user:res', res.data);
@@ -83,7 +82,10 @@ export const AuthProvider = ({ children }) => {
   };
   const loginUser = async (credentials) => {
     try {
-      const res = await axios.post('/api/users/login', credentials);
+      const res = await axios.post(
+        `${react_base_url}/users/login`,
+        credentials
+      );
       const { token } = res.data;
       setToken(token);
       const decoded = jwtDecode(token);
@@ -111,12 +113,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    
     loadUser();
     console.log('after loading user:', initialState);
   }, []);
   return (
-    <AuthContext.Provider value={{ ...state, dispatch, loginUser, logout,loadUser }}>
+    <AuthContext.Provider
+      value={{ ...state, dispatch, loginUser, logout, loadUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

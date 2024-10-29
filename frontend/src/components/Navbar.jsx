@@ -6,7 +6,7 @@ import { MdOutlineMenuOpen } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import '../styles/navbar.css';
-
+const react_base_url = import.meta.env.REACT_APP_API_BASE_URL;
 const Navbar = () => {
   const { logout, user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -17,7 +17,7 @@ const Navbar = () => {
     e.preventDefault();
     try {
       logout();
-      const response = await axios.post('/api/users/logout');
+      const response = await axios.post(`${react_base_url}/users/logout`);
       navigate('/login');
       console.log(response.data);
     } catch (error) {

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TailSpin } from 'react-loader-spinner';
 import InputComponent from '../ui/InputComponent';
+const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const RegisterForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -41,7 +42,10 @@ const RegisterForm = () => {
       // Submit the form data (e.g., API call)
       console.log('Form submitted:', formData);
       try {
-        const response = await axios.post('/api/users/register', formData);
+        const response = await axios.post(
+          `${react_base_url}/users/register`,
+          formData
+        );
         console.log('User created', response.data);
         setTimeout(() => {
           setIsLoading(false);
