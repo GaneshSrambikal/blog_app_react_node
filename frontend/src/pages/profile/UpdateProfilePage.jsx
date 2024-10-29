@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { TbPhotoEdit } from 'react-icons/tb';
 import { resizeImage } from '../../utils/resizeImage';
 const UpdateProfilePage = () => {
+  const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
   const { user, token, dispatch, loadUser } = useContext(AuthContext);
   const [formData, setFormData] = useState(user);
@@ -62,10 +63,9 @@ const UpdateProfilePage = () => {
       console.log('im here');
       setLoadingUpload(true);
       try {
-      
         // update user profile
         const updatedUser = await axios.post(
-          '/api/users/upload-avatar',
+          `${react_base_url}/users/upload-avatar`,
           avatarFormData,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -114,18 +114,22 @@ const UpdateProfilePage = () => {
     } else {
       setErrors({});
       try {
-        const updatedUser = await axios.put('/api/users/profile', newUserData, {
-          headers: { Authorization: `Bearer ${token}` },
+        const updatedUser = await axios.put(
+          `${react_base_url}/users/profile`,
+          newUserData,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        // if (updatedUser.statusText == 'OK') {
+        dispatch({
+          type: 'LOAD_USER',
+          payload: { userData: updatedUser.data.user, token },
         });
-        if (updatedUser.statusText == 'OK') {
-          dispatch({
-            type: 'LOAD_USER',
-            payload: { userData: updatedUser.data.user, token },
-          });
-          console.log('dispatch sent', user);
-          navigate('/profile');
-        }
-        console.log('updatedUser', updatedUser.data.user);
+        console.log('dispatch sent', user);
+        navigate('/profile');
+        // }
+        console.log('updatedUser', updatedUser);
       } catch (error) {
         console.log(error);
         setErrors({ server: error && error.response?.data?.message });
@@ -137,7 +141,7 @@ const UpdateProfilePage = () => {
   const handleGenerateAvatar = async () => {
     setLoadingGenerate(true);
     try {
-      const res = await axios.get('/api/users/generate-avatar', {
+      const res = await axios.get(`${react_base_url}/users/generate-avatar`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -162,7 +166,7 @@ const UpdateProfilePage = () => {
           loadingUpload || loadingGenerate ? (
             <div>loading</div>
           ) : (
-            <img src={user.avatar_url} alt='profile-avatar' />
+            <img src={user.avatar_url} alt='profile-avatar' loading='lazy' />
           )
         ) : (
           <p>{formData?.name && getInitials(formData?.name)}</p>
