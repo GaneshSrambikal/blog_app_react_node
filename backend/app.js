@@ -13,8 +13,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // Routes
-app.get('/', (req, res) => {
-  res.send('Blog app api');
+app.get('/api', (req, res) => {
+  res.send('Blog app react + node api @GITHUB/GANESHSRAMBIKAL');
 });
 
 // Admin User Routes
