@@ -16,7 +16,7 @@ const ProfilePage = () => {
   return (
     <div className='user-profile-container'>
       <ProfileComponent user={user} />
-      <ProfileTabs />
+      <ProfileTabs user={user}/>
     </div>
   );
 };

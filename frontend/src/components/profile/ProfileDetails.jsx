@@ -4,8 +4,8 @@ import { useEffect, useContext, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-const ProfileDetails = () => {
-  const { user, loading } = useContext(AuthContext);
+const ProfileDetails = ({ user }) => {
+  const { loading } = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   console.log('Blogs', blogs);
   const react_base_url = import.meta.env.VITE_API_BASE_URL;
@@ -24,12 +24,17 @@ const ProfileDetails = () => {
     fetchBlog();
   }, []);
   if (loading) return <div>Loading</div>;
+  if (!user) return <div>Loading</div>;
   return (
     <div className='profile-details-c'>
       {/* <h2>ProfileDetails</h2> */}
       <div className='profile-details-about-c'>
         <h3>About Me</h3>
-        <p>{user?.about.length > 0 ? user.about : 'Introduce'}</p>
+        { user?.about?.length > 0 ? (
+          <p>{user?.about}</p>
+        ) : (
+          <p style={{ color: 'gray' }}>Edit Profile to add About.</p>
+        )}
       </div>
       <div className='profile-details-about-c'>
         <h3>Recent Blogs</h3>

@@ -1,9 +1,16 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
 const Layout = () => {
   const location = useLocation();
-  const routesWithNavbar = ['/profile', '/home', '/profile/edit'];
+  const params = useParams();
+  const routesWithNavbar = [
+    '/profile',
+    '/home',
+    '/profile/',
+    '/profile/edit',
+    `/profile/${params.id}`,
+  ];
   const showNavbar = routesWithNavbar.includes(location.pathname);
   return (
     <div>

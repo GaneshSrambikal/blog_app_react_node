@@ -12,9 +12,7 @@ const {
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendEmail.js');
-const {
-  getRandomAvatarbyGender,
-} = require('../utils/constants/avatars.js');
+const { getRandomAvatarbyGender } = require('../utils/constants/avatars.js');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -158,8 +156,39 @@ exports.logoutUser = async (req, res, next) => {
 // Profile Management
 // Get User Profile (protected)
 exports.getProfile = async (req, res, next) => {
+  console.log('this is coming from backend', req.user.id, req.params.id);
   try {
     const user = await User.findById(req.user.id).select(['-password', '-__v']); // -password excludes the password
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server error', error: error.message });
+  }
+};
+// Get Users Profile by id (protected)
+exports.getUsersProfile = async (req, res, next) => {
+  console.log('this is coming from backend', req.user.id, req.params.id);
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({
+        message: `Entered an invalid user id. Please check and try again`,
+        error: error.message,
+      });
+  }
+  try {
+    const user = await User.findById(req.params.id).select([
+      '-password',
+      '-__v',
+    ]); // -password excludes the password
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -274,10 +303,12 @@ exports.uploadAvatar = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found!' });
     }
+
     user.avatar_url = req.file.path;
     const newData = await user.save();
     return res.status(200).json({
       message: 'File Upload successfully',
+
       profieAvatarUrl: req.file.path,
       user: {
         _id: newData.id,
@@ -573,7 +604,7 @@ exports.listFollowers = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found!.' });
     }
-    const listFollowers = (await user.populate('followers', 'name email'))
+    const listFollowers = (await user.populate('followers', 'name title avatar_url'))
       .followers;
     return res.status(200).json({ followers: listFollowers });
   } catch (error) {
@@ -597,7 +628,7 @@ exports.listFollowing = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: 'user not found' });
     }
-    const listFollowing = (await user.populate('following', 'name email'))
+    const listFollowing = (await user.populate('following', 'name title avatar_url'))
       .following;
     return res.status(200).json({ following: listFollowing });
   } catch (error) {

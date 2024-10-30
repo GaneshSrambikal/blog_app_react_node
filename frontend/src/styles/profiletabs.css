@@ -139,3 +139,107 @@
 .profile-blogs-card-c .profile-b-card-footer div svg {
   margin-right: 0.5rem;
 }
+
+/* Profile Connections */
+.profile-connections-container {
+  /* background-color: aqua; */
+
+  /* margin-top: 1rem; */
+}
+.profile-connections-container h2 {
+  text-transform: capitalize;
+}
+.profile-connections-container .profile-connections-c-f-c {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px dashed #c0c0c0;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+.profile-connections-c-f-c h3 {
+  color: #4c4c4c;
+}
+.profile-connections-c-f-cs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .profile-connections-c-f-cs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 640px) {
+  .profile-connections-c-f-cs {
+    grid-template-columns: 1fr;
+  }
+}
+.profile-connections-c-f-c .profile-connections-card-c {
+  display: flex;
+  /* background-color: rgb(245, 245, 245); */
+  width: 100%;
+  max-width: 250px;
+  margin-top: 1rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px #d8d8d8;
+}
+.profile-connections-card-c .profile-connections-card-avatar-c {
+  background-color: brown;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-connections-card-avatar-c p {
+  color: aliceblue;
+  font-size: 12px;
+}
+.profile-connections-card-avatar-c img {
+  width: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-connections-card-c .profile-connections-card-u-info {
+  flex: 2;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.profile-connections-card-u-info-name a {
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #4c4c4c;
+}
+.profile-connections-card-u-info-name a:hover {
+  text-decoration: underline;
+}
+.profile-connections-card-u-info-name a p {
+  color: #4c4c4c;
+}
+.profile-connections-card-u-info .profile-connections-card-u-info-name span {
+  color: gray;
+  font-size: 12px;
+  font-weight: 300;
+}
+.profile-connections-card-u-info .profile-connections-card-u-info-action-btn-c {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.profile-connections-card-u-info
+  .profile-connections-card-u-info-action-btn-c
+  button {
+  width: 100%;
+  border: 0;
+  border-radius: 5px;
+  padding: 0.3rem 0.5rem;
+  background-color: #ececec;
+}

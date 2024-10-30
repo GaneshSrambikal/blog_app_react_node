@@ -16,6 +16,7 @@ const {
   listFollowing,
   uploadAvatar,
   generateAvatar,
+  getUsersProfile,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const upload = require('../../middlewares/uploadMiddleware');
@@ -46,6 +47,11 @@ router.post('/logout', logoutUser);
 //@route    GET /api/users/profile
 // @access  Private / Protected
 router.get('/profile', protect, getProfile);
+
+//@desc     Get users Profile by Id
+//@route    GET /api/users/profile/:id
+// @access  Private / Protected
+router.get('/profile/:id', protect, getUsersProfile);
 
 //@desc     update user Profile
 //@route    PUT /api/users/profile
@@ -87,14 +93,14 @@ router.post('/:id/follow', protect, followUser);
 router.post('/:id/unfollow', protect, unFollowUser);
 
 //@desc     list users followers
-//@route    post /api/users/:id/followers
+//@route    get /api/users/:id/followers
 // @access  Private / Protected
-router.post('/:id/followers', protect, listFollowers);
+router.get('/:id/followers', protect, listFollowers);
 
 //@desc     list users following
-//@route    post /api/users/:id/following
+//@route    get /api/users/:id/following
 // @access  Private / Protected
-router.post('/:id/following', protect, listFollowing);
+router.get('/:id/following', protect, listFollowing);
 
 // Upload Files
 
