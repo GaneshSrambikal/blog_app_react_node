@@ -1,96 +1,32 @@
-// import React from 'react'
-import { Link } from 'react-router-dom';
+import ProfileConnectionCard from './ProfileConnectionCard';
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
 const ProfileConnections = () => {
+  const { user, loading } = useContext(AuthContext);
+  if (loading) return <div>loading</div>;
+  console.log(user);
   return (
     <div className='profile-connections-container'>
-      <h2>John's connections</h2>
-      <div className='profile-connections-c-followers-c'>
+      <h2>{`${user.name.split(' ')[0]}'s connections`}</h2>
+      {/* Followers */}
+      <div className='profile-connections-c-f-c'>
         <h3>Followers</h3>
-        <div className='profile-connections-c-followers-cs'>
-          <div className='profile-connections-card-c'>
-            <div className='profile-connections-card-avatar-c'>
-              <p>Avatar</p>
-            </div>
-            <div className='profile-connections-card-u-info'>
-              <div className='profile-connections-card-u-info-name'>
-                <Link to='/users/id'>
-                  <p>Name</p>
-                </Link>
-                <span>Title</span>
-              </div>
-              <div className='profile-connections-card-u-info-action-btn-c'>
-                <button>Following</button>
-              </div>
-            </div>
-          </div>
-          <div className='profile-connections-card-c'>
-            <div className='profile-connections-card-avatar-c'>
-              <p>Avatar</p>
-            </div>
-            <div className='profile-connections-card-u-info'>
-              <div className='profile-connections-card-u-info-name'>
-                <Link to='/users/id'>
-                  <p>Name</p>
-                </Link>
-                <span>Title</span>
-              </div>
-              <div className='profile-connections-card-u-info-action-btn-c'>
-                <button>Following</button>
-              </div>
-            </div>
-          </div>
-          <div className='profile-connections-card-c'>
-            <div className='profile-connections-card-avatar-c'>
-              <p>Avatar</p>
-            </div>
-            <div className='profile-connections-card-u-info'>
-              <div className='profile-connections-card-u-info-name'>
-                <Link to='/users/id'>
-                  <p>Name</p>
-                </Link>
-                <span>Title</span>
-              </div>
-              <div className='profile-connections-card-u-info-action-btn-c'>
-                <button>Following</button>
-              </div>
-            </div>
-          </div>
-          <div className='profile-connections-card-c'>
-            <div className='profile-connections-card-avatar-c'>
-              <p>Avatar</p>
-            </div>
-            <div className='profile-connections-card-u-info'>
-              <div className='profile-connections-card-u-info-name'>
-                <Link to='/users/id'>
-                  <p>Name</p>
-                </Link>
-                <span>Title</span>
-              </div>
-              <div className='profile-connections-card-u-info-action-btn-c'>
-                <button>Following</button>
-              </div>
-            </div>
-          </div>
-          <div className='profile-connections-card-c'>
-            <div className='profile-connections-card-avatar-c'>
-              <p>Avatar</p>
-            </div>
-            <div className='profile-connections-card-u-info'>
-              <div className='profile-connections-card-u-info-name'>
-                <Link to='/users/id'>
-                  <p>Name</p>
-                </Link>
-                <span>Title</span>
-              </div>
-              <div className='profile-connections-card-u-info-action-btn-c'>
-                <button>Following</button>
-              </div>
-            </div>
-          </div>
+        <div className='profile-connections-c-f-cs'>
+          <ProfileConnectionCard />
+          <ProfileConnectionCard />
+          <ProfileConnectionCard />
+          <ProfileConnectionCard />
         </div>
       </div>
-      <div>
+      {/* Following */}
+      <div className='profile-connections-c-f-c'>
         <h3>Following</h3>
+        <div className='profile-connections-c-f-cs'>
+          <ProfileConnectionCard />
+          <ProfileConnectionCard />
+          <ProfileConnectionCard />
+          <ProfileConnectionCard />
+        </div>
       </div>
     </div>
   );
