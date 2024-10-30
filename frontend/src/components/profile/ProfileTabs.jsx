@@ -3,17 +3,17 @@ import ProfileDetails from './ProfileDetails';
 import ProfileBlogs from './ProfileBlogs';
 import ProfileConnections from './ProfileConnections';
 import '../../styles/profiletabs.css';
-const ProfileTabs = () => {
+const ProfileTabs = ({ user }) => {
   const [activeTab, setActiveTab] = useState('profile');
 
   const renderTab = () => {
     switch (activeTab) {
       case 'profile':
-        return <ProfileDetails />;
+        return <ProfileDetails user={user} />;
       case 'blogs':
-        return <ProfileBlogs />;
+        return <ProfileBlogs user={user} />;
       case 'connections':
-        return <ProfileConnections />;
+        return <ProfileConnections user={user} />;
 
       default:
         return null;

@@ -15,7 +15,9 @@ const ProfileBlogCard = ({ blog }) => {
           )}
         </div>
         <div className='profile-b-card-u-info'>
-          <p>{blog.author.name}</p>
+          <Link to={`/profile/${blog.author.id}`}>
+            <p>{blog.author.name}</p>
+          </Link>
           <p>{getJoinedDate(blog.createdAt)}</p>
         </div>
       </div>

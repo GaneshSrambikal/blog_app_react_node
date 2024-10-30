@@ -197,7 +197,7 @@
 }
 .profile-connections-card-avatar-c p {
   color: aliceblue;
-  font-size: 10px;
+  font-size: 12px;
 }
 .profile-connections-card-avatar-c img {
   width: 3rem;
@@ -216,6 +216,13 @@
   text-decoration: none;
   cursor: pointer;
   font-size: 0.9rem;
+  color: #4c4c4c;
+}
+.profile-connections-card-u-info-name a:hover {
+  text-decoration: underline;
+}
+.profile-connections-card-u-info-name a p {
+  color: #4c4c4c;
 }
 .profile-connections-card-u-info .profile-connections-card-u-info-name span {
   color: gray;

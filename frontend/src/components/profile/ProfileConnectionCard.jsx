@@ -1,22 +1,42 @@
 // import React from 'react'
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-const ProfileConnectionCard = () => {
+import AuthContext from '../../context/AuthContext';
+import { getInitials } from '../../utils/formatNames';
+const ProfileConnectionCard = ({ data }) => {
+  const { user } = useContext(AuthContext);
+  console.log(data);
   return (
     <div className='profile-connections-card-c'>
       <div className='profile-connections-card-avatar-c'>
         {/* <p>Avatar</p> */}
-        <img src='https://avatar.iran.liara.run/public/30' alt="avatar"/>
+        {data?.avatar_url.length > 0 ? (
+          <img src={data?.avatar_url} alt='avatar' />
+        ) : (
+          <p>{getInitials(data?.name)}</p>
+        )}
       </div>
       <div className='profile-connections-card-u-info'>
         <div className='profile-connections-card-u-info-name'>
-          <Link to='/users/id'>
-            <p>John Mathew</p>
-          </Link>
-          <span>Senior Software Engineer</span>
+          {data?._id == user._id ? (
+            <>
+              <Link to={`/profile`}>
+                <p>{data?.name}</p>
+              </Link>
+              <span>{data?.title}</span>
+            </>
+          ) : (
+            <>
+              <Link to={`/profile/${data?._id}`}>
+                <p>{data?.name}</p>
+              </Link>
+              <span>{data?.title}</span>
+            </>
+          )}
         </div>
-        <div className='profile-connections-card-u-info-action-btn-c'>
-          <button>Following</button>
-        </div>
+        {/* <div className='profile-connections-card-u-info-action-btn-c'>
+          <button>Follow</button>
+        </div> */}
       </div>
     </div>
   );

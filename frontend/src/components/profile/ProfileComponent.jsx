@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import '../../styles/profile.css';
 import { getJoinedDate } from '../../utils/formatDates';
 import { CiCalendar, CiLocationOn } from 'react-icons/ci';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 const ProfileComponent = ({ user }) => {
+  const params = useParams();
   const [profile, setProfile] = useState(user);
   console.log(`Profile Components: ${profile} `);
   useEffect(() => {
@@ -37,11 +38,11 @@ const ProfileComponent = ({ user }) => {
           </div>
           <div className='pc-user-details-connections'>
             <div>
-              <p>{100}</p>
+              <p>{user.followers.length}</p>
               <p>followers</p>
             </div>
             <div>
-              <p>{10}</p>
+              <p>{user.following.length}</p>
               <p>following</p>
             </div>
             <div>
@@ -50,9 +51,15 @@ const ProfileComponent = ({ user }) => {
             </div>
           </div>
           <div className='pc-user-details-edit-btn-c'>
-            <Link to='/profile/edit' type='button' className='submit-button'>
-              Edit Profile
-            </Link>
+            {params.id === user.id ? (
+              <Link to='/profile/edit' type='button' className='submit-button'>
+                Edit Profile
+              </Link>
+            ) : user.following.includes(params.id) ? (
+              <button className='submit-button'>Following</button>
+            ) : (
+              <button className='submit-button'>Follow</button>
+            )}
           </div>
         </div>
       </div>

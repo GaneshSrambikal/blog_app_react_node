@@ -20,6 +20,7 @@ import ProfilePage from './pages/profile/ProfilePage';
 import UpdateProfilePage from './pages/profile/UpdateProfilePage';
 import Layout from './pages/Layout';
 import PublicRoutes from './routes/PublicRoutes';
+import UsersProfilePage from './pages/profile/UsersProfilePage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path='/home' element={<HomePage />} />
               <Route path='/profile' element={<ProfilePage />} />
+              <Route path='/profile/:id' element={<UsersProfilePage />} />
               <Route path='/profile/edit' element={<UpdateProfilePage />} />
             </Route>
           </Route>
