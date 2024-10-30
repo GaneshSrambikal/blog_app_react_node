@@ -12,7 +12,7 @@ const ProfileTabs = () => {
         return <ProfileDetails />;
       case 'blogs':
         return <ProfileBlogs />;
-      case 'connection':
+      case 'connections':
         return <ProfileConnections />;
 
       default:

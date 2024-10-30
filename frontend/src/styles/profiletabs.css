@@ -139,3 +139,68 @@
 .profile-blogs-card-c .profile-b-card-footer div svg {
   margin-right: 0.5rem;
 }
+
+/* Profile Connections */
+.profile-connections-container {
+  /* background-color: aqua; */
+
+  /* margin-top: 1rem; */
+}
+.profile-connections-container .profile-connections-c-followers-c {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px dashed #c0c0c0;
+  border-radius: 5px;
+}
+.profile-connections-c-followers-cs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media screen and (max-width: 640px) {
+  .profile-connections-c-followers-cs {
+    grid-template-columns: 1fr;
+  }
+}
+.profile-connections-c-followers-c .profile-connections-card-c {
+  display: flex;
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+  max-width: 250px;
+  margin-top: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px #d8d8d8;
+}
+.profile-connections-card-c .profile-connections-card-avatar-c {
+  background-color: brown;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-connections-card-avatar-c p {
+  color: aliceblue;
+  font-size: 10px;
+}
+.profile-connections-card-c .profile-connections-card-u-info {
+  flex: 2;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.profile-connections-card-u-info .profile-connections-card-u-info-action-btn-c {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.profile-connections-card-u-info
+  .profile-connections-card-u-info-action-btn-c
+  button {
+  width: 100%;
+  border: 0;
+  padding: 0.3rem 0.5rem;
+}

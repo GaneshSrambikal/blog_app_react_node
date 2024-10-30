@@ -12,9 +12,7 @@ const {
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendEmail.js');
-const {
-  getRandomAvatarbyGender,
-} = require('../utils/constants/avatars.js');
+const { getRandomAvatarbyGender } = require('../utils/constants/avatars.js');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -274,10 +272,12 @@ exports.uploadAvatar = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found!' });
     }
+   
     user.avatar_url = req.file.path;
     const newData = await user.save();
     return res.status(200).json({
       message: 'File Upload successfully',
+    
       profieAvatarUrl: req.file.path,
       user: {
         _id: newData.id,
