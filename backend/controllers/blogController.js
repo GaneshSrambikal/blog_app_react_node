@@ -12,7 +12,7 @@ const cloudinary = require('cloudinary').v2;
 // Get all Blogs
 exports.getAllBlogs = async (req, res, next) => {
   try {
-    const blogs = await Blog.find({});
+    const blogs = await Blog.find({}).sort({ createdAt: -1 });
 
     if (!blogs) {
       return res.status(404).json({ message: 'No Blogs found' });
