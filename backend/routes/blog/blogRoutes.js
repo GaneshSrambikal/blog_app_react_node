@@ -10,7 +10,7 @@ const {
   getAllBlogs,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
-
+const upload = require('../../middlewares/uploadMiddleware');
 const router = require('express').Router();
 
 // Get all blogs
@@ -18,11 +18,18 @@ const router = require('express').Router();
 //@route    get /api/blogs
 // @access  Public
 router.get('/', getAllBlogs);
+
 // Create a blog
 //@desc     Create a blog
 //@route    post /api/blogs/create-blog
 // @access  Private / Protected
-router.post('/create-blog', protect, createBlog);
+router.post('/create-blog', protect, upload.single('heroImage'), createBlog);
+
+// Upload a blogs Hero Image
+//@desc     Upload a blogs hero image
+//@route    post /api/blogs/upload-hero_image
+// @access  Private / Protected
+// router.post('/upload-hero_image', protect, upload.single('image'), createBlog);
 
 // Read a blog by Id
 // Create a blog

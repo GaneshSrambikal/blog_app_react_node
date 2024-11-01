@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { getReadingTime } = require('../utils/getReadingTime');
 
 // comments
 const commentSchema = mongoose.Schema({
@@ -17,6 +18,22 @@ const commentSchema = mongoose.Schema({
 
 const BlogSchema = mongoose.Schema({
   title: {
+    type: String,
+    required: true,
+  },
+  excerpt: {
+    type: String,
+    required: true,
+    maxLength: 150,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  readingTime: {
+    type: Number,
+  },
+  heroImage: {
     type: String,
     required: true,
   },
@@ -40,6 +57,13 @@ const BlogSchema = mongoose.Schema({
   },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   comments: [commentSchema],
+});
+
+// pre-save middleware for calculating the read time of the blog
+BlogSchema.pre('save', function (next) {
+  this.readingTime = getReadingTime(this.content);
+  console.log(getReadingTime(this.content));
+  next();
 });
 
 // Compile the Blog Model

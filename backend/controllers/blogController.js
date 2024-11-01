@@ -36,7 +36,7 @@ exports.createBlog = async (req, res, next) => {
       .json({ message: 'Validation Error', error: error.message });
   }
 
-  const { title, content } = req.body;
+  const { title, content, excerpt, category, heroImage } = req.body;
   try {
     const user = await User.findById(req.user.id);
     if (!user) {
@@ -50,7 +50,9 @@ exports.createBlog = async (req, res, next) => {
           name: req.user.name,
           avatar_url: user.avatar_url,
         },
-
+        excerpt,
+        heroImage: req.file.path,
+        category,
         content,
       });
       const savedBlog = await newBlog.save();
@@ -66,6 +68,10 @@ exports.createBlog = async (req, res, next) => {
       .json({ message: 'Server Error', error: error.message });
   }
 };
+
+// exports.uploadBlogImage = async (req,res,next) =>{
+
+// }
 
 // GEt Blogs by Id
 exports.getBlogById = async (req, res, next) => {
