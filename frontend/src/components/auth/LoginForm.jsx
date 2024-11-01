@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../validators/auth/loginValidator';
 import InputComponent from '../ui/InputComponent';
 import AuthContext from '../../context/AuthContext';
+import { Oval } from 'react-loader-spinner';
 
 const LoginForm = () => {
   const { loginUser } = useContext(AuthContext);
@@ -16,6 +17,7 @@ const LoginForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (e) => {
@@ -34,18 +36,23 @@ const LoginForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const validationErrors = validateLoginForm(formData);
     if (validationErrors) {
+      setLoading(false);
       setErrors(validationErrors);
       console.log(validationErrors);
     } else {
+      setLoading(true);
       console.log('Form submitted:', formData);
       setErrors({}); // Clear previous errors
       try {
         await loginUser(formData);
+        setLoading(false);
         navigate('/home');
       } catch (error) {
         console.log(error.response);
+        setLoading(false);
         if (error.response.status === 500) {
           setErrors({ server: error.response?.statusText });
         }
@@ -119,7 +126,19 @@ const LoginForm = () => {
 
           <div className='form-group'>
             <button type='submit' className='submit-button'>
-              Login
+              {loading ? (
+                <Oval
+                  visible={loading}
+                  height='20'
+                  width='20'
+                  color='#fff'
+                  ariaLabel='oval-loading'
+                  wrapperStyle={{}}
+                  wrapperClass=''
+                />
+              ) : (
+                `Login`
+              )}
             </button>
           </div>
         </form>

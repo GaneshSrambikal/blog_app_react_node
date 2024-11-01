@@ -39,6 +39,7 @@ const RegisterForm = () => {
       setIsLoading(false);
     } else {
       setErrors({});
+      setIsLoading(true);
       // Submit the form data (e.g., API call)
       console.log('Form submitted:', formData);
       try {
@@ -53,6 +54,7 @@ const RegisterForm = () => {
             state: { message: 'You have been registered. Login now.' },
           });
         }, 3000);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         setIsLoading(false);
@@ -201,7 +203,7 @@ const RegisterForm = () => {
             </button>
           ) : (
             <button type='submit' className='submit-button register-submit-btn'>
-              Register
+              register
             </button>
           )}
         </form>
