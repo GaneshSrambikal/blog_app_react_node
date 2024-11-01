@@ -1,3 +1,4 @@
+const { uploadToCloudinary } = require('../middlewares/uploadMiddleware');
 const Blog = require('../models/blogModel');
 const User = require('../models/userModel');
 const {
@@ -7,7 +8,7 @@ const {
   deleteCommentSchema,
 } = require('../validators/blogValidator');
 const { objectIdSchema } = require('../validators/userValidator');
-
+const cloudinary = require('cloudinary').v2;
 // Get all Blogs
 exports.getAllBlogs = async (req, res, next) => {
   try {
@@ -36,7 +37,8 @@ exports.createBlog = async (req, res, next) => {
       .json({ message: 'Validation Error', error: error.message });
   }
 
-  const { title, content } = req.body;
+  const { title, content, excerpt, category, heroImage } = req.body;
+  console.log(req.body);
   try {
     const user = await User.findById(req.user.id);
     if (!user) {
@@ -50,7 +52,9 @@ exports.createBlog = async (req, res, next) => {
           name: req.user.name,
           avatar_url: user.avatar_url,
         },
-
+        excerpt,
+        heroImage: req.file.path,
+        category,
         content,
       });
       const savedBlog = await newBlog.save();
@@ -66,6 +70,10 @@ exports.createBlog = async (req, res, next) => {
       .json({ message: 'Server Error', error: error.message });
   }
 };
+
+// exports.uploadBlogImage = async (req,res,next) =>{
+
+// }
 
 // GEt Blogs by Id
 exports.getBlogById = async (req, res, next) => {
@@ -96,35 +104,54 @@ exports.getBlogById = async (req, res, next) => {
 
 // Update Blog by Id
 exports.updateBlogById = async (req, res, next) => {
+  // validate the id. Should be an ObjectId
   const { error } = objectIdSchema.validate(req.params);
-
   if (error) {
     return res
       .status(400)
       .json({ message: 'Validation Error', error: error.message });
   }
+
   try {
-    const { error } = updateBlogSchema.validate(req.body);
-    if (error) {
-      return res
-        .status(400)
-        .json({ message: 'Validation Error', error: error.message });
-    }
-    const { title, content } = req.body;
+    // Check if blog exist
     const blog = await Blog.findById(req.params.id);
     if (!blog) {
       return res
         .status(404)
         .json({ message: `No Blogs with id: ${req.params.id} exists.` });
     }
-    if (blog.author.toString() === req.user.id) {
-      blog.title = title;
-      blog.content = content;
-      blog.updatedAt = Date.now();
-      await blog.save();
+    // validate the body
+    const { error } = updateBlogSchema.validate(req.body);
+    console.log(error, req.body);
+    if (error) {
       return res
-        .status(200)
-        .json({ message: 'Updated Blog successfully', blog_id: blog._id });
+        .status(400)
+        .json({ message: 'Validation Error', error: error.message });
+    }
+
+    const { title, content, excerpt, category } = req.body;
+    let imageUrl;
+    if (req.file) {
+      const newFileUpload = await uploadToCloudinary(req.file.path);
+      imageUrl = newFileUpload;
+    }
+    if (blog.author.id.toString() === req.user.id) {
+      const updatedBlog = await Blog.findByIdAndUpdate(
+        req.params.id,
+        {
+          title,
+          content,
+          excerpt,
+          category,
+          heroImage: (imageUrl && imageUrl) || blog.heroImage,
+        },
+        { new: true }
+      );
+      return res.status(200).json({
+        message: 'Updated Blog successfully',
+        blog_id: blog._id,
+        blog: updatedBlog,
+      });
     } else {
       return res.status(403).json({ message: 'UnAuthorized to update.' });
     }

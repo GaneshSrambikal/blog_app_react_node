@@ -19,7 +19,7 @@ const {
   getUsersProfile,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
-const upload = require('../../middlewares/uploadMiddleware');
+const { upload } = require('../../middlewares/uploadMiddleware');
 const router = require('express').Router();
 
 // @desc    Register a New User
