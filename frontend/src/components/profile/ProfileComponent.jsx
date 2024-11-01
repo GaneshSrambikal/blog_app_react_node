@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import '../../styles/profile.css';
+import AuthContext from '../../context/AuthContext';
 import { getJoinedDate } from '../../utils/formatDates';
 import { CiCalendar, CiLocationOn } from 'react-icons/ci';
 import { Link, useParams } from 'react-router-dom';
 const ProfileComponent = ({ user }) => {
+  const { loading } = useContext(AuthContext);
   const params = useParams();
   const [profile, setProfile] = useState(user);
   console.log(`Profile Components: ${profile} `);
   useEffect(() => {
     setProfile(user);
   }, [user]);
+  if (loading) return <div>loading...</div>;
   return (
     <>
       <div className='profile-c-container'>
@@ -38,11 +41,11 @@ const ProfileComponent = ({ user }) => {
           </div>
           <div className='pc-user-details-connections'>
             <div>
-              <p>{user.followers.length}</p>
+              <p>{profile?.followers?.length}</p>
               <p>followers</p>
             </div>
             <div>
-              <p>{user.following.length}</p>
+              <p>{profile?.following?.length}</p>
               <p>following</p>
             </div>
             <div>
@@ -51,11 +54,11 @@ const ProfileComponent = ({ user }) => {
             </div>
           </div>
           <div className='pc-user-details-edit-btn-c'>
-            {params.id === user.id ? (
+            {params.id === profile.id ? (
               <Link to='/profile/edit' type='button' className='submit-button'>
                 Edit Profile
               </Link>
-            ) : user.following.includes(params.id) ? (
+            ) : profile.following.includes(params.id) ? (
               <button className='submit-button'>Following</button>
             ) : (
               <button className='submit-button'>Follow</button>

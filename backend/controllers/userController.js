@@ -177,12 +177,10 @@ exports.getUsersProfile = async (req, res, next) => {
   console.log('this is coming from backend', req.user.id, req.params.id);
   const { error } = objectIdSchema.validate(req.params);
   if (error) {
-    return res
-      .status(400)
-      .json({
-        message: `Entered an invalid user id. Please check and try again`,
-        error: error.message,
-      });
+    return res.status(400).json({
+      message: `Entered an invalid user id. Please check and try again`,
+      error: error.message,
+    });
   }
   try {
     const user = await User.findById(req.params.id).select([
@@ -245,6 +243,8 @@ exports.updateProfile = async (req, res, next) => {
           username: updatedUser.username,
           joined: updatedUser.joined,
           avatar_url: updatedUser.avatar_url,
+          followers: updatedUser.followers,
+          following: updatedUser.following,
         },
       });
     } else {
@@ -322,6 +322,8 @@ exports.uploadAvatar = async (req, res, next) => {
         title: newData.title,
         about: newData.about,
         joined: newData.joined,
+        following: newData.following,
+        followers: newData.followers,
       },
     });
   } catch (error) {
@@ -358,6 +360,8 @@ exports.generateAvatar = async (req, res, next) => {
         title: newData.title,
         about: newData.about,
         joined: newData.joined,
+        followers: newData.followers,
+        following: newData.following,
       },
     });
   } catch (error) {
@@ -604,8 +608,9 @@ exports.listFollowers = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found!.' });
     }
-    const listFollowers = (await user.populate('followers', 'name title avatar_url'))
-      .followers;
+    const listFollowers = (
+      await user.populate('followers', 'name title avatar_url')
+    ).followers;
     return res.status(200).json({ followers: listFollowers });
   } catch (error) {
     console.log(`Error: ${error.message}`);
@@ -628,8 +633,9 @@ exports.listFollowing = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: 'user not found' });
     }
-    const listFollowing = (await user.populate('following', 'name title avatar_url'))
-      .following;
+    const listFollowing = (
+      await user.populate('following', 'name title avatar_url')
+    ).following;
     return res.status(200).json({ following: listFollowing });
   } catch (error) {
     console.log(error.message);
