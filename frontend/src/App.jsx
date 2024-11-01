@@ -21,6 +21,7 @@ import UpdateProfilePage from './pages/profile/UpdateProfilePage';
 import Layout from './pages/Layout';
 import PublicRoutes from './routes/PublicRoutes';
 import UsersProfilePage from './pages/profile/UsersProfilePage';
+import BlogPage from './pages/blogs/BlogPage';
 
 function App() {
   return (
@@ -39,7 +40,8 @@ function App() {
           />
           <Route path='/reset-password/*' element={<Navigate to='/login' />} />
           <Route path='*' element={<NotFoundPage />} />
-
+          {/*Blog routes  */}
+          <Route path='/blog/:id' element={<BlogPage />} />
           {/* Routes with Navbar */}
           <Route element={<Layout />}>
             {/* Protected Routes */}
