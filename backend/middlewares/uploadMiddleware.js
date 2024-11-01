@@ -12,4 +12,15 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
-module.exports = upload;
+const uploadToCloudinary = async (filePath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: 'blog_app_react_node',
+    });
+    return result.secure_url;
+  } catch (error) {
+    return `Cloudinary upload failed: ${error.message}`;
+  }
+};
+
+module.exports = { upload, uploadToCloudinary };
