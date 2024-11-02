@@ -40,8 +40,7 @@ function App() {
           />
           <Route path='/reset-password/*' element={<Navigate to='/login' />} />
           <Route path='*' element={<NotFoundPage />} />
-          {/*Blog routes  */}
-          <Route path='/blog/:id' element={<BlogPage />} />
+         
           {/* Routes with Navbar */}
           <Route element={<Layout />}>
             {/* Protected Routes */}
@@ -50,6 +49,9 @@ function App() {
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/profile/:id' element={<UsersProfilePage />} />
               <Route path='/profile/edit' element={<UpdateProfilePage />} />
+
+              {/*Blog routes  */}
+              <Route path='/blog/:id' element={<BlogPage />} />
             </Route>
           </Route>
         </Routes>

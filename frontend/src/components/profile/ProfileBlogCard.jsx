@@ -23,7 +23,7 @@ const ProfileBlogCard = ({ blog }) => {
       </div>
       <div className='profile-b-card-body'>
         <h2>
-          <Link to={`/blogs/${blog._id}`}>{blog.title}</Link>
+          <Link to={`/blog/${blog._id}`}>{blog.title}</Link>
         </h2>
         <div className='profile-b-card-footer'>
           <div>
