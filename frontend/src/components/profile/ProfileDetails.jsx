@@ -43,7 +43,7 @@ const ProfileDetails = ({ user }) => {
           .slice(0, 3)
           .map((blog, index) => (
             <p key={index}>
-              <Link to={blog.id}>{blog.title}</Link>
+              <Link to={`/blog/${blog._id}`}>{blog.title}</Link>
             </p>
           ))}
       </div>
