@@ -27,7 +27,7 @@ exports.getAllBlogs = async (req, res, next) => {
   }
 };
 
-// Create a Blog
+// Create a Blog  
 exports.createBlog = async (req, res, next) => {
   const { error } = createBlogSchema.validate(req.body);
 
@@ -53,7 +53,7 @@ exports.createBlog = async (req, res, next) => {
           avatar_url: user.avatar_url,
         },
         excerpt,
-        heroImage: req.file.path,
+        heroImage, // for cloudinary uploads in backend using image url 
         category,
         content,
       });

@@ -130,6 +130,9 @@
   font-weight: 300;
   color: #333;
 }
+.bm-image-content-c .bm-content p {
+  white-space: pre-line;
+}
 @media screen and (max-width: 640px) {
   .bm-image-content-c .bm-content {
     font-size: 1rem;

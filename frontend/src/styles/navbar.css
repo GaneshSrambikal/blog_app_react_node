@@ -1,12 +1,39 @@
+.navbar-0 {
+  background-color: #263246;
+}
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 2rem;
-  background-color: #333;
   color: #fff;
-  /* max-width: 1280px;
-  margin: auto; */
+  max-width: 1180px;
+  margin: auto;
+}
+.navbar-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.navbar-right .navbar-add-blog-btn {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 2rem;
+  padding: 0.3rem 0.5rem;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s ease-in;
+}
+
+.navbar-right .navbar-add-blog-btn:hover {
+  background-color: aliceblue;
+  color: #333;
+}
+.navbar-right .navbar-add-blog-btn svg {
+  margin-right: 0.3rem;
 }
 .navbar .navbar-brand a {
   text-decoration: none;

@@ -22,6 +22,7 @@ import Layout from './pages/Layout';
 import PublicRoutes from './routes/PublicRoutes';
 import UsersProfilePage from './pages/profile/UsersProfilePage';
 import BlogPage from './pages/blogs/BlogPage';
+import CreateBlogPage from './pages/blogs/CreateBlogPage';
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function App() {
           />
           <Route path='/reset-password/*' element={<Navigate to='/login' />} />
           <Route path='*' element={<NotFoundPage />} />
-         
+
           {/* Routes with Navbar */}
           <Route element={<Layout />}>
             {/* Protected Routes */}
@@ -52,6 +53,7 @@ function App() {
 
               {/*Blog routes  */}
               <Route path='/blog/:id' element={<BlogPage />} />
+              <Route path='/blogs/create-blog' element={<CreateBlogPage />} />
             </Route>
           </Route>
         </Routes>
