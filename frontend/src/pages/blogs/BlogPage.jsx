@@ -47,9 +47,7 @@ const BlogPage = () => {
           <button>
             <MdEdit /> Edit
           </button>
-          <button>
-            <MdDelete /> Delete
-          </button>
+          
         </div>
       )}
       <div className='blogpage-main-c'>
@@ -90,16 +88,7 @@ const BlogPage = () => {
             <p>{blog?.content}</p>
           </div>
           <div>Like and comment goes here</div>
-          {/* {user?._id === blog?.author?.id && (
-            <div className='blogpage-main-action-c'>
-              <button>
-            <MdEdit /> Edit
-          </button>
-              <button>
-                <MdDelete /> Delete
-              </button>
-            </div>
-          )} */}
+          
         </div>
       </div>
     </div>

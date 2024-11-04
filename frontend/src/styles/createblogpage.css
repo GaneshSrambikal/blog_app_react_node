@@ -61,3 +61,7 @@
 .create-blog-form-container {
   margin-bottom: 2rem;
 }
+#confetti-canvas{
+  width: 100%;
+  height: 100%;
+}
