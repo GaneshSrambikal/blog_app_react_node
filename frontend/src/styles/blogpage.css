@@ -17,6 +17,34 @@
   margin-right: 0.5rem;
   font-size: 16px;
 }
+.blogpage-container .blogpage-main-action-c {
+  /* background-color: aqua; */
+  padding: 1rem 0;
+  display: flex;
+  justify-content: end;
+}
+.blogpage-container .blogpage-main-action-c button {
+  border: 0;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #fff;
+  text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.blogpage-main-action-c button svg {
+  margin-right: 0.2rem;
+}
+.blogpage-main-action-c button:nth-child(1) {
+  background-color: #2e9414;
+}
+.blogpage-main-action-c button:nth-child(2) {
+  background-color: #be1b1b;
+  margin-left: 1rem;
+}
 .blogpage-container .blogpage-main-c {
   /* background-color: aquamarine; */
   margin-top: 2rem;

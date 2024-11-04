@@ -1,14 +1,14 @@
 /* Profile tabs */
 .profile-tabs {
   /* background-color: aqua; */
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 .p-tabs-container {
   background-color: rgb(236, 236, 236);
   padding: 0.5rem 0.5rem;
   border-radius: 4px;
   display: flex;
-  width: 300px;
+  width: 100%;
   margin-bottom: 1rem;
 }
 .p-tabs-container .p-tabs-btn {

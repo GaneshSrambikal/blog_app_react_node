@@ -1,10 +1,9 @@
 import { useContext, useRef, useState } from 'react';
 import InputComponent from '../ui/InputComponent';
 import { validateCreateBlogForm } from '../../validators/blog/createBlogValidator';
-import Joi from 'joi';
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
-
+import { Oval } from 'react-loader-spinner';
 const CreateBlogForm = () => {
   const fileInputRef = useRef(null);
   const { token } = useContext(AuthContext);
@@ -12,6 +11,7 @@ const CreateBlogForm = () => {
   const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
   const c_upload_url = import.meta.env.VITE_CLOUDINARY_UPLOAD_URL;
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     excerpt: '',
@@ -20,30 +20,22 @@ const CreateBlogForm = () => {
     heroImage: null,
   });
   const [errors, setErrors] = useState({});
-  const [imageError, setImageError] = useState({});
 
-  // schema for image for validation
-  const imageSchema = Joi.object({
-    heroImage: Joi.any().required().label('Image').messages({
-      'any.required': 'Image is required',
-      'any.empty': 'Image is required',
-    }),
-  });
   const handleInputChange = (e) => {
-    setErrors({});
-
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    setErrors({
+      ...errors,
+      [name]: '',
+    });
   };
 
   const handleImageChange = () => {
     setErrors({});
-    // const file = e.target.files[0];
     if (fileInputRef.current.files[0]) {
-      console.log('seting image');
       setFormData((prevData) => ({
         ...prevData,
         heroImage: URL.createObjectURL(fileInputRef.current.files[0]),
@@ -66,13 +58,16 @@ const CreateBlogForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log(formData, selectedImage);
     const validationErrors = validateCreateBlogForm(formData);
     if (validationErrors) {
       console.log(validationErrors);
       setErrors(validationErrors);
+      setIsLoading(false);
     } else {
       try {
+        setIsLoading(true);
         console.log(URL.revokeObjectURL(formData.heroImage));
         // 1. upload image to cloudinary
         const imageData = new FormData();
@@ -94,53 +89,11 @@ const CreateBlogForm = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log('Added blog successfully', newBlog);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
-
-    // const validateImage = imageSchema.validate({
-    //   heroImage: fileInputRef.current.files[0],
-    // });
-    // if (validateImage.error) {
-    //   setImageError({
-    //     heroImage: validateImage.error.details[0].message,
-    //   });
-    //   // console.log(errors);
-    //   console.log('Image Error : ', validateImage);
-    //   console.log(Object.keys(imageError).length);
-    // } else {
-    //   setImageError({});
-    // }
-
-    // if (
-    //   Object.keys(errors).length === 0 &&
-    //   Object.keys(imageError).length === 0
-    // ) {
-    //   console.log('form submitted successfully');
-    //   const blogFormData = new FormData();
-    //   blogFormData.append('heroImage', formData.heroImage);
-    //   blogFormData.append('title', formData.title);
-    //   blogFormData.append('content', formData.content);
-    //   blogFormData.append('excerpt', formData.excerpt);
-    //   blogFormData.append('category', formData.category);
-    //   // blogFormData.append('upload_preset', preset);
-    //   try {
-    //     console.log(selectedImage);
-    //     const newBlog = await axios.post(
-    //       `${react_base_url}/blogs/create-blog`,
-    //       blogFormData,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       }
-    //     );
-    //     console.log('New Blog', newBlog.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
     console.log(formData);
   };
   return (
@@ -156,7 +109,6 @@ const CreateBlogForm = () => {
         className={`${getInputClass('title')}`}
         error={errors.title}
       />
-      {/* {errors.title && <span className='error-message'>{errors.title}</span>} */}
       {/* Excerpt */}
       <InputComponent
         label={'Excerpt (brief description).'}
@@ -196,28 +148,17 @@ const CreateBlogForm = () => {
         <label>Image</label>
         <span>(aspect ratios: 16:9 suits the best.)</span>
         <input
-          className='create-blog-fileInput'
           type='file'
           name='heroImage'
           id='heroImage'
           accept='image/*'
           onChange={handleImageChange}
           ref={fileInputRef}
+          className={`${getInputClass('heroImage')} create-blog-fileInput`}
         />
         {errors.heroImage && (
           <p className='error-message'>{errors.heroImage}</p>
         )}
-        {/* <InputComponent
-          type='file'
-          id='heroImage'
-          label='Image'
-          value={formData.heroImage}
-          onChange={handleImageChange}
-          ref={fileInputRef}
-          accept='image/*'
-          className={`${getInputClass('content')} create-blog-fileinput`}
-          error={errors.heroImage}
-        /> */}
 
         {selectedImage && (
           <div className='create-blog-preview-img'>
@@ -236,7 +177,21 @@ const CreateBlogForm = () => {
       </div>
       {/* submit */}
       <div className='create-blog-form-sub-btn'>
-        <button className='submit-button'>Add</button>
+        <button className='submit-button' disabled={isLoading}>
+          {isLoading ? (
+            <Oval
+              visible={isLoading}
+              height='20'
+              width='20'
+              color='#fff'
+              ariaLabel='oval-loading'
+              wrapperStyle={{}}
+              wrapperClass=''
+            />
+          ) : (
+            `Add`
+          )}
+        </button>
       </div>
     </form>
   );

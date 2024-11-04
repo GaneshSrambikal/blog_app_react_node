@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { FaArrowCircleLeft } from 'react-icons/fa';
-import { MdOutlineAccessTime } from 'react-icons/md';
+import { MdOutlineAccessTime, MdEdit, MdDelete } from 'react-icons/md';
 import { CiCalendar } from 'react-icons/ci';
 import '../../styles/blogpage.css';
 import { useContext, useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ import AuthContext from '../../context/AuthContext';
 import { getCreatedDate } from '../../utils/formatDates';
 const base_url = import.meta.env.VITE_API_BASE_URL;
 const BlogPage = () => {
-  const { loading } = useContext(AuthContext);
+  const { loading, user } = useContext(AuthContext);
   const [blog, setBlog] = useState({});
   const [isloading, setIsloading] = useState(false);
   const params = useParams();
@@ -42,6 +42,16 @@ const BlogPage = () => {
           <FaArrowCircleLeft /> back to blogs
         </Link>
       </div>
+      {user?._id === blog?.author?.id && (
+        <div className='blogpage-main-action-c'>
+          <button>
+            <MdEdit /> Edit
+          </button>
+          <button>
+            <MdDelete /> Delete
+          </button>
+        </div>
+      )}
       <div className='blogpage-main-c'>
         <div className='blogpage-m-tags-c'>
           <span className='bmtag'>{blog?.category}</span>
@@ -80,6 +90,16 @@ const BlogPage = () => {
             <p>{blog?.content}</p>
           </div>
           <div>Like and comment goes here</div>
+          {/* {user?._id === blog?.author?.id && (
+            <div className='blogpage-main-action-c'>
+              <button>
+            <MdEdit /> Edit
+          </button>
+              <button>
+                <MdDelete /> Delete
+              </button>
+            </div>
+          )} */}
         </div>
       </div>
     </div>
