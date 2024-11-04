@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-
+import '../index.css';
 const Layout = () => {
   const location = useLocation();
   const params = useParams();

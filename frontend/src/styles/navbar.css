@@ -1,5 +1,8 @@
 .navbar-0 {
   background-color: #263246;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
 }
 .navbar {
   display: flex;

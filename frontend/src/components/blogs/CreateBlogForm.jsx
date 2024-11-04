@@ -91,6 +91,7 @@ const CreateBlogForm = () => {
         console.log('Added blog successfully', newBlog);
         setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
     }
