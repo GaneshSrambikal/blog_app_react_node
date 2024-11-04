@@ -16,6 +16,7 @@ textarea.error {
   max-width: 800px;
   margin: auto;
   padding: 2rem;
+  padding-top: 8rem;
   display: flex;
   flex-direction: column;
   /* background-color: cadetblue; */
@@ -133,6 +134,7 @@ hr {
   /* flex-direction: column; */
   /* background-color: #3eb7cc; */
   padding: 2rem;
+  padding-top: 8rem;
 }
 .edit-profile-form-c {
   /* background-color: aquamarine; */

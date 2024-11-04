@@ -3,6 +3,7 @@
   margin: auto;
   /* background-color: aqua; */
   padding: 2rem;
+  padding-top: 8rem;
   /* display: flex; */
 }
 .blogpage-container .blogpage-back-c a {
@@ -129,12 +130,13 @@
 }
 .bm-image-content-c .bm-hero-image {
   width: 100%;
+  height: 100%;
   /* background-color: #541bbe; */
   margin-bottom: 1rem;
 }
 .bm-image-content-c .bm-hero-image img {
   width: 100%;
-  height: 24rem;
+  height: auto;
   object-fit: cover;
   border-radius: 0.75rem;
 }

@@ -4,11 +4,24 @@ const cors = require('cors');
 const userRouter = require('./routes/users/userRoutes');
 const adminRouter = require('./routes/users/adminRoutes');
 const blogRouter = require('./routes/blog/blogRoutes');
+const { allowedOrigins } = require('./utils/constants/corsOrigins');
 const app = express();
 
 app.use(express.json());
 // Middleware setup
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+  })
+);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
