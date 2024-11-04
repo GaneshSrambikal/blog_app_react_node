@@ -24,7 +24,7 @@ const BlogSchema = mongoose.Schema({
   excerpt: {
     type: String,
     required: true,
-    maxLength: 150,
+    maxLength: 250,
   },
   category: {
     type: String,

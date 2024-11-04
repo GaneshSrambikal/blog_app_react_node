@@ -26,7 +26,7 @@ router.get('/', getAllBlogs);
 //@desc     Create a blog
 //@route    post /api/blogs/create-blog
 // @access  Private / Protected
-router.post('/create-blog', protect, upload.single('heroImage'), createBlog);
+router.post('/create-blog', protect, createBlog);
 
 // Upload a blogs Hero Image
 //@desc     Upload a blogs hero image
