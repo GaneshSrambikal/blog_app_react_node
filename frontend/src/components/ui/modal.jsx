@@ -32,9 +32,13 @@ const Modal = ({ confetti = false, ...props }) => {
         <div className='blg-modal-prompt'>
           <p>{props?.promptTitle}</p>
           <div>
-            <Link to={props?.btnProps?.link} className=''>
-              {props?.btnProps?.text}
-            </Link>
+            {props?.btnProps?.btnType == 'link' ? (
+              <Link to={props?.btnProps?.link} className=''>
+                {props?.btnProps?.text}
+              </Link>
+            ) : (
+              <button>{props?.btnProps?.text}</button>
+            )}
             <button className='' onClick={handleClose}>
               close
             </button>

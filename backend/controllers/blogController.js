@@ -58,12 +58,10 @@ exports.createBlog = async (req, res, next) => {
         content,
       });
       const savedBlog = await newBlog.save();
-      return res
-        .status(200)
-        .json({
-          message: `blog created. Blog id: ${savedBlog._id}`,
-          id: savedBlog._id,
-        });
+      return res.status(200).json({
+        message: `blog created. Blog id: ${savedBlog._id}`,
+        id: savedBlog._id,
+      });
     }
   } catch (error) {
     console.log(`error: ${error.message}`);
@@ -182,7 +180,7 @@ exports.deleteBlogById = async (req, res, next) => {
         .status(404)
         .json({ message: `Blog with id: ${req.params.id} does not exists.` });
     }
-    if (blog.author.toString() === req.user.id) {
+    if (blog.author.id.toString() === req.user.id) {
       await blog.deleteOne();
       return res
         .status(200)

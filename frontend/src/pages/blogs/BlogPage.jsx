@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { FaArrowCircleLeft } from 'react-icons/fa';
-import { MdOutlineAccessTime, MdEdit, MdDelete } from 'react-icons/md';
+import { MdOutlineAccessTime, MdEdit } from 'react-icons/md';
 import { CiCalendar } from 'react-icons/ci';
 import '../../styles/blogpage.css';
 import { useContext, useEffect, useState } from 'react';

@@ -8,6 +8,7 @@ import { validateUpdateForm } from '../../validators/profile/updateValidator';
 import { useNavigate } from 'react-router-dom';
 import { TbPhotoEdit } from 'react-icons/tb';
 import { resizeImage } from '../../utils/resizeImage';
+import { useToast } from '../../context/ToastContext';
 const UpdateProfilePage = () => {
   const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
@@ -18,6 +19,7 @@ const UpdateProfilePage = () => {
   const [loadingGenerate, setLoadingGenerate] = useState(false);
   const [showUploadAction, setShowUploadAction] = useState(false);
   const navigate = useNavigate();
+  const addToast = useToast();
   const avatarActionRef = useRef(null);
   useEffect(() => {
     loadUser();
@@ -78,6 +80,7 @@ const UpdateProfilePage = () => {
         setLoadingUpload(false);
         handleUploadAction();
         console.log('updated profile picture', updatedUser);
+        addToast('User avatar updated successfully.', 'toaster-success');
       } catch (error) {
         console.log(error);
         setLoadingUpload(false);
@@ -126,6 +129,7 @@ const UpdateProfilePage = () => {
           type: 'LOAD_USER',
           payload: { userData: updatedUser.data.user, token },
         });
+        addToast('Profile updated successfully', 'toaster-success');
         console.log('dispatch sent', user);
         navigate('/profile');
         // }
@@ -152,6 +156,7 @@ const UpdateProfilePage = () => {
       });
       setLoadingGenerate(false);
       handleUploadAction();
+      addToast('User avatar updated successfully', 'toaster-success');
       console.log(res);
     } catch (error) {
       console.log(error);

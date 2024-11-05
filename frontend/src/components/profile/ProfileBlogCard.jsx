@@ -46,7 +46,7 @@ const ProfileBlogCard = ({ blog, ...props }) => {
               <Link to={`/blog/${blog?._id}`}>
                 <MdEdit />
               </Link>
-              <button onClick={props.handleModal}>
+              <button onClick={() => props.handleModal(blog._id)}>
                 <MdDelete />
               </button>
             </div>

@@ -134,6 +134,8 @@ body.modal-open {
   font-weight: 300;
   cursor: pointer;
   border: 0;
+  display: flex;
+  align-items: center;
 }
 .blg-modal-prompt div button:hover {
   text-decoration: underline;
