@@ -2,17 +2,20 @@ import ProfileConnectionCard from './ProfileConnectionCard';
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
-const ProfileConnections = ({ user }) => {
+const ProfileConnections = ({ ...props }) => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const { loading, token } = useContext(AuthContext);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
-  console.log(user, token);
+  console.log(props.user, token);
   const fetchFollower = async () => {
     try {
-      const res = await axios.get(`${base_url}/users/${user._id}/followers`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `${base_url}/users/${props.user._id}/followers`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.log(res);
       setFollowers(res.data.followers);
       return res.data.followers;
@@ -22,9 +25,12 @@ const ProfileConnections = ({ user }) => {
   };
   const fetchFollowing = async () => {
     try {
-      const res = await axios.get(`${base_url}/users/${user._id}/following`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `${base_url}/users/${props.user._id}/following`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.log(res);
       setFollowing(res.data.following);
       return res.data.following;
@@ -35,12 +41,12 @@ const ProfileConnections = ({ user }) => {
   useEffect(() => {
     fetchFollower();
     fetchFollowing();
-  }, []);
+  }, [props.user]);
   console.log(followers, following);
   if (loading) return <div>loading</div>;
   return (
     <div className='profile-connections-container'>
-      <h2>{`${user.name.split(' ')[0]}'s connections`}</h2>
+      <h2>{`${props.user.name.split(' ')[0]}'s connections`}</h2>
       {/* Followers */}
       <div className='profile-connections-c-f-c'>
         <h3>Followers</h3>
