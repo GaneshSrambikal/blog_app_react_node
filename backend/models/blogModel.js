@@ -3,7 +3,11 @@ const { getReadingTime } = require('../utils/getReadingTime');
 
 // comments
 const commentSchema = mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', require: true },
+  author: {
+    id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    name: { type: String },
+    avatar_url: { type: String },
+  },
   text: {
     type: String,
     required: true,

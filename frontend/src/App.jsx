@@ -23,6 +23,7 @@ import PublicRoutes from './routes/PublicRoutes';
 import UsersProfilePage from './pages/profile/UsersProfilePage';
 import BlogPage from './pages/blogs/BlogPage';
 import CreateBlogPage from './pages/blogs/CreateBlogPage';
+import UpdateBlogPage from './pages/blogs/UpdateBlogPage';
 
 function App() {
   return (
@@ -52,8 +53,9 @@ function App() {
               <Route path='/profile/edit' element={<UpdateProfilePage />} />
 
               {/*Blog routes  */}
-              <Route path='/blog/:id' element={<BlogPage />} />
-              <Route path='/blogs/create-blog' element={<CreateBlogPage />} />
+              <Route path='/blogs/blog/:id' element={<BlogPage />} />
+              <Route path='/blogs/blog/create-blog' element={<CreateBlogPage />} />
+              <Route path='/blogs/blog/edit/:id' element={<UpdateBlogPage />} />
             </Route>
           </Route>
         </Routes>

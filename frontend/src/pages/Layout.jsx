@@ -10,8 +10,9 @@ const Layout = () => {
     '/profile/',
     '/profile/edit',
     `/profile/${params.id}`,
-    `/blog/${params.id}`,
-    `/blogs/create-blog`,
+    `/blogs/blog/${params.id}`,
+    `/blogs/blog/create-blog`,
+    `/blogs/blog/edit/${params.id}`,
   ];
   const showNavbar = routesWithNavbar.includes(location.pathname);
   return (

@@ -130,12 +130,12 @@ exports.updateBlogById = async (req, res, next) => {
         .json({ message: 'Validation Error', error: error.message });
     }
 
-    const { title, content, excerpt, category } = req.body;
-    let imageUrl;
-    if (req.file) {
-      const newFileUpload = await uploadToCloudinary(req.file.path);
-      imageUrl = newFileUpload;
-    }
+    const { title, content, excerpt, category, heroImage } = req.body;
+    // let imageUrl;
+    // if (req.file) {
+    //   const newFileUpload = await uploadToCloudinary(req.file.path);
+    //   imageUrl = newFileUpload;
+    // }
     if (blog.author.id.toString() === req.user.id) {
       const updatedBlog = await Blog.findByIdAndUpdate(
         req.params.id,
@@ -144,7 +144,7 @@ exports.updateBlogById = async (req, res, next) => {
           content,
           excerpt,
           category,
-          heroImage: (imageUrl && imageUrl) || blog.heroImage,
+          heroImage: heroImage,
         },
         { new: true }
       );
@@ -239,6 +239,26 @@ exports.likeBlogById = async (req, res, next) => {
       .json({ message: 'Server Error', error: error.message });
   }
 };
+// get comment by blog id
+exports.getCommentByBlogId = async (req, res, next) => {
+  const { error } = objectIdSchema.validate(req.params);
+  if (error) {
+    return res
+      .status(400)
+      .json({ message: 'Validation Error', error: error.message });
+  }
+  try {
+    const blog = await Blog.findById(req.params.id).populate('comments');
+    if (!blog) {
+      return res.status(404).json({ message: 'No blog found' });
+    }
+    return res.status(200).json({ comments: blog.comments.reverse() });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Failed to fetch Comments', error: error.message });
+  }
+};
 
 // comment on a blog post by id
 exports.commentOnBlog = async (req, res, next) => {
@@ -260,7 +280,11 @@ exports.commentOnBlog = async (req, res, next) => {
     if (blog) {
       const newComment = {
         text: comment,
-        user: req.user.id,
+        author: {
+          id: req.user.id,
+          avatar_url: req.user.avatar_url,
+          name: req.user.name,
+        },
       };
       blog.comments.push(newComment);
       await blog.save();
@@ -295,7 +319,7 @@ exports.deleteCommentOnBlog = async (req, res, next) => {
       if (!comment) {
         return res.status(404).json({ message: 'No comments found' });
       }
-      if (comment.user.toString() !== req.user.id) {
+      if (comment.author.id.toString() !== req.user.id) {
         return res
           .status(403)
           .json({ message: 'Not Authorized to delete comment' });

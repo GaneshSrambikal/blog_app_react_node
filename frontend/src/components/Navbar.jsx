@@ -51,7 +51,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className='navbar-right'>
-          <Link to='/blogs/create-blog' className='navbar-add-blog-btn'>
+          <Link to='/blogs/blog/create-blog' className='navbar-add-blog-btn'>
             <MdAddCircleOutline /> Add blog
           </Link>
           <div className='navbar-avatar' onClick={toggleDropdown}>
