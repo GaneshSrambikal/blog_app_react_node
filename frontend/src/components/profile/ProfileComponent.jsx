@@ -5,10 +5,12 @@ import { getJoinedDate } from '../../utils/formatDates';
 import { CiCalendar, CiLocationOn } from 'react-icons/ci';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Oval } from 'react-loader-spinner';
 const ProfileComponent = ({ ...props }) => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const { loading, user, token } = useContext(AuthContext);
   const params = useParams();
+  const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState(props.user);
   const [isFollow, setIsFollow] = useState(false);
   const [followers, setFollowers] = useState([]);
@@ -50,6 +52,7 @@ const ProfileComponent = ({ ...props }) => {
   };
   const handleFollow = async () => {
     try {
+      setIsLoading(true);
       await axios.post(`${base_url}/users/${profile._id}/follow`, '', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -59,13 +62,17 @@ const ProfileComponent = ({ ...props }) => {
       await fetchFollower();
       await fetchFollowing();
       setIsFollow(true);
+      setIsLoading(false);
       console.log(followers);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
   const handleUnFollow = async () => {
     try {
+      setIsLoading(true);
+
       await axios.post(`${base_url}/users/${profile._id}/unfollow`, '', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -75,8 +82,12 @@ const ProfileComponent = ({ ...props }) => {
       await fetchFollower();
       await fetchFollowing();
       setIsFollow(false);
+      setIsLoading(false);
+
       console.log(props.user);
     } catch (error) {
+      setIsLoading(false);
+
       console.log(error);
     }
   };
@@ -139,11 +150,35 @@ const ProfileComponent = ({ ...props }) => {
               </Link>
             ) : isFollow ? (
               <button className='submit-button' onClick={handleUnFollow}>
-                Following
+                {isLoading ? (
+                  <Oval
+                    visible={isLoading}
+                    height='20'
+                    width='20'
+                    color='#fff'
+                    ariaLabel='oval-loading'
+                    wrapperStyle={{}}
+                    wrapperClass=''
+                  />
+                ) : (
+                  `Following`
+                )}
               </button>
             ) : (
               <button className='submit-button' onClick={handleFollow}>
-                Follow
+                {isLoading ? (
+                  <Oval
+                    visible={isLoading}
+                    height='20'
+                    width='20'
+                    color='#fff'
+                    ariaLabel='oval-loading'
+                    wrapperStyle={{}}
+                    wrapperClass=''
+                  />
+                ) : (
+                  `Follow`
+                )}
               </button>
             )}
           </div>
