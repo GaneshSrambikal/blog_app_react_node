@@ -30,7 +30,7 @@ const ProfileDetails = ({ user }) => {
       {/* <h2>ProfileDetails</h2> */}
       <div className='profile-details-about-c'>
         <h3>About Me</h3>
-        { user?.about?.length > 0 ? (
+        {user?.about?.length > 0 ? (
           <p>{user?.about}</p>
         ) : (
           <p style={{ color: 'gray' }}>Edit Profile to add About.</p>
@@ -43,7 +43,7 @@ const ProfileDetails = ({ user }) => {
           .slice(0, 3)
           .map((blog, index) => (
             <p key={index}>
-              <Link to={`/blog/${blog._id}`}>{blog.title}</Link>
+              <Link to={`/blogs/blog/${blog._id}`}>{blog.title}</Link>
             </p>
           ))}
       </div>

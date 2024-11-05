@@ -39,7 +39,7 @@ const HeroBlogCard = ({ blog }) => {
           </div>
         </div>
         <div className='hero-blog-card-read-link'>
-          <Link to={`/blog/${blog._id}`}>
+          <Link to={`/blogs/blog/${blog._id}`}>
             Read more <FaArrowCircleRight />
           </Link>
         </div>

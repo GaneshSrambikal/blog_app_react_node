@@ -28,7 +28,7 @@ const ProfileBlogCard = ({ blog, ...props }) => {
       </div>
       <div className='profile-b-card-body'>
         <h2>
-          <Link to={`/blog/${blog._id}`}>{blog.title}</Link>
+          <Link to={`/blogs/blog/${blog._id}`}>{blog.title}</Link>
         </h2>
         <div className='profile-b-card-footer'>
           <div className='pb-c-f-like-comment'>
@@ -43,7 +43,7 @@ const ProfileBlogCard = ({ blog, ...props }) => {
           </div>
           {blog?.author?.id === user._id && (
             <div className='pb-c-f-actions'>
-              <Link to={`/blog/${blog?._id}`}>
+              <Link to={`/blogs/blog/edit/${blog?._id}`}>
                 <MdEdit />
               </Link>
               <button onClick={() => props.handleModal(blog._id)}>

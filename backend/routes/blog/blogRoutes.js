@@ -8,6 +8,7 @@ const {
   deleteCommentOnBlog,
   searchBlogByTitle,
   getAllBlogs,
+  getCommentByBlogId,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const {
@@ -58,6 +59,12 @@ router.delete('/blog/:id', protect, deleteBlogById);
 //@route    POST /api/blogs/:id/like
 // @access  Private / Protected
 router.post('/:id/like', protect, likeBlogById);
+
+// comment on blog
+//@desc     comment a blog by Blog Id
+//@route    POST /api/blogs/:id/comment
+// @access  Private / Protected
+router.get('/:id/comment', protect, getCommentByBlogId);
 
 // comment on blog
 //@desc     comment a blog by Blog Id

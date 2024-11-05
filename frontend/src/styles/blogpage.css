@@ -24,28 +24,25 @@
   display: flex;
   justify-content: end;
 }
-.blogpage-container .blogpage-main-action-c button {
+.blogpage-container .blogpage-main-action-c a {
   border: 0;
   padding: 0.3rem 0.7rem;
   border-radius: 5px;
   font-size: 1rem;
   font-weight: 300;
   color: #fff;
+  background-color: rgb(9, 163, 9);
   text-transform: lowercase;
   display: flex;
   align-items: center;
   cursor: pointer;
+  text-decoration: none;
+  text-transform: capitalize;
 }
-.blogpage-main-action-c button svg {
+.blogpage-main-action-c a svg {
   margin-right: 0.2rem;
 }
-.blogpage-main-action-c button:nth-child(1) {
-  background-color: #2e9414;
-}
-.blogpage-main-action-c button:nth-child(2) {
-  background-color: #be1b1b;
-  margin-left: 1rem;
-}
+
 .blogpage-container .blogpage-main-c {
   /* background-color: aquamarine; */
   margin-top: 2rem;
@@ -170,4 +167,170 @@
   .bm-image-content-c .bm-excerpt p {
     font-size: 15px;
   }
+}
+
+/* Likes comments */
+.bm-likes-comments-container {
+  /* background-color: aquamarine; */
+  display: flex;
+  flex-direction: column;
+}
+.bm-likes-comments-container .bm-like-comment-c {
+  display: flex;
+  /* background-color: aqua; */
+  font-size: 1.1rem;
+  color: #333;
+}
+.bm-like-comment-c .bm-like-c {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+.bm-like-comment-c .bm-like-c svg {
+  margin-right: 0.3rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.bm-like-comment-c .bm-like-c svg.liked {
+  color: rgb(240, 71, 71);
+}
+.bm-like-comment-c .bm-comment-c {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+.bm-like-comment-c .bm-comment-c svg {
+  margin-right: 0.3rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.bm-comments-c {
+  /* background-color: #541bbe; */
+}
+.bm-comments-c .bm-comments-c-null {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bm-comments-c-null p {
+  color: gray;
+  font-size: 1.2rem;
+}
+/* comment card */
+.bm-comments-c .bm-comment-card {
+  /* background-color: aquamarine; */
+  margin-top: 1rem;
+  padding: 0.3rem 0.7rem;
+}
+.bm-comment-card-u {
+  display: flex;
+}
+.bm-comment-card-u .bm-comment-card-u-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: chocolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.bm-comment-card-u .bm-comment-card-u-avatar span {
+  color: #fff;
+  /* font-weight: 200; */
+}
+.bm-comment-card-u .bm-comment-card-u-avatar img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.bm-comment-card-u-info-comment {
+  margin-left: 1rem;
+  background-color: rgb(243, 243, 243);
+  width: 100%;
+  padding: 0.3rem 0.8rem;
+  border: 1px dashed #dadada;
+  border-radius: 4px;
+}
+.bm-comment-card-u-info-comment .bm-comment-card-u-info {
+  display: flex;
+  margin-top: 0.5rem;
+}
+.bm-comment-card-u-info span {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  color: gray;
+  font-size: 14px;
+}
+.bm-comment-card-u-info span svg {
+  margin-right: 0.5rem;
+}
+.bm-comment-card-u-content {
+  margin: 0.5rem 0;
+}
+.bm-comment-card-u-info-comment .bm-comment-card-u-action {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.bm-comment-card-u-info-comment .bm-comment-card-u-action button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 4px;
+  background-color: rgb(250, 46, 46);
+  color: #fff;
+  padding: 0.3rem 0.9rem;
+  cursor: pointer;
+}
+.bm-comment-card-u-content-c {
+  margin-top: 1rem;
+}
+/* comment form */
+
+.commentform-container {
+  /* background-color: blue; */
+  display: flex;
+
+  align-items: flex-start;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+.commentform-container .commentform-c-user-a {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: chocolate;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+.commentform-container .commentform-c-user-a img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.commentform-container .comment-form-c-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.commentform-container .comment-form-c-form textarea {
+  resize: vertical;
+  min-height: 50px;
+  max-height: 100px;
+  margin-bottom: 1rem;
+}
+.comment-form-c-form .comment-btn {
 }
