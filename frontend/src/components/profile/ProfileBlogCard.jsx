@@ -3,7 +3,12 @@ import { FaRegHeart, FaRegCommentAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { getJoinedDate } from '../../utils/formatDates';
 import { getInitials } from '../../utils/formatNames';
-const ProfileBlogCard = ({ blog }) => {
+
+import { MdDelete, MdEdit } from 'react-icons/md';
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
+const ProfileBlogCard = ({ blog, ...props }) => {
+  const { user } = useContext(AuthContext);
   return (
     <div className='profile-blogs-card-c'>
       <div className='profile-b-card-header'>
@@ -26,14 +31,26 @@ const ProfileBlogCard = ({ blog }) => {
           <Link to={`/blog/${blog._id}`}>{blog.title}</Link>
         </h2>
         <div className='profile-b-card-footer'>
-          <div>
-            <FaRegHeart />
-            {`${blog.likes.length} likes`}
+          <div className='pb-c-f-like-comment'>
+            <div>
+              <FaRegHeart />
+              {`${blog.likes.length} likes`}
+            </div>
+            <div>
+              <FaRegCommentAlt />
+              {`${blog.comments.length} Comments`}
+            </div>
           </div>
-          <div>
-            <FaRegCommentAlt />
-            {`${blog.comments.length} Comments`}
-          </div>
+          {blog?.author?.id === user._id && (
+            <div className='pb-c-f-actions'>
+              <Link to={`/blog/${blog?._id}`}>
+                <MdEdit />
+              </Link>
+              <button onClick={() => props.handleModal(blog._id)}>
+                <MdDelete />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

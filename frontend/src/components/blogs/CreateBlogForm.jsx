@@ -4,7 +4,8 @@ import { validateCreateBlogForm } from '../../validators/blog/createBlogValidato
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { Oval } from 'react-loader-spinner';
-const CreateBlogForm = () => {
+
+const CreateBlogForm = ({ ...props }) => {
   const fileInputRef = useRef(null);
   const { token } = useContext(AuthContext);
   const react_base_url = import.meta.env.VITE_API_BASE_URL;
@@ -89,7 +90,17 @@ const CreateBlogForm = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log('Added blog successfully', newBlog);
+        props.handleNewLink(newBlog.data.id);
         setIsLoading(false);
+        setFormData({
+          title: '',
+          excerpt: '',
+          content: '',
+          category: '',
+          heroImage: null,
+        });
+        handleRemoveImage();
+        props.handleSuccess();
       } catch (error) {
         setIsLoading(false);
         console.log(error);
@@ -98,103 +109,107 @@ const CreateBlogForm = () => {
     console.log(formData);
   };
   return (
-    <form className='create-blog-form-container' onSubmit={handleSubmit}>
-      {/* Title */}
-      <InputComponent
-        label={'Title'}
-        type={'text'}
-        id={'title'}
-        name={'title'}
-        value={formData.title}
-        onChange={handleInputChange}
-        className={`${getInputClass('title')}`}
-        error={errors.title}
-      />
-      {/* Excerpt */}
-      <InputComponent
-        label={'Excerpt (brief description).'}
-        type={'textarea'}
-        id={'excerpt'}
-        name={'excerpt'}
-        value={formData.excerpt}
-        onChange={handleInputChange}
-        className={`${getInputClass('excerpt')} create-blog-excerpt-f`}
-        error={errors.excerpt}
-        rows={5}
-      />
-      {/* category */}
-      <InputComponent
-        label={'Category'}
-        type={'select'}
-        id={'category'}
-        name={'category'}
-        value={formData.category}
-        onChange={handleInputChange}
-        className={`${getInputClass('category')} create-blog-select-category`}
-        error={errors.category}
-      />
-      {/* Content */}
-      <InputComponent
-        label={'Content'}
-        type={'textarea'}
-        id={'content'}
-        name={'content'}
-        value={formData.content}
-        onChange={handleInputChange}
-        className={`${getInputClass('content')} create-blog-content-f`}
-        error={errors.content}
-      />
-      {/* Add Image */}
-      <div className='form-group create-blog-file-container'>
-        <label>Image</label>
-        <span>(aspect ratios: 16:9 suits the best.)</span>
-        <input
-          type='file'
-          name='heroImage'
-          id='heroImage'
-          accept='image/*'
-          onChange={handleImageChange}
-          ref={fileInputRef}
-          className={`${getInputClass('heroImage')} create-blog-fileInput`}
+    <>
+      {/* <Modal /> */}
+      <form className='create-blog-form-container' onSubmit={handleSubmit}>
+        {/* Title */}
+        <InputComponent
+          label={'Title'}
+          type={'text'}
+          id={'title'}
+          name={'title'}
+          value={formData.title}
+          onChange={handleInputChange}
+          className={`${getInputClass('title')}`}
+          error={errors.title}
         />
-        {errors.heroImage && (
-          <p className='error-message'>{errors.heroImage}</p>
-        )}
-
-        {selectedImage && (
-          <div className='create-blog-preview-img'>
-            <img
-              src={selectedImage}
-              alt='selectedImage'
-              style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-            />
-            <div className='form-group'>
-              <button onClick={handleRemoveImage} className=''>
-                Remove Image
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-      {/* submit */}
-      <div className='create-blog-form-sub-btn'>
-        <button className='submit-button' disabled={isLoading}>
-          {isLoading ? (
-            <Oval
-              visible={isLoading}
-              height='20'
-              width='20'
-              color='#fff'
-              ariaLabel='oval-loading'
-              wrapperStyle={{}}
-              wrapperClass=''
-            />
-          ) : (
-            `Add`
+        {/* Excerpt */}
+        <InputComponent
+          label={'Excerpt (brief description).'}
+          type={'textarea'}
+          id={'excerpt'}
+          name={'excerpt'}
+          value={formData.excerpt}
+          onChange={handleInputChange}
+          className={`${getInputClass('excerpt')} create-blog-excerpt-f`}
+          error={errors.excerpt}
+          rows={5}
+        />
+        {/* category */}
+        <InputComponent
+          label={'Category'}
+          type={'select'}
+          id={'category'}
+          name={'category'}
+          value={formData.category}
+          onChange={handleInputChange}
+          className={`${getInputClass('category')} create-blog-select-category`}
+          error={errors.category}
+        />
+        {/* Content */}
+        <InputComponent
+          label={'Content'}
+          type={'textarea'}
+          id={'content'}
+          name={'content'}
+          value={formData.content}
+          onChange={handleInputChange}
+          className={`${getInputClass('content')} create-blog-content-f`}
+          error={errors.content}
+        />
+        {/* Add Image */}
+        <div className='form-group create-blog-file-container'>
+          <label>Image</label>
+          <span>(aspect ratios: 16:9 suits the best.)</span>
+          <input
+            type='file'
+            name='heroImage'
+            id='heroImage'
+            accept='image/*'
+            onChange={handleImageChange}
+            ref={fileInputRef}
+            className={`${getInputClass('heroImage')} create-blog-fileInput`}
+          />
+          {errors.heroImage && (
+            <p className='error-message'>{errors.heroImage}</p>
           )}
-        </button>
-      </div>
-    </form>
+
+          {selectedImage && (
+            <div className='create-blog-preview-img'>
+              <img
+                src={selectedImage}
+                alt='selectedImage'
+                style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+              />
+              <div className='form-group'>
+                <button onClick={handleRemoveImage} className=''>
+                  Remove Image
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* submit */}
+        <div className='create-blog-form-sub-btn'>
+          <button className='submit-button' disabled={isLoading}>
+            {isLoading ? (
+              <Oval
+                visible={isLoading}
+                height='20'
+                width='20'
+                color='#fff'
+                ariaLabel='oval-loading'
+                wrapperStyle={{}}
+                wrapperClass=''
+              />
+            ) : (
+              `Add`
+            )}
+          </button>
+        </div>
+      </form>
+      {/* {activate && <ConfettiWrapper />} */}
+    </>
   );
 };
 

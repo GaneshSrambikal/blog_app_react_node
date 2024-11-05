@@ -1,0 +1,142 @@
+.blg-modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* background-color: rgba(85, 85, 85, 0.514); */
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 11;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* visibility: hidden;
+  opacity: 0; */
+  transition: visibility 0s, opacity 0.3s ease;
+}
+.blg-modal-overlay.show {
+  visibility: visible;
+  opacity: 1;
+}
+body.modal-open {
+  overflow: hidden;
+}
+.blg-modal-container {
+  /* background-color: aquamarine; */
+  background-color: #ffffff;
+  border: 1px solid #eee;
+  width: 500px;
+  max-width: 600px;
+  margin: auto;
+  /* height: 300px; */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  align-items: center;
+  border-radius: 5px;
+  position: relative;
+}
+@media screen and (max-width: 768px) {
+  .blg-modal-container {
+    max-width: 100%;
+  }
+}
+.blg-modal-head {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.blg-modal-head .blg-modal-svg-c {
+  width: 3rem;
+  height: 3rem;
+  /* background-color: #333; */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@keyframes check-animate {
+  0% {
+    width: 2rem;
+  }
+  10% {
+    width: 1.8rem;
+  }
+  50% {
+    width: 1rem;
+  }
+  80% {
+    width: 1.8rem;
+  }
+  100% {
+    width: 2rem;
+  }
+}
+.blg-modal-head svg {
+  color: rgb(46, 175, 46);
+  /* font-size: 2rem; */
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 1rem;
+  animation-name: check-animate;
+  animation-duration: 1.6s;
+  animation-iteration-count: 4;
+  animation-timing-function: linear;
+  transition: 0.4s;
+}
+
+.blg-modal-prompt {
+  flex: 1;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+  align-items: center;
+  margin-top: 1rem;
+  /* background-color: blue; */
+}
+.blg-modal-prompt p {
+  padding-bottom: 1rem;
+}
+.blg-modal-prompt div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.blg-modal-prompt div a {
+  text-decoration: none;
+  text-transform: capitalize;
+  color: aliceblue;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  background-color: #333;
+  font-size: 15px;
+  font-weight: 300;
+  cursor: pointer;
+}
+.blg-modal-prompt div a:hover {
+  text-decoration: underline;
+}
+.blg-modal-prompt div button {
+  text-transform: capitalize;
+  margin-left: 1rem;
+  color: aliceblue;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  background-color: #333;
+  font-size: 15px;
+  font-weight: 300;
+  cursor: pointer;
+  border: 0;
+  display: flex;
+  align-items: center;
+}
+.blg-modal-prompt div button:hover {
+  text-decoration: underline;
+}

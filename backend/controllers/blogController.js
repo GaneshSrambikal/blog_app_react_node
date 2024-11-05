@@ -27,7 +27,7 @@ exports.getAllBlogs = async (req, res, next) => {
   }
 };
 
-// Create a Blog  
+// Create a Blog
 exports.createBlog = async (req, res, next) => {
   const { error } = createBlogSchema.validate(req.body);
 
@@ -53,14 +53,15 @@ exports.createBlog = async (req, res, next) => {
           avatar_url: user.avatar_url,
         },
         excerpt,
-        heroImage, // for cloudinary uploads in backend using image url 
+        heroImage, // for cloudinary uploads in backend using image url
         category,
         content,
       });
       const savedBlog = await newBlog.save();
-      return res
-        .status(200)
-        .json({ message: `blog created. Blog id: ${savedBlog._id}` });
+      return res.status(200).json({
+        message: `blog created. Blog id: ${savedBlog._id}`,
+        id: savedBlog._id,
+      });
     }
   } catch (error) {
     console.log(`error: ${error.message}`);
@@ -179,7 +180,7 @@ exports.deleteBlogById = async (req, res, next) => {
         .status(404)
         .json({ message: `Blog with id: ${req.params.id} does not exists.` });
     }
-    if (blog.author.toString() === req.user.id) {
+    if (blog.author.id.toString() === req.user.id) {
       await blog.deleteOne();
       return res
         .status(200)

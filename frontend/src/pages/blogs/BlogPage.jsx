@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { FaArrowCircleLeft } from 'react-icons/fa';
-import { MdOutlineAccessTime, MdEdit, MdDelete } from 'react-icons/md';
+import { MdOutlineAccessTime, MdEdit } from 'react-icons/md';
 import { CiCalendar } from 'react-icons/ci';
 import '../../styles/blogpage.css';
 import { useContext, useEffect, useState } from 'react';
@@ -47,9 +47,7 @@ const BlogPage = () => {
           <button>
             <MdEdit /> Edit
           </button>
-          <button>
-            <MdDelete /> Delete
-          </button>
+          
         </div>
       )}
       <div className='blogpage-main-c'>
@@ -90,16 +88,7 @@ const BlogPage = () => {
             <p>{blog?.content}</p>
           </div>
           <div>Like and comment goes here</div>
-          {/* {user?._id === blog?.author?.id && (
-            <div className='blogpage-main-action-c'>
-              <button>
-            <MdEdit /> Edit
-          </button>
-              <button>
-                <MdDelete /> Delete
-              </button>
-            </div>
-          )} */}
+          
         </div>
       </div>
     </div>
