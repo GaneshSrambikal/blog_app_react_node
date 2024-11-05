@@ -6,7 +6,6 @@ import { getInitials } from '../../utils/formatNames';
 import { FaCalendar } from 'react-icons/fa';
 import { getCreatedDate } from '../../utils/formatDates';
 import { MdDelete } from 'react-icons/md';
-import { Oval } from 'react-loader-spinner';
 
 const CommentCard = ({ comment, ...props }) => {
   const { user } = useContext(AuthContext);

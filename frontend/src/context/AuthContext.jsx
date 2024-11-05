@@ -10,12 +10,14 @@ const initialState = {
   token: localStorage.getItem('blog_AuthToken') || null,
   isAuthenticated: false,
   loading: true,
+  allBlogs: [],
 };
 
 const actionTypes = {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
   LOAD_USER: 'LOAD_USER',
+  LOAD_ALL_BLOGS: 'LOAD_ALL_BLOGS',
 };
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -47,6 +49,11 @@ const authReducer = (state, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case actionTypes.LOAD_ALL_BLOGS:
+      return {
+        ...state,
+        allBlogs: action.payload,
       };
     default:
       return state;
@@ -100,6 +107,18 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
+  const fetchAllBlog = async () => {
+    try {
+      const res = await axios.get(`${react_base_url}/blogs`);
+      dispatch({
+        type: actionTypes.LOAD_ALL_BLOGS,
+        payload: res.data.blogs,
+      });
+    } catch (error) {
+      console.log(error.response?.data?.message);
+      throw error;
+    }
+  };
 
   const logout = () => {
     try {
@@ -118,7 +137,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
   return (
     <AuthContext.Provider
-      value={{ ...state, dispatch, loginUser, logout, loadUser }}
+      value={{ ...state, dispatch, loginUser, logout, loadUser, fetchAllBlog }}
     >
       {children}
     </AuthContext.Provider>

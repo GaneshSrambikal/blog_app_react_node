@@ -1,13 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import {
-  FaArrowCircleLeft,
-  FaCalendar,
-  FaHeart,
-  FaRegComment,
-  FaRegComments,
-  FaRegHeart,
-} from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
+import { FaArrowCircleLeft } from 'react-icons/fa';
 import { MdOutlineAccessTime, MdEdit } from 'react-icons/md';
 import { CiCalendar } from 'react-icons/ci';
 import '../../styles/blogpage.css';
@@ -19,7 +11,7 @@ import { getCreatedDate } from '../../utils/formatDates';
 import BlogComments from '../../components/blogs/BlogComments';
 const base_url = import.meta.env.VITE_API_BASE_URL;
 const BlogPage = () => {
-  const { loading, user, token } = useContext(AuthContext);
+  const { loading, user } = useContext(AuthContext);
   const [blog, setBlog] = useState({});
   const [isloading, setIsloading] = useState(false);
   const params = useParams();
@@ -32,20 +24,6 @@ const BlogPage = () => {
       setIsloading(false);
     } catch (error) {
       setIsloading(false);
-      console.log(error);
-    }
-  };
-  const handleComment = async (comment) => {
-    try {
-      const res = await axios.post(
-        `${base_url}/blogs/${blog?._id}/comment`,
-        comment,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      fetchBlog();
-    } catch (error) {
       console.log(error);
     }
   };
@@ -74,7 +52,7 @@ const BlogPage = () => {
         </div>
       )}
       <div className='blogpage-main-c'>
-        {/* <div className='blogpage-m-tags-c'>
+        <div className='blogpage-m-tags-c'>
           <span className='bmtag'>{blog?.category}</span>
           <span className='bmreadt'>
             <MdOutlineAccessTime />
@@ -110,18 +88,10 @@ const BlogPage = () => {
           <div className='bm-content'>
             <p>{blog?.content}</p>
           </div>
-        </div> */}
+        </div>
+        {/* Like and comment counts */}
         <div className='bm-likes-comments-container'>
-          <div className='bm-like-comment-c'>
-            <div className='bm-like-c'>
-              <FaRegHeart className='liked' />
-              {`${0} Likes`}
-            </div>
-            <div className='bm-comment-c'>
-              <FaRegComment />
-              {`${0} Comments`}
-            </div>
-          </div>
+          {/* Comments */}
           <BlogComments />
         </div>
       </div>

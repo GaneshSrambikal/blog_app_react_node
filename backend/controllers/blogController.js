@@ -220,16 +220,20 @@ exports.likeBlogById = async (req, res, next) => {
       blog.likes = blog.likes.filter((like) => like.toString() !== req.user.id);
       console.log(blog.likes);
       await blog.save();
-      return res
-        .status(200)
-        .json({ message: `Un Like the blog post ${req.params.id}` });
+      return res.status(200).json({
+        message: `Un Like the blog post ${req.params.id}`,
+        userId: req.user.id,
+      });
     } else {
       // like the post by addes user id
       blog.likes.push(req.user.id);
       await blog.save();
       return res
         .status(200)
-        .json({ message: `Like the blog post ${req.params.id}` });
+        .json({
+          message: `Like the blog post ${req.params.id}`,
+          userId: req.user.id,
+        });
     }
   } catch (error) {
     console.log(`Error: ${error.message}`);
