@@ -4,7 +4,7 @@ import { useContext, useState, useEffect } from 'react';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 import ProfileBlogCard from './ProfileBlogCard';
-import DeleteModal from '../ui/deleteModal';
+import DeleteModal from '../ui/DeleteModal';
 import { useToast } from '../../context/ToastContext';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const ProfileBlogs = () => {
@@ -35,7 +35,7 @@ const ProfileBlogs = () => {
     console.log(user.id);
     console.log('delete');
     setIsLoading(true);
-   
+
     try {
       const blog = await axios.delete(
         `${react_base_url}/blogs/blog/${selectedBlog}`,
