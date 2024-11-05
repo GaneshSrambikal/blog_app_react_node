@@ -130,15 +130,19 @@
   height: 100%;
   /* background-color: #541bbe; */
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .bm-image-content-c .bm-hero-image img {
-  width: 100%;
+  width: 80%;
   height: auto;
   object-fit: cover;
   border-radius: 0.75rem;
 }
 @media screen and (max-width: 640px) {
   .bm-image-content-c .bm-hero-image img {
+    width: 100%;
     height: 14rem;
   }
 }
@@ -174,6 +178,7 @@
   /* background-color: aquamarine; */
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
 }
 .bm-likes-comments-container .bm-like-comment-c {
   display: flex;
@@ -333,4 +338,5 @@
   margin-bottom: 1rem;
 }
 .comment-form-c-form .comment-btn {
+  max-width: 200px;
 }

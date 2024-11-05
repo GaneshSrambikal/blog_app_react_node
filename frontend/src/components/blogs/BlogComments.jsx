@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import CommentCard from './CommentCard';
 import { getInitials } from '../../utils/formatNames';
 import { useToast } from '../../context/ToastContext';
 import { Oval } from 'react-loader-spinner';
+import { FaRegComment } from 'react-icons/fa';
+import LikeComponent from './LikeComponent';
 const BlogComments = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const { loading, user, token } = useContext(AuthContext);
@@ -14,6 +16,7 @@ const BlogComments = () => {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [isLoading, setIsloading] = useState(false);
+
   const handleInput = (e) => {
     setComment(e.target.value);
   };
@@ -24,7 +27,7 @@ const BlogComments = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res.data.comments);
+
       setComments(res.data.comments);
     } catch (error) {
       console.log(error);
@@ -35,7 +38,7 @@ const BlogComments = () => {
     if (comment) {
       try {
         setIsloading(true);
-        const res = await axios.post(
+        await axios.post(
           `${base_url}/blogs/${params.id}/comment`,
           {
             comment,
@@ -44,7 +47,7 @@ const BlogComments = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log('comment added', res.data);
+
         setComment('');
         fetchComments();
         setIsloading(false);
@@ -58,15 +61,11 @@ const BlogComments = () => {
   const handleDeleteComment = async (id) => {
     try {
       setIsloading(true);
-      const res = await axios.delete(
-        `${base_url}/blogs/${params.id}/comment/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.delete(`${base_url}/blogs/${params.id}/comment/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       fetchComments();
       setIsloading(false);
-      console.log(res);
     } catch (error) {
       setIsloading(false);
       console.log(error);
@@ -75,9 +74,16 @@ const BlogComments = () => {
   useEffect(() => {
     fetchComments();
   }, []);
-  if (loading) return <div>Loading comments</div>;
+  if (loading) return <div>Loading ...</div>;
   return (
     <>
+      <div className='bm-like-comment-c'>
+        <LikeComponent />
+        <div className='bm-comment-c'>
+          <FaRegComment />
+          {`${comments?.length} Comments`}
+        </div>
+      </div>
       {/* Comment form */}
       <div className='commentform-container'>
         <div className='commentform-c-user-a'>
