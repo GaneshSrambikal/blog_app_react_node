@@ -81,7 +81,7 @@
   align-items: center;
 }
 .profile-blogs-card-c .profile-b-card-header .profile-b-card-avatar {
-  background-color: rgb(71, 209, 183);
+  /* background-color: rgb(71, 209, 183); */
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -89,7 +89,7 @@
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  color: aliceblue;
+  color: #333;
 }
 .profile-b-card-header .profile-b-card-avatar img {
   width: 3rem;
@@ -225,7 +225,7 @@
   box-shadow: 1px 1px 1px #d8d8d8;
 }
 .profile-connections-card-c .profile-connections-card-avatar-c {
-  background-color: brown;
+  /* background-color: brown; */
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -234,7 +234,7 @@
   align-items: center;
 }
 .profile-connections-card-avatar-c p {
-  color: aliceblue;
+  color: #333;
   font-size: 12px;
 }
 .profile-connections-card-avatar-c img {

@@ -9,11 +9,12 @@ import { MdDelete } from 'react-icons/md';
 
 const CommentCard = ({ comment, ...props }) => {
   const { user } = useContext(AuthContext);
+
   return (
     <div className='bm-comment-card' key={comment?._id}>
       <div className='bm-comment-card-u'>
         <div className='bm-comment-card-u-avatar'>
-          {comment?.author?.avatar_url.length > 0 ? (
+          {comment && comment?.author?.avatar_url.length > 0 ? (
             <img src={comment?.author?.avatar_url} alt='avatar' />
           ) : (
             <span>{getInitials(comment?.author?.name)}</span>
@@ -25,7 +26,7 @@ const CommentCard = ({ comment, ...props }) => {
             <p>{comment?.author?.name}</p>
             <span>
               <FaCalendar />
-              {getCreatedDate(comment?.createdAt)}
+              {comment && getCreatedDate(comment?.createdAt)}
             </span>
           </div>
           <div className='bm-comment-card-u-content-c'>

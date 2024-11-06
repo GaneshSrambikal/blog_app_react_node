@@ -4,6 +4,7 @@ import { getInitials } from '../../utils/formatNames';
 import InputComponent from '../../components/ui/InputComponent';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
+
 import { validateUpdateForm } from '../../validators/profile/updateValidator';
 import { useNavigate } from 'react-router-dom';
 import { TbPhotoEdit } from 'react-icons/tb';
@@ -162,6 +163,7 @@ const UpdateProfilePage = () => {
       console.log(error);
       setLoadingGenerate(false);
     }
+    
   };
   if (!user) return <div>Loading</div>;
   return (

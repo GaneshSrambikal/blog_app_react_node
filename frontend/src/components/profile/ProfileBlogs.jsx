@@ -7,7 +7,7 @@ import ProfileBlogCard from './ProfileBlogCard';
 import DeleteModal from '../ui/DeleteModal';
 import { useToast } from '../../context/ToastContext';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
-const ProfileBlogs = () => {
+const ProfileBlogs = ({ ...props }) => {
   const { user, loading, token } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState({});
@@ -20,7 +20,10 @@ const ProfileBlogs = () => {
       const res = await axios.get(`${react_base_url}/blogs`);
       console.log(res.data);
       if (res) {
-        setBlogs(res.data.blogs);
+        const userBlogs = res.data.blogs.filter(
+          (blog) => blog.author.id === props.user._id
+        );
+        setBlogs(userBlogs);
       }
     } catch (error) {
       console.log(error);
@@ -62,7 +65,7 @@ const ProfileBlogs = () => {
   return (
     <>
       <div className='profile-blogs-container'>
-        <h2>{`${user.name.split(' ')[0]}'s`} Blogs</h2>
+        <h2>{`${props.user.name.split(' ')[0]}'s`} Blogs</h2>
         <div className='profile-blogs-c'>
           <ul>
             {blogs &&

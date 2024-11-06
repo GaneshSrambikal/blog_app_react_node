@@ -235,7 +235,7 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: chocolate;
+  /* background-color: chocolate; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -311,7 +311,7 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: chocolate;
+  /* background-color: chocolate; */
   color: #fff;
   font-size: 1rem;
   font-weight: 400;

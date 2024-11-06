@@ -26,9 +26,10 @@ textarea.error {
   display: flex;
 }
 .profile-c-avatar-circle {
-  background-color: blueviolet;
+  /* background-color: coral; */
   width: 8rem;
   height: 8rem;
+  border: 1px solid #c0c0c0;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -156,8 +157,8 @@ hr {
   width: 13rem;
   height: 13rem;
   border-radius: 50%;
-  background-color: coral;
-  color: aliceblue;
+  /* background-color: coral; */
+  color: #333;
   display: flex;
   justify-content: center;
   align-items: center;

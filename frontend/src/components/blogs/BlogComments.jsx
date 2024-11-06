@@ -123,7 +123,7 @@ const BlogComments = () => {
       </div>
       {/* comments */}
       <div className='bm-comments-c'>
-        {comments?.length > 0 ? (
+        {comments && comments?.length > 0 ? (
           comments.map((comment) => (
             <CommentCard
               comment={comment}
