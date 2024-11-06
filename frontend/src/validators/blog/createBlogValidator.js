@@ -17,11 +17,12 @@ const createBlogSchema = Joi.object({
     'string.empty': 'Category is required',
     'any.required': 'Category is required',
   }),
-  excerpt: Joi.string().min(10).required().label('Excerpt').messages({
-    'string.base': 'Excerpt must be a string',
-    'string.empty': 'Excerpt is required',
-    'string.min': 'Excerpt must be at least 10 characters',
-    'any.required': 'Excerpt is required',
+  excerpt: Joi.string().min(10).max(250).required().label('Excerpt').messages({
+    'string.base': 'Excerpt must be a string.',
+    'string.empty': 'Excerpt is required.',
+    'string.min': 'Excerpt must be at least 10 characters.',
+    'string.max': 'Excerpt must be max 250 characters.',
+    'any.required': 'Excerpt is required.',
   }),
   heroImage: Joi.string().uri().required().label('Image').messages({
     'string.empty': 'Image is required',

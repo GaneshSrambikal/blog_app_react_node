@@ -10,7 +10,7 @@ const CreateBlogPage = () => {
     console.log('success called', success);
   };
   const handleNewLink = (link) => {
-    setNewBlogLink(`/blog/${link}`);
+    setNewBlogLink(`/blogs/blog/${link}`);
     console.log('link called', newBlogLink);
   };
   return (

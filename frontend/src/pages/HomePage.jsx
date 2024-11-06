@@ -6,6 +6,8 @@ import AuthContext from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import '../styles/homepage.css';
 import HeroBlogCard from '../components/blogs/HeroBlogCard';
+import Carousel from '../components/ui/Carousel';
+
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
   const { user, loading } = useContext(AuthContext);
@@ -25,6 +27,7 @@ const Home = () => {
   useEffect(() => {
     fetchBlog();
   }, []);
+
   if (!user) return <Navigate to='/login' />;
   if (loading) return <div>Loading...</div>;
   return (
@@ -37,11 +40,27 @@ const Home = () => {
         </div>
         <div className='homepage-latest-post-c'>
           <h3>Latest blogs at Blog App</h3>
+          <Carousel>
+            {blogs &&
+              blogs.slice(0, 6).map((blog, index) => (
+                <div className='homepage-carousel-slide' key={index}>
+                  <HeroBlogCard blog={blog} />
+                </div>
+              ))}
+          </Carousel>
+        </div>
+        <div className='homepage-filtersearch-container'>
+        <div>
+          <div>filters</div>
+          <div>search </div>
+        </div>
           {blogs &&
             blogs
-              .slice(0, 2)
-              .map((blog, index) => <HeroBlogCard key={index} blog={blog} />)}
+              .slice(0, 4)
+              .map((blog, index) => <HeroBlogCard blog={blog} key={index} />)}
         </div>
+
+
         {/* </div> */}
         {/* <div className='homepage-right-c'>right</div> */}
       </div>

@@ -1,17 +1,35 @@
 // import React from 'react'
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getInitials } from '../../utils/formatNames';
+import AvatarPlaceHolder from '../../assets/images/avatarPlaceholder.png';
+import axios from 'axios';
 const ProfileConnectionCard = ({ data }) => {
-  const { user } = useContext(AuthContext);
+  const base_url = import.meta.env.VITE_API_BASE_URL;
+  const { user, token } = useContext(AuthContext);
+  const [userAvatar, setUserAvatar] = useState(AvatarPlaceHolder);
   console.log(data);
+  const fetchUseAvatar = async () => {
+    const res = await axios.get(
+      `${base_url}/users/user/${data._id}/get-avatar-url`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log(res.data);
+    setUserAvatar(res.data.avatar_url);
+    // return currentAvatar;
+  };
+  useEffect(() => {
+    fetchUseAvatar();
+  }, []);
   return (
     <div className='profile-connections-card-c'>
       <div className='profile-connections-card-avatar-c'>
         {/* <p>Avatar</p> */}
         {data?.avatar_url.length > 0 ? (
-          <img src={data?.avatar_url} alt='avatar' />
+          <img src={userAvatar} alt='avatar' />
         ) : (
           <p>{getInitials(data?.name)}</p>
         )}

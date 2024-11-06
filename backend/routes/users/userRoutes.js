@@ -17,6 +17,7 @@ const {
   uploadAvatar,
   generateAvatar,
   getUsersProfile,
+  getUserCurrentAvatar,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const { upload } = require('../../middlewares/uploadMiddleware');
@@ -62,6 +63,11 @@ router.put('/profile', protect, updateProfile);
 //@route    delete /api/users/profile
 // @access  Private / Protected
 router.delete('/profile', protect, deleteProfile);
+
+//@desc     Get user Avatar
+//@route    GET /api/users/user/get-avatar-url
+// @access  Private / Protected
+router.get('/user/:id/get-avatar-url', protect, getUserCurrentAvatar);
 
 // Password Management
 

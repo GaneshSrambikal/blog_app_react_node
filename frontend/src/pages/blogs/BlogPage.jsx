@@ -9,10 +9,12 @@ import { getInitials } from '../../utils/formatNames';
 import AuthContext from '../../context/AuthContext';
 import { getCreatedDate } from '../../utils/formatDates';
 import BlogComments from '../../components/blogs/BlogComments';
+import AvatarPlaceHolder from '../../assets/images/avatarPlaceholder.png';
 const base_url = import.meta.env.VITE_API_BASE_URL;
 const BlogPage = () => {
-  const { loading, user } = useContext(AuthContext);
+  const { loading, user, token } = useContext(AuthContext);
   const [blog, setBlog] = useState({});
+  const [userAvatar, setUserAvatar] = useState(AvatarPlaceHolder);
   const [isloading, setIsloading] = useState(false);
   const params = useParams();
   const fetchBlog = async () => {
@@ -21,16 +23,27 @@ const BlogPage = () => {
       const blog = await axios.get(`${base_url}/blogs/blog/${params.id}`);
       console.log('from blog page', blog.data.blog);
       setBlog(blog.data.blog);
+      if (blog) {
+        fetchUseAvatar(blog.data.blog?.author?.id);
+      }
       setIsloading(false);
     } catch (error) {
       setIsloading(false);
       console.log(error);
     }
   };
-
+  const fetchUseAvatar = async (id) => {
+    const res = await axios.get(`${base_url}/users/user/${id}/get-avatar-url`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(res.data);
+    setUserAvatar(res.data.avatar_url);
+    // return currentAvatar;
+  };
   useEffect(() => {
     fetchBlog();
   }, []);
+
   if (loading || isloading)
     return (
       <div className='blogpage-container'>
@@ -65,13 +78,17 @@ const BlogPage = () => {
         <div className='bm-user-card'>
           <div className='bm-user-card-av-c'>
             {blog?.author && blog?.author?.avatar_url?.length > 0 ? (
-              <img src={blog?.author?.avatar_url} alt='avatar-image' />
+              <img src={userAvatar} alt='avatar-image' />
             ) : (
               blog?.author && getInitials(blog?.author?.name)
             )}
           </div>
           <div className='bm-user-card-info'>
-            <p>{blog?.author?.name}</p>
+            <p>
+              <Link to={`/profile/${blog?.author?.id}`}>
+                {blog?.author?.name}
+              </Link>
+            </p>
             <span>Chef</span>
             <span>
               <CiCalendar /> {getCreatedDate(blog?.createdAt)}

@@ -1,9 +1,29 @@
 // import React from 'react'
 import { getInitials } from '../../utils/formatNames';
 import { Link } from 'react-router-dom';
-import { MdOutlineAccessTime } from 'react-icons/md';
+import { MdOutlineAccessTime, MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaArrowCircleRight } from 'react-icons/fa';
+import { getCreatedDate } from '../../utils/formatDates';
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
+import AuthContext from '../../context/AuthContext';
+import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
 const HeroBlogCard = ({ blog }) => {
+  const base_url = import.meta.env.VITE_API_BASE_URL;
+  const { token } = useContext(AuthContext);
+  const [userAvatar, setUserAvatar] = useState(AvatarPlaceholder);
+  const fetchUseAvatar = async () => {
+    const res = await axios.get(
+      `${base_url}/users/user/${blog?.author?.id}/get-avatar-url`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    console.log(res.data);
+    setUserAvatar(res.data.avatar_url);
+    // return currentAvatar;
+  };
+  useEffect(() => {
+    fetchUseAvatar();
+  }, []);
   if (!blog) return <div>loading</div>;
   return (
     <div className='hero-blog-card-c'>
@@ -17,18 +37,25 @@ const HeroBlogCard = ({ blog }) => {
           </div>
           <div className='hero-blog-card-reading-c'>
             {' '}
-            <MdOutlineAccessTime /> <span>{` ${blog?.readingTime} min`}</span>
+            <MdOutlineAccessTime />{' '}
+            <span>{` ${blog?.readingTime} min read`}</span>{' '}
+            <span className='hero-blog-card-reading-c-h-divide'> | </span>
+            <span>
+              <MdOutlineCalendarMonth /> {getCreatedDate(blog?.createdAt)}
+            </span>
           </div>
           <div></div>
         </div>
         <div className='hero-blog-card-title-content'>
+          {/* <h2>{`${String(blog?.title).slice(0, 50)} ....`}</h2> */}
           <h2>{blog?.title}</h2>
-          <p>{blog?.excerpt}</p>
+          <p>{`${String(blog?.excerpt).slice(0, 80)} ....`}</p>
+          {/* <p>{blog?.excerpt}</p> */}
         </div>
         <div className='hero-blog-card-user-info'>
           <div className='hbcui-img-c'>
             {blog?.author?.avatar_url?.length > 0 ? (
-              <img src={blog?.author?.avatar_url} />
+              <img src={userAvatar} />
             ) : (
               getInitials(blog?.author?.name)
             )}

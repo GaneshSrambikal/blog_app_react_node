@@ -84,14 +84,15 @@
   margin-top: 1rem;
 }
 .blogpage-main-c .bm-user-card .bm-user-card-av-c {
-  background-color: #541bbe;
+  /* background-color: #541bbe; */
   width: 3rem;
   height: 3rem;
+  border: 1px solid #eee;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: #333;
 }
 .bm-user-card .bm-user-card-av-c img {
   width: 3rem;
@@ -124,6 +125,8 @@
   margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
 }
 .bm-image-content-c .bm-hero-image {
   width: 100%;
