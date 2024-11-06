@@ -57,6 +57,8 @@ const userSchema = new mongoose.Schema({
   },
   avatar_url: {
     type: String,
+    default:
+      'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
   },
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

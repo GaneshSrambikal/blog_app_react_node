@@ -374,6 +374,25 @@ exports.generateAvatar = async (req, res, next) => {
   }
 };
 
+// Get users current avatar
+exports.getUserCurrentAvatar = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.status(400).json({ message: 'User not found' });
+    } else {
+      const userAvatar = user.avatar_url;
+      return res.status(200).json({ avatar_url: userAvatar });
+    }
+  } catch (error) {
+    // next(error);
+    return res.status(500).json({
+      message: 'Failed to fetch user avatar',
+      error: error.message,
+    });
+  }
+};
+
 //Password Management
 // Forgot Password
 exports.forgotPassword = async (req, res, next) => {

@@ -3,23 +3,32 @@ import '../../styles/profile.css';
 import AuthContext from '../../context/AuthContext';
 import { getJoinedDate } from '../../utils/formatDates';
 import { CiCalendar, CiLocationOn } from 'react-icons/ci';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 const ProfileComponent = ({ ...props }) => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const { loading, user, token } = useContext(AuthContext);
-  const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState(props.user);
   const [isFollow, setIsFollow] = useState(false);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
-  console.log(
-    `Profile Components: ${profile?.followers?.includes(params.id)} `
-  );
-  console.log(profile.followers.includes(user._id), user._id, profile._id);
+  const [blogsCount, setBlogsCount] = useState(0);
 
+  const fetchUserBlog = async () => {
+    try {
+      const blogs = await axios.get(`${base_url}/blogs`);
+      if (blogs) {
+        const userBlog = blogs.data.blogs.filter(
+          (blog) => blog.author.id === props.user._id
+        );
+        setBlogsCount(userBlog.length);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const fetchFollower = async () => {
     try {
       const res = await axios.get(
@@ -92,7 +101,7 @@ const ProfileComponent = ({ ...props }) => {
     }
   };
   const isFollowing = () => {
-    if (profile.followers.includes(user._id)) {
+    if (profile?.followers?.includes(user._id)) {
       setIsFollow(true);
     }
   };
@@ -101,14 +110,15 @@ const ProfileComponent = ({ ...props }) => {
     fetchFollower();
     fetchFollowing();
     isFollowing();
+    fetchUserBlog();
   }, [props.user, profile]);
   if (loading) return <div>loading...</div>;
   return (
     <>
       <div className='profile-c-container'>
         <div className='profile-c-avatar-circle'>
-          {profile.avatar_url ? (
-            <img src={profile.avatar_url} alt='profile-avatar' />
+          {profile?.avatar_url ? (
+            <img src={profile?.avatar_url} alt='profile-avatar' />
           ) : (
             profile.name
               .split(' ')
@@ -131,15 +141,15 @@ const ProfileComponent = ({ ...props }) => {
           </div>
           <div className='pc-user-details-connections'>
             <div>
-              <p>{followers?.length}</p>
+              <p>{followers?.length || 0}</p>
               <p>followers</p>
             </div>
             <div>
-              <p>{following?.length}</p>
+              <p>{following?.length || 0}</p>
               <p>following</p>
             </div>
             <div>
-              <p>{0}</p>
+              <p>{blogsCount || 0}</p>
               <p>posts</p>
             </div>
           </div>

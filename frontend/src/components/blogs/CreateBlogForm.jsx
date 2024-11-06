@@ -125,7 +125,7 @@ const CreateBlogForm = ({ ...props }) => {
         />
         {/* Excerpt */}
         <InputComponent
-          label={'Excerpt (brief description).'}
+          label={`Excerpt (brief description. max characters 250). (${formData.excerpt.length}/250)`}
           type={'textarea'}
           id={'excerpt'}
           name={'excerpt'}
@@ -189,6 +189,7 @@ const CreateBlogForm = ({ ...props }) => {
             </div>
           )}
         </div>
+        {errors.server && <span>{errors.server}</span>}
         {/* submit */}
         <div className='create-blog-form-sub-btn'>
           <button className='submit-button' disabled={isLoading}>

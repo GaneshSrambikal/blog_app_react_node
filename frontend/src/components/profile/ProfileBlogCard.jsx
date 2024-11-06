@@ -3,12 +3,29 @@ import { FaRegHeart, FaRegCommentAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { getJoinedDate } from '../../utils/formatDates';
 import { getInitials } from '../../utils/formatNames';
-
+import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
 import { MdDelete, MdEdit } from 'react-icons/md';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
+import axios from 'axios';
 const ProfileBlogCard = ({ blog, ...props }) => {
-  const { user } = useContext(AuthContext);
+  const base_url = import.meta.env.VITE_API_BASE_URL;
+  const { user, token } = useContext(AuthContext);
+  const [userAvatar, setUserAvatar] = useState(AvatarPlaceholder);
+  const fetchUseAvatar = async () => {
+    const res = await axios.get(
+      `${base_url}/users/user/${blog?.author?.id}/get-avatar-url`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log(res.data);
+    setUserAvatar(res.data.avatar_url);
+    // return currentAvatar;
+  };
+  useEffect(() => {
+    fetchUseAvatar();
+  }, []);
   return (
     <div className='profile-blogs-card-c'>
       <div className='profile-b-card-header'>
@@ -16,7 +33,7 @@ const ProfileBlogCard = ({ blog, ...props }) => {
           {blog.author.avatar_url.length < 1 ? (
             getInitials(blog.author.name)
           ) : (
-            <img src={blog.author.avatar_url} alt='author_avatar' />
+            <img src={userAvatar} alt='author_avatar' />
           )}
         </div>
         <div className='profile-b-card-u-info'>
