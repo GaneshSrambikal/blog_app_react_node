@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import '../styles/homepage.css';
 import HeroBlogCard from '../components/blogs/HeroBlogCard';
 import Carousel from '../components/ui/Carousel';
+import { FaSearch } from 'react-icons/fa';
 
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
@@ -50,16 +51,23 @@ const Home = () => {
           </Carousel>
         </div>
         <div className='homepage-filtersearch-container'>
-        <div>
-          <div>filters</div>
-          <div>search </div>
-        </div>
+          <div className='homepage-filter-search'>
+            <div className='h-fs-filter-c'>
+              <div className='h-fs-filter-option'>all</div>
+              <div className='h-fs-filter-option'>Technology</div>
+              <div className='h-fs-filter-option'>Travel</div>
+              <div className='h-fs-filter-option'>Food</div>
+            </div>
+            <div className='h-fs-search-c'>
+              <input type='text' placeholder='search blogs'/>
+              <FaSearch />
+            </div>
+          </div>
           {blogs &&
             blogs
               .slice(0, 4)
               .map((blog, index) => <HeroBlogCard blog={blog} key={index} />)}
         </div>
-
 
         {/* </div> */}
         {/* <div className='homepage-right-c'>right</div> */}
