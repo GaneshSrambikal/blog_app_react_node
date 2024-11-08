@@ -17,9 +17,7 @@ const HeroBlogCard = ({ blog }) => {
       `${base_url}/users/user/${blog?.author?.id}/get-avatar-url`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    console.log(res.data);
     setUserAvatar(res.data.avatar_url);
-    // return currentAvatar;
   };
   useEffect(() => {
     fetchUseAvatar();

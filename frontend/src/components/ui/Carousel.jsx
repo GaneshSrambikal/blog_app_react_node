@@ -4,10 +4,9 @@ import { GoDot } from 'react-icons/go';
 const Carousel = ({ children }) => {
   let interval = 5000;
   const [slideIndex, setSlideIndex] = useState(0);
-  console.log(children.length);
+
   const nextSlide = useCallback(() => {
     setSlideIndex((prev) => (prev + 1) % children.length);
-    // console.log(slideIndex);
   }, [children.length]);
 
   useEffect(() => {

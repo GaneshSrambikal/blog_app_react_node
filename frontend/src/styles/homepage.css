@@ -5,7 +5,6 @@
   padding: 2rem;
   padding-top: 8rem;
   /* display: flex; */
-  
 }
 .homepage-left-c {
   flex: 2;
@@ -185,4 +184,53 @@
   .hero-blog-card-c .hero-blog-card-read-link {
     margin-top: 1rem;
   }
+}
+/* filter and search tabs */
+.homepage-filtersearch-container {
+  /* background-color: #7683f1; */
+  margin: 5rem 0;
+  padding: 0.5rem 0;
+}
+.homepage-filtersearch-container .homepage-filter-search {
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding: 0.5rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+.homepage-filter-search .h-fs-filter-c {
+  /* background-color: cadetblue; */
+  display: flex;
+}
+.h-fs-filter-c .h-fs-filter-option {
+  text-transform: capitalize;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  margin-right: 0.5rem;
+  background-color: chartreuse;
+  display: flex;
+  align-items: center;
+}
+.homepage-filter-search .h-fs-search-c {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  border: 1px solid #eee;
+  width: 500px;
+  max-width: 400px;
+  background-color: #fff;
+}
+.h-fs-search-c input {
+  border: 0;
+  width: 100%;
+}
+.h-fs-search-c input {
+  outline: none;
+}
+.h-fs-search-c svg {
+  color: grey;
 }
