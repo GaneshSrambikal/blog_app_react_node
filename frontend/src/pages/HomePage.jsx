@@ -53,7 +53,7 @@ const Home = () => {
         <div className='homepage-filtersearch-container'>
           <div className='homepage-filter-search'>
             <div className='h-fs-filter-c'>
-              <div className='h-fs-filter-option'>all</div>
+              <div className='h-fs-filter-option selected'>all</div>
               <div className='h-fs-filter-option'>Technology</div>
               <div className='h-fs-filter-option'>Travel</div>
               <div className='h-fs-filter-option'>Food</div>

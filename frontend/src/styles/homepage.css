@@ -210,9 +210,14 @@
   padding: 0.3rem 0.8rem;
   border-radius: 1rem;
   margin-right: 0.5rem;
-  background-color: chartreuse;
+  background-color: rgb(241, 241, 241);
+  color: #696969;
   display: flex;
   align-items: center;
+}
+.h-fs-filter-option.selected {
+  background-color: #263246;
+  color: #efefef;
 }
 .homepage-filter-search .h-fs-search-c {
   display: flex;
