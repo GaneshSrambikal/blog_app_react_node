@@ -3,14 +3,13 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../context/AuthContext';
-import { Link, Navigate } from 'react-router-dom';
 import '../styles/homepage.css';
 import HeroBlogCard from '../components/blogs/HeroBlogCard';
 import Carousel from '../components/ui/Carousel';
-import AvatarPlaceholder from '../assets/images/avatarPlaceholder.png';
 import { FaSearch } from 'react-icons/fa';
-import { MdCalendarMonth } from 'react-icons/md';
-import HomeBlogCard from '../components/blogs/homeBlogCard';
+import { Navigate } from 'react-router-dom';
+import HomeBlogCard from '../components/blogs/HomeBlogCard';
+
 
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {

@@ -201,9 +201,19 @@
   border-radius: 4px;
   border: 1px solid #eee;
 }
+@media screen and (max-width: 768px) {
+  .homepage-filtersearch-container .homepage-filter-search {
+    flex-direction: column;
+  }
+}
 .homepage-filter-search .h-fs-filter-c {
   /* background-color: cadetblue; */
   display: flex;
+}
+@media screen and (max-width: 768px) {
+  .homepage-filter-search .h-fs-filter-c {
+    margin-bottom: 1rem;
+  }
 }
 .h-fs-filter-c .h-fs-filter-option {
   text-transform: capitalize;
@@ -214,6 +224,15 @@
   color: #696969;
   display: flex;
   align-items: center;
+}
+@media screen and (max-width: 640px) {
+  .h-fs-filter-c {
+    flex-wrap: wrap;
+  }
+  .h-fs-filter-c .h-fs-filter-option {
+    font-size: 14px;
+    margin: 0.1rem;
+  }
 }
 .h-fs-filter-option.selected {
   background-color: #263246;
@@ -228,6 +247,11 @@
   width: 500px;
   max-width: 400px;
   background-color: #fff;
+}
+@media screen and (max-width: 640px) {
+  .homepage-filter-search .h-fs-search-c {
+    width: 200px;
+  }
 }
 .h-fs-search-c input {
   border: 0;
@@ -308,11 +332,11 @@
   padding: 2px 8px;
   text-decoration: none; */
   background-color: #d1c1ee;
-    padding: 0.2rem 0.5rem;
-    border-radius: 1rem;
-    color: #541bbe;
-    font-size: 14px;
-    text-transform: capitalize;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  color: #541bbe;
+  font-size: 14px;
+  text-transform: capitalize;
 }
 .filtersearch-result-card-c
   .fs-res-content
