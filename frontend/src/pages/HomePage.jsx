@@ -8,8 +8,7 @@ import HeroBlogCard from '../components/blogs/HeroBlogCard';
 import Carousel from '../components/ui/Carousel';
 import { FaSearch } from 'react-icons/fa';
 import { Navigate } from 'react-router-dom';
-import HomeBlogCard from '../components/blogs/HomeBlogCard';
-
+import HomeBlogCard from '../components/blogs/HeroBlogCard';
 
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
@@ -74,9 +73,9 @@ const Home = () => {
               .map((blog, index) => <HeroBlogCard blog={blog} key={index} />)} */}
           <div className='homepage-filtersearch-result-container'>
             {blogs &&
-              blogs.reverse().map((blog, index) => (
-                <HomeBlogCard blog={blog} key={index} />
-              ))}
+              blogs
+                .reverse()
+                .map((blog, index) => <HomeBlogCard blog={blog} key={index} />)}
           </div>
         </div>
 
