@@ -3,7 +3,7 @@ import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
 import { Link } from 'react-router-dom';
 import { getCreatedDate } from '../../utils/formatDates';
 
-const HomeBlogCard = ({ blog }) => {
+const FilterCard = ({ blog }) => {
   return (
     <article className='filtersearch-result-card-c'>
       <Link to={`/blogs/blog/${blog?._id}`}>
@@ -36,4 +36,4 @@ const HomeBlogCard = ({ blog }) => {
   );
 };
 
-export default HomeBlogCard;
+export default FilterCard;
