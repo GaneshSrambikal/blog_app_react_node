@@ -3,11 +3,14 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../context/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import '../styles/homepage.css';
 import HeroBlogCard from '../components/blogs/HeroBlogCard';
 import Carousel from '../components/ui/Carousel';
+import AvatarPlaceholder from '../assets/images/avatarPlaceholder.png';
 import { FaSearch } from 'react-icons/fa';
+import { MdCalendarMonth } from 'react-icons/md';
+import HomeBlogCard from '../components/blogs/homeBlogCard';
 
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
@@ -59,14 +62,23 @@ const Home = () => {
               <div className='h-fs-filter-option'>Food</div>
             </div>
             <div className='h-fs-search-c'>
-              <input type='text' placeholder='search blogs'/>
+              <input
+                type='text'
+                placeholder='search blogs by title, author, date, order'
+              />
               <FaSearch />
             </div>
           </div>
-          {blogs &&
+          {/* {blogs &&
             blogs
               .slice(0, 4)
-              .map((blog, index) => <HeroBlogCard blog={blog} key={index} />)}
+              .map((blog, index) => <HeroBlogCard blog={blog} key={index} />)} */}
+          <div className='homepage-filtersearch-result-container'>
+            {blogs &&
+              blogs.reverse().map((blog, index) => (
+                <HomeBlogCard blog={blog} key={index} />
+              ))}
+          </div>
         </div>
 
         {/* </div> */}
