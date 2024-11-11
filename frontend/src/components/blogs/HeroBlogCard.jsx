@@ -5,20 +5,27 @@ import { MdOutlineAccessTime, MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaArrowCircleRight } from 'react-icons/fa';
 import { getCreatedDate } from '../../utils/formatDates';
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
 const HeroBlogCard = ({ blog }) => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const { token } = useContext(AuthContext);
   const [userAvatar, setUserAvatar] = useState(AvatarPlaceholder);
-  const fetchUseAvatar = async () => {
+  // const fetchUseAvatar = async () => {
+  //   const res = await axios.get(
+  //     `${base_url}/users/user/${blog?.author?.id}/get-avatar-url`,
+  //     { headers: { Authorization: `Bearer ${token}` } }
+  //   );
+  //   setUserAvatar(res.data.avatar_url);
+  // };
+  const fetchUseAvatar = useCallback(async () => {
     const res = await axios.get(
       `${base_url}/users/user/${blog?.author?.id}/get-avatar-url`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setUserAvatar(res.data.avatar_url);
-  };
+  }, [base_url, token, blog]);
   useEffect(() => {
     fetchUseAvatar();
   }, []);
