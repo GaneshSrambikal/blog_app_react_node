@@ -8,7 +8,7 @@ import HeroBlogCard from '../components/blogs/HeroBlogCard';
 import Carousel from '../components/ui/Carousel';
 import { FaSearch } from 'react-icons/fa';
 import { Navigate } from 'react-router-dom';
-import HomeBlogCard from '../components/blogs/HeroBlogCard';
+import HomeBlogCard from '../components/blogs/homeBlogCard';
 
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
