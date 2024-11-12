@@ -26,6 +26,7 @@ const Carousel = ({ children }) => {
                 borderRadius: '50%',
                 color: slideIndex === index && '#263246',
                 fontSize: slideIndex === index && '1.5rem',
+                cursor: 'pointer',
               }}
             />
           </div>
