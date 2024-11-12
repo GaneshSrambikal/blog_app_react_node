@@ -1,12 +1,26 @@
-import {
-  MdCalendarMonth,
-  MdOutlineAccessTime,
-} from 'react-icons/md';
-// import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
+import { MdCalendarMonth, MdOutlineAccessTime } from 'react-icons/md';
+import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
 import { Link } from 'react-router-dom';
 import { getCreatedDate } from '../../utils/formatDates';
-
+import { useCallback, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import AuthContext from '../../context/AuthContext';
+const base_url = import.meta.env.VITE_API_BASE_URL;
 const FilterCard = ({ blog }) => {
+  const [userAvatar, setUserAvatar] = useState(AvatarPlaceholder);
+  const { token } = useContext(AuthContext);
+
+  const fetchUseAvatar = useCallback(async () => {
+    const res = await axios.get(
+      `${base_url}/users/user/${blog?.author?.id}/get-avatar-url`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setUserAvatar(res.data.avatar_url);
+  }, [base_url, token, blog]);
+
+  useEffect(() => {
+    fetchUseAvatar();
+  }, []);
   return (
     <article className='filtersearch-result-card-c'>
       <Link to={`/blogs/blog/${blog?._id}`}>
@@ -27,7 +41,7 @@ const FilterCard = ({ blog }) => {
           </div>
           <div className='fs-res-content-user-card'>
             <div className='fs-res-content-user-card-av-c'>
-              <img src={blog?.author.avatar_url} alt='user-card-av' />
+              <img src={userAvatar} alt='user-card-av' />
             </div>
             <div className='fs-res-content-user-card-info-c'>
               <p>{blog?.author?.name}</p>
