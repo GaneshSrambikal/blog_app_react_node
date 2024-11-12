@@ -6,9 +6,8 @@ import AuthContext from '../context/AuthContext';
 import '../styles/homepage.css';
 import HeroBlogCard from '../components/blogs/HeroBlogCard';
 import Carousel from '../components/ui/Carousel';
-import { FaSearch } from 'react-icons/fa';
 import { Navigate } from 'react-router-dom';
-import FilterCard from '../components/blogs/FilterCard';
+import FilterSearchTabs from '../components/blogs/FilterSearchTabs';
 
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
@@ -51,7 +50,7 @@ const Home = () => {
               ))}
           </Carousel>
         </div>
-        <div className='homepage-filtersearch-container'>
+        {/* <div className='homepage-filtersearch-container'>
           <div className='homepage-filter-search'>
             <div className='h-fs-filter-c'>
               <div className='h-fs-filter-option selected'>all</div>
@@ -67,17 +66,14 @@ const Home = () => {
               <FaSearch />
             </div>
           </div>
-          {/* {blogs &&
-            blogs
-              .slice(0, 4)
-              .map((blog, index) => <HeroBlogCard blog={blog} key={index} />)} */}
           <div className='homepage-filtersearch-result-container'>
             {blogs &&
               blogs
                 .reverse()
                 .map((blog, index) => <FilterCard key={index} blog={blog} />)}
           </div>
-        </div>
+        </div> */}
+        <FilterSearchTabs blogs={blogs} />
 
         {/* </div> */}
         {/* <div className='homepage-right-c'>right</div> */}

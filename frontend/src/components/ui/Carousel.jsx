@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import '../../styles/carousel.css';
 import { GoDot } from 'react-icons/go';
 const Carousel = ({ children }) => {
-  let interval = 5000;
+  let interval = 20000;
   const [slideIndex, setSlideIndex] = useState(0);
 
   const nextSlide = useCallback(() => {
@@ -20,6 +20,7 @@ const Carousel = ({ children }) => {
         {children.map((element, index) => (
           <div key={index} className='carousel-dots'>
             <GoDot
+              onClick={nextSlide}
               style={{
                 border: slideIndex === index && '1px solid #263246',
                 borderRadius: '50%',

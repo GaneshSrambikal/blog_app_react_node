@@ -9,6 +9,7 @@ const {
   searchBlogByTitle,
   getAllBlogs,
   getCommentByBlogId,
+  searchBlogByCategory,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const {
@@ -79,10 +80,15 @@ router.post('/:id/comment', protect, commentOnBlog);
 router.delete('/:blogId/comment/:commentId', protect, deleteCommentOnBlog);
 
 // search a blog
-// like a blog
 //@desc     Search a blog by Title
 //@route    GET /api/blogs/search
 // @access  Public
 router.get('/search', searchBlogByTitle);
+
+// search by category
+//@desc     Search a blog by Title
+//@route    GET /api/blogs/search/category
+// @access  Private
+router.get('/search/category', searchBlogByCategory);
 
 module.exports = router;

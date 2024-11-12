@@ -228,12 +228,10 @@ exports.likeBlogById = async (req, res, next) => {
       // like the post by addes user id
       blog.likes.push(req.user.id);
       await blog.save();
-      return res
-        .status(200)
-        .json({
-          message: `Like the blog post ${req.params.id}`,
-          userId: req.user.id,
-        });
+      return res.status(200).json({
+        message: `Like the blog post ${req.params.id}`,
+        userId: req.user.id,
+      });
     }
   } catch (error) {
     console.log(`Error: ${error.message}`);
@@ -345,7 +343,7 @@ exports.deleteCommentOnBlog = async (req, res, next) => {
   }
 };
 
-// Search A blog by Title and filters
+// Search blogs by Title and author data range
 exports.searchBlogByTitle = async (req, res, next) => {
   try {
     const searchTerm = req.query.title || '';
@@ -395,13 +393,15 @@ exports.searchBlogByTitle = async (req, res, next) => {
     });
 
     if (blogs.length === 0) {
-      return res
-        .status(404)
-        .json({ message: 'No Blogs found with the given title' });
+      return res.status(200).json({
+        message: 'No Blogs found with the given title',
+        blogs: [],
+        totalBlogs: totalBlogCount,
+      });
     }
     const totalPages = Math.ceil(totalBlogCount / limit);
     if (page > totalPages) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: `Page ${page} does not exist. Only ${totalPages} available.`,
       });
     }
@@ -411,6 +411,49 @@ exports.searchBlogByTitle = async (req, res, next) => {
       totalBlogs: totalBlogCount,
       currentPage: page,
       totalPages,
+    });
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    next(error);
+    return res
+      .status(500)
+      .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// Search blog by category
+exports.searchBlogByCategory = async (req, res, next) => {
+  try {
+    const category = req.query.category || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const blogs = await Blog.find({}).select(['-__v']);
+    const byCategory = blogs.filter((blog) => blog.category === category);
+
+    // const totalBlogCount = await Blog.countDocuments({
+    //   title: { $regex: searchTerm, $options: 'i' },
+    // });
+
+    // if (byCategory.length === 0) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: `No Blogs found with ${category} category` });
+    // }
+    // const totalPages = Math.ceil(totalBlogCount / limit);
+    // if (page > totalPages) {
+    //   return res.status(404).json({
+    //     message: `Page ${page} does not exist. Only ${totalPages} available.`,
+    //   });
+    // }
+
+    return res.status(200).json({
+      blogs: byCategory,
+      // totalBlogs: totalBlogCount,
+      // currentPage: page,
+      // totalPages,
+      totalBlogs: byCategory.length,
     });
   } catch (error) {
     console.log(`Error: ${error.message}`);
