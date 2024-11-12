@@ -1,5 +1,5 @@
 import { MdCalendarMonth } from 'react-icons/md';
-import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
+// import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
 import { Link } from 'react-router-dom';
 import { getCreatedDate } from '../../utils/formatDates';
 
@@ -17,11 +17,11 @@ const FilterCard = ({ blog }) => {
           </div>
           <div className='fs-res-content-title-des'>
             <h3>{blog?.title}</h3>
-            <p>{String(blog?.excerpt).slice(0,60) + '....'}</p>
+            <p>{String(blog?.excerpt).slice(0, 60) + '....'}</p>
           </div>
           <div className='fs-res-content-user-card'>
             <div className='fs-res-content-user-card-av-c'>
-              <img src={AvatarPlaceholder} alt='user-card-av' />
+              <img src={blog?.author.avatar_url} alt='user-card-av' />
             </div>
             <div className='fs-res-content-user-card-info-c'>
               <p>{blog?.author?.name}</p>
