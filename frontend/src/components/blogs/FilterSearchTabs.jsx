@@ -13,9 +13,11 @@ const FilterSearchTabs = ({ blogs }) => {
 
   const handleCategory = async (value) => {
     if (value == 'all') {
+      setSearchInput('');
       setFilteredBlogs([]);
       setSelectedCategory(value);
     } else {
+      setSearchInput('');
       setSelectedCategory(value);
       fetchBlogByCategory(value);
     }
@@ -25,6 +27,9 @@ const FilterSearchTabs = ({ blogs }) => {
   };
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
+    setTimeout(() => {
+      fetchBlogByTitle(e.target.value);
+    }, 600);
   };
 
   const fetchBlogByCategory = async (value) => {
@@ -33,6 +38,23 @@ const FilterSearchTabs = ({ blogs }) => {
     );
     setFilteredBlogs(res.data.blogs);
     setTotalFilteredBlogs(res.data.totalBlogs);
+  };
+  const fetchBlogByTitle = async () => {
+    setSelectedCategory('');
+    try {
+      if (searchInput.length > 0) {
+        const res = await axios.get(
+          `${react_base_url}/blogs/search/?title=${searchInput}`
+        );
+
+        setFilteredBlogs(res.data.blogs);
+        setTotalFilteredBlogs(res.data.totalBlogs);
+      } else {
+        setFilteredBlogs([]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className='homepage-filtersearch-container'>
@@ -77,11 +99,14 @@ const FilterSearchTabs = ({ blogs }) => {
       {filteredBlogs.length > 0 ? (
         <>
           <div className='filtersearch-result-counts'>
-            {selectedCategory
+            {searchInput.length == 0
               ? `Total blogs in ${selectedCategory}: ${totalFilteredBlogs}`
-              : `Total blogs found: ${totalFilteredBlogs}`}
+              : `Total blogs found for '${searchInput}' : ${totalFilteredBlogs}`}
           </div>
-          <div className='homepage-filtersearch-result-container'>
+          <div
+            className='homepage-filtersearch-result-container'
+            style={{ minHeight: '20rem' }}
+          >
             {filteredBlogs &&
               filteredBlogs.map((blog, index) => (
                 <FilterCard key={index} blog={blog} />

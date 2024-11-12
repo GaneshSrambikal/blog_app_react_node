@@ -1,4 +1,7 @@
-import { MdCalendarMonth } from 'react-icons/md';
+import {
+  MdCalendarMonth,
+  MdOutlineAccessTime,
+} from 'react-icons/md';
 // import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
 import { Link } from 'react-router-dom';
 import { getCreatedDate } from '../../utils/formatDates';
@@ -13,7 +16,10 @@ const FilterCard = ({ blog }) => {
         <div className='fs-res-content'>
           <div className='fs-res-content-tags-read'>
             <div className='fs-res-content-tag'>{blog?.category}</div>
-            <div className='fs-res-content-read'>{`${blog?.readingTime} min read`}</div>
+            <div className='fs-res-content-read'>
+              <MdOutlineAccessTime />
+              {`${blog?.readingTime} min read`}
+            </div>
           </div>
           <div className='fs-res-content-title-des'>
             <h3>{blog?.title}</h3>

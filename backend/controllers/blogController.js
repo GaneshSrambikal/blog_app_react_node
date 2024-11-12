@@ -393,13 +393,15 @@ exports.searchBlogByTitle = async (req, res, next) => {
     });
 
     if (blogs.length === 0) {
-      return res
-        .status(404)
-        .json({ message: 'No Blogs found with the given title' });
+      return res.status(200).json({
+        message: 'No Blogs found with the given title',
+        blogs: [],
+        totalBlogs: totalBlogCount,
+      });
     }
     const totalPages = Math.ceil(totalBlogCount / limit);
     if (page > totalPages) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: `Page ${page} does not exist. Only ${totalPages} available.`,
       });
     }

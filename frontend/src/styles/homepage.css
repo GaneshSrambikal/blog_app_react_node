@@ -206,7 +206,7 @@
   border-radius: 4px;
   border: 1px solid #eee;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 968px) {
   .homepage-filtersearch-container .homepage-filter-search {
     flex-direction: column;
   }
@@ -215,7 +215,7 @@
   /* background-color: cadetblue; */
   display: flex;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 968px) {
   .homepage-filter-search .h-fs-filter-c {
     margin-bottom: 1rem;
   }
@@ -342,7 +342,7 @@
   padding: 0.2rem 0.5rem;
   border-radius: 1rem;
   color: #541bbe;
-  font-size: 14px;
+  font-size: 13px;
   text-transform: capitalize;
 }
 .filtersearch-result-card-c
@@ -351,9 +351,11 @@
   .fs-res-content-read {
   margin-left: 1rem;
   display: flex;
-
+  align-items: center;
+  font-size: 13px;
   border-radius: 5px;
   text-decoration: none;
+  color: gray;
 }
 .filtersearch-result-card-c
   .fs-res-content
