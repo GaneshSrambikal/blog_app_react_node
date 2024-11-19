@@ -369,7 +369,7 @@
 }
 .fs-res-content .fs-res-content-title-des p {
   font-weight: 300;
-  color: gray;
+  color: #727272;
   margin-top: 0.5rem;
 }
 .fs-res-content .fs-res-content-user-card {
@@ -402,4 +402,34 @@
 }
 .fs-res-content-user-card .fs-res-content-user-card-info-c span svg {
   margin-right: 0.3rem;
+}
+
+.homepage-filtersearch-container .filtersearch-pagination-c {
+  background-color: aqua;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.homepage-filtersearch-container .filtersearch-pagination-c .fs-pagination-c {
+  width: 200px;
+  max-width: 400px;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  color: gray;
+}
+.fs-pagination-c .fs-pagination-numbers {
+  cursor: pointer;
+}
+.fs-pagination-c .fs-pagination-arrows-c button {
+  background-color: #263246;
+  color: #fff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }

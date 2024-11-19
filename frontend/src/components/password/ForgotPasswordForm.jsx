@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FaCheckCircle } from 'react-icons/fa';
 import { ForgotPasswordSchema } from '../../validators/auth/loginValidator';
 import { TailSpin } from 'react-loader-spinner';
+const base_url = import.meta.env.VITE_API_BASE_URL;
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState('');
@@ -44,12 +45,12 @@ const ForgotPasswordForm = () => {
     setErrors({}); // Clear previous errors
     setIsLoading(true);
     try {
-      const response = await axios.post('/api/users/forgot-password', {
+      const response = await axios.post(`${base_url}/users/forgot-password`, {
         email,
       });
       console.log('password sent', response.data);
       setSentEmail(true);
-      let link = `http://localhost:5173/reset-password/${response.data.resetToken}/?emailId=${email}`;
+      let link = `${base_url}/reset-password/${response.data.resetToken}/?emailId=${email}`;
       setResetLink(link);
       // Handle successful login, e.g., redirect or store token
       setIsLoading(false);

@@ -4,13 +4,20 @@ import { FaSearch } from 'react-icons/fa';
 import FilterCard from './FilterCard';
 import { useState } from 'react';
 import axios from 'axios';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const FilterSearchTabs = ({ blogs }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchInput, setSearchInput] = useState('');
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [totalFilteredBlogs, setTotalFilteredBlogs] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limitPerPage, setLimitPerPage] = useState(6);
+  const totalPages = Math.ceil(blogs?.length / limitPerPage);
 
+  const handlePagination = (n) => {
+    setPage(n);
+  };
   const handleCategory = async (value) => {
     if (value == 'all') {
       setSearchInput('');
@@ -116,9 +123,36 @@ const FilterSearchTabs = ({ blogs }) => {
       ) : (
         <div className='homepage-filtersearch-result-container'>
           {blogs &&
-            blogs.map((blog, index) => <FilterCard key={index} blog={blog} />)}
+            blogs
+              .slice(0)
+              .map((blog, index) => <FilterCard key={index} blog={blog} />)}
         </div>
       )}
+      <div className='filtersearch-pagination-c'>
+        <div className='fs-pagination-c'>
+          <div className='fs-pagination-arrows-c'>
+            <button>
+              <MdArrowBack />
+            </button>
+          </div>
+          {Array.from(
+            { length: Math.ceil(blogs?.length / limitPerPage) },
+            (_, i) => {
+              return (
+                <div className='fs-pagination-numbers' key={i} onClick={() => handlePagination(i + 1)} style={{color:page === i+1 && '#333'}}>
+                  {i + 1}
+                </div>
+              );
+            }
+          )}
+
+          <div className='fs-pagination-arrows-c'>
+            <button>
+              <MdArrowForward />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
