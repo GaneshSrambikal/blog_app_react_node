@@ -1,13 +1,14 @@
 // import React from 'react'
 
-import { MdAdd, MdPostAdd } from 'react-icons/md';
+// import { BsPostcardHeart } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
 const AddBlogSection = () => {
   return (
     <section className='hp-add-blog-section'>
       <Link to='/blogs/blog/create-blog' className='hp-add-blog-c'>
-        <MdPostAdd/>
+        {/* <BsPostcardHeart /> */}
+        <span>🖊️🆕📗</span>
         <p>Add new Blog post</p>
       </Link>
     </section>

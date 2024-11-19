@@ -40,6 +40,7 @@ const Home = () => {
           <h1>Home</h1>
           <h2>Welcome 👋, {user?.name}</h2>
         </div>
+        <AddBlogSection />
         <div className='homepage-latest-post-c'>
           <h3>Latest blogs at Blog App</h3>
           <Carousel>
@@ -74,8 +75,9 @@ const Home = () => {
                 .map((blog, index) => <FilterCard key={index} blog={blog} />)}
           </div>
         </div> */}
+        
         <FilterSearchTabs blogs={blogs} />
-        <AddBlogSection />
+        
         {/* </div> */}
         {/* <div className='homepage-right-c'>right</div> */}
       </div>

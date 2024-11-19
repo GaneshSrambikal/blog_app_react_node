@@ -440,6 +440,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 }
 .hp-add-blog-section .hp-add-blog-c {
   width: 100%;
@@ -450,6 +451,10 @@
   text-decoration: none;
   padding: 1rem 0;
 
+}
+.hp-add-blog-section .hp-add-blog-c span{
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 .hp-add-blog-section .hp-add-blog-c svg{
   margin-bottom: 1rem;
