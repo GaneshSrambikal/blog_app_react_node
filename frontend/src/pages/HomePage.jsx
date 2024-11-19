@@ -8,6 +8,7 @@ import HeroBlogCard from '../components/blogs/HeroBlogCard';
 import Carousel from '../components/ui/Carousel';
 import { Navigate } from 'react-router-dom';
 import FilterSearchTabs from '../components/blogs/FilterSearchTabs';
+import AddBlogSection from '../components/blogs/AddBlogSection';
 
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
@@ -74,7 +75,7 @@ const Home = () => {
           </div>
         </div> */}
         <FilterSearchTabs blogs={blogs} />
-
+        <AddBlogSection />
         {/* </div> */}
         {/* <div className='homepage-right-c'>right</div> */}
       </div>
