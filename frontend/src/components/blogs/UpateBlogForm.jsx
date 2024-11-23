@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { Oval } from 'react-loader-spinner';
 import { useToast } from '../../context/ToastContext';
+import { Helmet } from 'react-helmet';
 const UpdateBlogForm = () => {
   const fileInputRef = useRef(null);
   const params = useParams();
@@ -139,6 +140,9 @@ const UpdateBlogForm = () => {
   };
   return (
     <>
+      <Helmet>
+        <title>{`Edit | ${formData.title} | Blog_app`}</title>
+      </Helmet>
       {/* <Modal /> */}
       <form className='create-blog-form-container' onSubmit={handleSubmit}>
         {/* Title */}

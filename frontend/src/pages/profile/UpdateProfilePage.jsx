@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { TbPhotoEdit } from 'react-icons/tb';
 import { resizeImage } from '../../utils/resizeImage';
 import { useToast } from '../../context/ToastContext';
+import { Helmet } from 'react-helmet';
 const UpdateProfilePage = () => {
   const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
@@ -163,193 +164,199 @@ const UpdateProfilePage = () => {
       console.log(error);
       setLoadingGenerate(false);
     }
-    
   };
   if (!user) return <div>Loading</div>;
   return (
-    <div className='edit-profile-container'>
-      <div className='edit-profile-avatar-c'>
-        {formData.avatar_url ? (
-          loadingUpload || loadingGenerate ? (
-            <div>loading</div>
+    <>
+      <Helmet>
+        <title>{`Edit Profile | ${user?.name} | Blog_app`}</title>
+      </Helmet>
+      <div className='edit-profile-container'>
+        <div className='edit-profile-avatar-c'>
+          {formData.avatar_url ? (
+            loadingUpload || loadingGenerate ? (
+              <div>loading</div>
+            ) : (
+              <img src={user.avatar_url} alt='profile-avatar' loading='lazy' />
+            )
           ) : (
-            <img src={user.avatar_url} alt='profile-avatar' loading='lazy' />
-          )
-        ) : (
-          <p>{formData?.name && getInitials(formData?.name)}</p>
-        )}
-        <div
-          className='edit-profile-avatar-icon-c'
-          onClick={handleUploadAction}
-        >
-          <TbPhotoEdit />
-        </div>
-        {showUploadAction && (
+            <p>{formData?.name && getInitials(formData?.name)}</p>
+          )}
           <div
-            className='edit-profile-avatar-action-menu'
-            ref={avatarActionRef}
+            className='edit-profile-avatar-icon-c'
+            onClick={handleUploadAction}
           >
-            <div className='edit-profile-file-upload'>
-              <input
-                type='file'
-                id='avatarInput'
-                accept='image/*'
-                onChange={handleFileInput}
-                disabled={loadingUpload}
-              />
-              <label htmlFor='avatarInput' className='avatar-input-label'>
-                {loadingUpload ? 'loading' : 'Choose File'}
-              </label>
-            </div>
-            <div>
-              {loadingGenerate ? (
-                <button disabled>
-                  {loadingGenerate ? 'loading' : 'generate avatar'}
-                </button>
-              ) : (
-                <button onClick={handleGenerateAvatar}>
-                  {loadingGenerate ? 'loading' : 'generate avatar'}
-                </button>
-              )}
-            </div>
+            <TbPhotoEdit />
           </div>
-        )}
-      </div>
-      <div className='edit-profile-form-c'>
-        <div className='edit-profile-form-header'>
-          <h1>Edit Profile</h1>
-        </div>
-        {formData && (
-          <form onSubmit={handleSubmit}>
-            {/* About */}
-            <InputComponent
-              type='textarea'
-              label='About'
-              id='about'
-              name='about'
-              value={formData && formData.about}
-              onChange={handleChange}
-              className={`${getInputClass('about')} edit-profile-textarea`}
-              error={errors.about}
-              required={false}
-              placeholder='Introduce yourself...'
-            />
-            {/* title */}
-            <InputComponent
-              type='select'
-              id='title'
-              name='title'
-              label='Title'
-              value={formData.title}
-              onChange={handleChange}
-              className={`${getInputClass('title')} edit-profile-title-select`}
-              error={errors.title}
-            />
-            {/* Email*/}
-            <InputComponent
-              type='email'
-              label='Email'
-              id='email'
-              name='email'
-              value={formData && formData.email}
-              onChange={handleChange}
-              className={`${getInputClass('email')}`}
-              error={errors.email}
-              required={false}
-              disabled
-            />
-            {/* Name */}
-            <InputComponent
-              type='text'
-              label='Name'
-              id='name'
-              name='name'
-              value={formData && formData.name}
-              onChange={handleChange}
-              className={`${getInputClass('name')}`}
-              error={errors.name}
-              required={true}
-            />
-            {/* Username */}
-            <InputComponent
-              type='text'
-              label='Username'
-              id='username'
-              name='username'
-              value={formData && formData.username}
-              onChange={handleChange}
-              className={`${getInputClass('username')}`}
-              error={errors.username}
-              required={false}
-              disabled
-            />
-            {/* Gender */}
-            <div className='form-groups'>
-              <div className='form-group'>
-                <label htmlFor='gender'>
-                  Gender<span className='label-required'>*</span>
-                </label>
-                <select
-                  name='gender'
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className={`register-form-gender-select ${getInputClass(
-                    'gender'
-                  )}`}
-                >
-                  <option value=''>Select Gender</option>
-                  <option value='male'>Male</option>
-                  <option value='female'>Female</option>
-                  <option value='other'>Other</option>
-                </select>
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor='dob'>
-                  Date of Birth<span className='label-required'>*</span>
-                </label>
+          {showUploadAction && (
+            <div
+              className='edit-profile-avatar-action-menu'
+              ref={avatarActionRef}
+            >
+              <div className='edit-profile-file-upload'>
                 <input
-                  type='date'
-                  name='dob'
-                  value={formData.dob.split('T')[0]}
-                  onChange={handleChange}
-                  min='1980-01-01'
-                  max={new Date().toISOString().split('T')[0]}
-                  className={`${getInputClass('dob')}`}
+                  type='file'
+                  id='avatarInput'
+                  accept='image/*'
+                  onChange={handleFileInput}
+                  disabled={loadingUpload}
                 />
+                <label htmlFor='avatarInput' className='avatar-input-label'>
+                  {loadingUpload ? 'loading' : 'Choose File'}
+                </label>
+              </div>
+              <div>
+                {loadingGenerate ? (
+                  <button disabled>
+                    {loadingGenerate ? 'loading' : 'generate avatar'}
+                  </button>
+                ) : (
+                  <button onClick={handleGenerateAvatar}>
+                    {loadingGenerate ? 'loading' : 'generate avatar'}
+                  </button>
+                )}
               </div>
             </div>
-            {/* errors for gender and dob */}
-            <div className='form-group'>
-              {errors.dob && <p className='error-message'>{errors.dob}</p>}
-              {errors.gender && (
-                <p className='error-message'>{errors.gender}</p>
-              )}
-            </div>
+          )}
+        </div>
+        <div className='edit-profile-form-c'>
+          <div className='edit-profile-form-header'>
+            <h1>Edit Profile</h1>
+          </div>
+          {formData && (
+            <form onSubmit={handleSubmit}>
+              {/* About */}
+              <InputComponent
+                type='textarea'
+                label='About'
+                id='about'
+                name='about'
+                value={formData && formData.about}
+                onChange={handleChange}
+                className={`${getInputClass('about')} edit-profile-textarea`}
+                error={errors.about}
+                required={false}
+                placeholder='Introduce yourself...'
+              />
+              {/* title */}
+              <InputComponent
+                type='select'
+                id='title'
+                name='title'
+                label='Title'
+                value={formData.title}
+                onChange={handleChange}
+                className={`${getInputClass(
+                  'title'
+                )} edit-profile-title-select`}
+                error={errors.title}
+              />
+              {/* Email*/}
+              <InputComponent
+                type='email'
+                label='Email'
+                id='email'
+                name='email'
+                value={formData && formData.email}
+                onChange={handleChange}
+                className={`${getInputClass('email')}`}
+                error={errors.email}
+                required={false}
+                disabled
+              />
+              {/* Name */}
+              <InputComponent
+                type='text'
+                label='Name'
+                id='name'
+                name='name'
+                value={formData && formData.name}
+                onChange={handleChange}
+                className={`${getInputClass('name')}`}
+                error={errors.name}
+                required={true}
+              />
+              {/* Username */}
+              <InputComponent
+                type='text'
+                label='Username'
+                id='username'
+                name='username'
+                value={formData && formData.username}
+                onChange={handleChange}
+                className={`${getInputClass('username')}`}
+                error={errors.username}
+                required={false}
+                disabled
+              />
+              {/* Gender */}
+              <div className='form-groups'>
+                <div className='form-group'>
+                  <label htmlFor='gender'>
+                    Gender<span className='label-required'>*</span>
+                  </label>
+                  <select
+                    name='gender'
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className={`register-form-gender-select ${getInputClass(
+                      'gender'
+                    )}`}
+                  >
+                    <option value=''>Select Gender</option>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
+                    <option value='other'>Other</option>
+                  </select>
+                </div>
 
-            {/* Address */}
-            <InputComponent
-              type='text'
-              name='address'
-              id='address'
-              label='Address'
-              value={formData.address}
-              onChange={handleChange}
-              className={`${getInputClass('address')}`}
-              error={errors.address}
-              required={true}
-            />
+                <div className='form-group'>
+                  <label htmlFor='dob'>
+                    Date of Birth<span className='label-required'>*</span>
+                  </label>
+                  <input
+                    type='date'
+                    name='dob'
+                    value={formData.dob.split('T')[0]}
+                    onChange={handleChange}
+                    min='1980-01-01'
+                    max={new Date().toISOString().split('T')[0]}
+                    className={`${getInputClass('dob')}`}
+                  />
+                </div>
+              </div>
+              {/* errors for gender and dob */}
+              <div className='form-group'>
+                {errors.dob && <p className='error-message'>{errors.dob}</p>}
+                {errors.gender && (
+                  <p className='error-message'>{errors.gender}</p>
+                )}
+              </div>
 
-            {/* update btn */}
-            <div className='edit-profile-update-btn-c'>
-              <button type='submit' className='submit-button'>
-                Update Profile
-              </button>
-            </div>
-          </form>
-        )}
+              {/* Address */}
+              <InputComponent
+                type='text'
+                name='address'
+                id='address'
+                label='Address'
+                value={formData.address}
+                onChange={handleChange}
+                className={`${getInputClass('address')}`}
+                error={errors.address}
+                required={true}
+              />
+
+              {/* update btn */}
+              <div className='edit-profile-update-btn-c'>
+                <button type='submit' className='submit-button'>
+                  Update Profile
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

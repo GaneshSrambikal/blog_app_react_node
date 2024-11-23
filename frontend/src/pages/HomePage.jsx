@@ -9,7 +9,7 @@ import Carousel from '../components/ui/Carousel';
 import { Navigate } from 'react-router-dom';
 import FilterSearchTabs from '../components/blogs/FilterSearchTabs';
 import AddBlogSection from '../components/blogs/AddBlogSection';
-
+import { Helmet } from 'react-helmet';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
   const { user, loading } = useContext(AuthContext);
@@ -34,6 +34,9 @@ const Home = () => {
   if (loading) return <div>Loading...</div>;
   return (
     <>
+      <Helmet>
+        <title>Home | Blog_app</title>
+      </Helmet>
       <div className='homepage-container'>
         {/* <div className='homepage-left-c'> */}
         <div className='homepage-greeting'>
@@ -75,9 +78,9 @@ const Home = () => {
                 .map((blog, index) => <FilterCard key={index} blog={blog} />)}
           </div>
         </div> */}
-        
+
         <FilterSearchTabs blogs={blogs} />
-        
+
         {/* </div> */}
         {/* <div className='homepage-right-c'>right</div> */}
       </div>

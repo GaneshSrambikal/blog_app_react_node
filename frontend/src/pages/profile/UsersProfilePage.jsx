@@ -5,6 +5,7 @@ import AuthContext from '../../context/AuthContext';
 import ProfileTabs from '../../components/profile/ProfileTabs';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 const UsersProfilePage = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const params = useParams();
@@ -36,10 +37,15 @@ const UsersProfilePage = () => {
   if (!user) return <div>Loading...</div>;
   if (loading) return <div>Loading...</div>;
   return (
-    <div className='user-profile-container'>
-      <ProfileComponent user={user} />
-      <ProfileTabs user={user} />
-    </div>
+    <>
+      <Helmet>
+        <title>{user?.name} | Profile | Blog_app</title>
+      </Helmet>
+      <div className='user-profile-container'>
+        <ProfileComponent user={user} />
+        <ProfileTabs user={user} />
+      </div>
+    </>
   );
 };
 
