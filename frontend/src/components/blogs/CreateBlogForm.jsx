@@ -4,7 +4,7 @@ import { validateCreateBlogForm } from '../../validators/blog/createBlogValidato
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { Oval } from 'react-loader-spinner';
-
+import { AiOutlineOpenAI } from 'react-icons/ai';
 const CreateBlogForm = ({ ...props }) => {
   const fileInputRef = useRef(null);
   const { token } = useContext(AuthContext);
@@ -147,6 +147,10 @@ const CreateBlogForm = ({ ...props }) => {
           error={errors.category}
         />
         {/* Content */}
+        <label>{`Or generate with Openai's chatGPT`}</label>{' '}
+        <button>
+          Generate with <AiOutlineOpenAI />
+        </button>
         <InputComponent
           label={'Content'}
           type={'textarea'}

@@ -464,5 +464,6 @@
 }
 .hp-add-blog-section .hp-add-blog-c p{
   text-decoration: none;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  font-size: 14px;
 }

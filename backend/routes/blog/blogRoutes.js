@@ -10,6 +10,8 @@ const {
   getAllBlogs,
   getCommentByBlogId,
   searchBlogByCategory,
+  searchBlogs,
+  generateBlogContent,
 } = require('../../controllers/blogController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const {
@@ -85,10 +87,18 @@ router.delete('/:blogId/comment/:commentId', protect, deleteCommentOnBlog);
 // @access  Public
 router.get('/search', searchBlogByTitle);
 
+// search a blog
+//@desc     Search a blog by Title
+//@route    GET /api/blogs/search
+// @access  Public
+router.get('/searchblog', searchBlogs);
+
 // search by category
 //@desc     Search a blog by Title
 //@route    GET /api/blogs/search/category
 // @access  Private
 router.get('/search/category', searchBlogByCategory);
+
+router.post('/ai/generate-blog', generateBlogContent);
 
 module.exports = router;

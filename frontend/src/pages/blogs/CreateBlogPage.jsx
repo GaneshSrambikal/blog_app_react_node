@@ -33,7 +33,11 @@ const CreateBlogPage = () => {
           svgType={'success'}
           headerTitle={'Blog Added Successfully'}
           promptTitle={'Do you want to ?'}
-          btnProps={{ text: 'view new blog', link: newBlogLink ,btnType: 'link'}}
+          btnProps={{
+            text: 'view new blog',
+            link: newBlogLink,
+            btnType: 'link',
+          }}
           handleSuccess={handleSuccess}
         />
       )}
