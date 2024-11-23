@@ -1,9 +1,11 @@
 import '../../styles/createblogpage.css';
 import UpdateBlogForm from '../../components/blogs/UpateBlogForm';
 
+
 const UpdateBlogPage = () => {
   return (
     <>
+    
       <div className='create-blog-container'>
         <div className='create-blog-header'>
           <h1>Update Blog</h1>

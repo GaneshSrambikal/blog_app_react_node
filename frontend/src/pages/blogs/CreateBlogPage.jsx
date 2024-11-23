@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CreateBlogForm from '../../components/blogs/CreateBlogForm';
 import Modal from '../../components/ui/modal';
 import '../../styles/createblogpage.css';
+import { Helmet } from 'react-helmet';
 const CreateBlogPage = () => {
   const [success, setSuccess] = useState(false);
   const [newBlogLink, setNewBlogLink] = useState('');
@@ -15,6 +16,9 @@ const CreateBlogPage = () => {
   };
   return (
     <>
+      <Helmet>
+        <title>Create New Blog Post | Blog_app</title>
+      </Helmet>
       <div className='create-blog-container'>
         <div className='create-blog-header'>
           <h1>New Blog</h1>

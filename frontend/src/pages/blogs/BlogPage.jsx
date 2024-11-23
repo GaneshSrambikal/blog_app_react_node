@@ -10,6 +10,7 @@ import AuthContext from '../../context/AuthContext';
 import { getCreatedDate } from '../../utils/formatDates';
 import BlogComments from '../../components/blogs/BlogComments';
 import AvatarPlaceHolder from '../../assets/images/avatarPlaceholder.png';
+import { Helmet } from 'react-helmet';
 const base_url = import.meta.env.VITE_API_BASE_URL;
 const BlogPage = () => {
   const { loading, user, token } = useContext(AuthContext);
@@ -51,68 +52,73 @@ const BlogPage = () => {
       </div>
     );
   return (
-    <div className='blogpage-container'>
-      <div className='blogpage-back-c'>
-        <Link to='/home'>
-          <FaArrowCircleLeft /> back to blogs
-        </Link>
-      </div>
-      {user?._id === blog?.author?.id && (
-        <div className='blogpage-main-action-c'>
-          <Link to={`/blogs/blog/edit/${blog?._id}`}>
-            <MdEdit /> Edit
+    <>
+      <Helmet>
+        <title>{`${blog?.title} | ${blog?.author?.name} | Blog_app`}</title>
+      </Helmet>
+      <div className='blogpage-container'>
+        <div className='blogpage-back-c'>
+          <Link to='/home'>
+            <FaArrowCircleLeft /> back to blogs
           </Link>
         </div>
-      )}
-      <div className='blogpage-main-c'>
-        <div className='blogpage-m-tags-c'>
-          <span className='bmtag'>{blog?.category}</span>
-          <span className='bmreadt'>
-            <MdOutlineAccessTime />
-            {`${blog?.readingTime} min`}
-          </span>
-        </div>
-        <div className='bm-header'>
-          <h1>{blog?.title}</h1>
-        </div>
-        <div className='bm-user-card'>
-          <div className='bm-user-card-av-c'>
-            {blog?.author && blog?.author?.avatar_url?.length > 0 ? (
-              <img src={userAvatar} alt='avatar-image' />
-            ) : (
-              blog?.author && getInitials(blog?.author?.name)
-            )}
+        {user?._id === blog?.author?.id && (
+          <div className='blogpage-main-action-c'>
+            <Link to={`/blogs/blog/edit/${blog?._id}`}>
+              <MdEdit /> Edit
+            </Link>
           </div>
-          <div className='bm-user-card-info'>
-            <p>
-              <Link to={`/profile/${blog?.author?.id}`}>
-                {blog?.author?.name}
-              </Link>
-            </p>
-            <span>Chef</span>
-            <span>
-              <CiCalendar /> {getCreatedDate(blog?.createdAt)}
+        )}
+        <div className='blogpage-main-c'>
+          <div className='blogpage-m-tags-c'>
+            <span className='bmtag'>{blog?.category}</span>
+            <span className='bmreadt'>
+              <MdOutlineAccessTime />
+              {`${blog?.readingTime} min`}
             </span>
           </div>
-        </div>
-        <div className='bm-image-content-c'>
-          <div className='bm-hero-image'>
-            <img src={blog?.heroImage} alt='hero-image' />
+          <div className='bm-header'>
+            <h1>{blog?.title}</h1>
           </div>
-          <div className='bm-excerpt'>
-            <p>{blog?.excerpt}</p>
+          <div className='bm-user-card'>
+            <div className='bm-user-card-av-c'>
+              {blog?.author && blog?.author?.avatar_url?.length > 0 ? (
+                <img src={userAvatar} alt='avatar-image' />
+              ) : (
+                blog?.author && getInitials(blog?.author?.name)
+              )}
+            </div>
+            <div className='bm-user-card-info'>
+              <p>
+                <Link to={`/profile/${blog?.author?.id}`}>
+                  {blog?.author?.name}
+                </Link>
+              </p>
+              <span>Chef</span>
+              <span>
+                <CiCalendar /> {getCreatedDate(blog?.createdAt)}
+              </span>
+            </div>
           </div>
-          <div className='bm-content'>
-            <p>{blog?.content}</p>
+          <div className='bm-image-content-c'>
+            <div className='bm-hero-image'>
+              <img src={blog?.heroImage} alt='hero-image' />
+            </div>
+            <div className='bm-excerpt'>
+              <p>{blog?.excerpt}</p>
+            </div>
+            <div className='bm-content'>
+              <p>{blog?.content}</p>
+            </div>
           </div>
-        </div>
-        {/* Like and comment counts */}
-        <div className='bm-likes-comments-container'>
-          {/* Comments */}
-          <BlogComments />
+          {/* Like and comment counts */}
+          <div className='bm-likes-comments-container'>
+            {/* Comments */}
+            <BlogComments />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
