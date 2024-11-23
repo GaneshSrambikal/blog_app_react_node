@@ -433,3 +433,37 @@
   align-items: center;
   cursor: pointer;
 }
+.hp-add-blog-section {
+  background-color: #fcfcfc;
+  border: 1px dashed #c6c6c6;
+  border-radius: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.hp-add-blog-section .hp-add-blog-c {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 1rem 0;
+
+}
+.hp-add-blog-section .hp-add-blog-c span{
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.hp-add-blog-section .hp-add-blog-c svg{
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  text-decoration: none;
+  color: #333;
+}
+.hp-add-blog-section .hp-add-blog-c p{
+  text-decoration: none;
+  text-transform: capitalize;
+  font-size: 14px;
+}

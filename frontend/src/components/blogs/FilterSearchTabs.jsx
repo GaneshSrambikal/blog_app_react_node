@@ -95,7 +95,7 @@ const FilterSearchTabs = ({ blogs }) => {
         <div className='h-fs-search-c'>
           <input
             type='text'
-            placeholder='search blogs by title, author, date, order'
+            placeholder='search blogs by title, author, content'
             value={searchInput}
             onChange={handleSearchInput}
           />
@@ -128,7 +128,7 @@ const FilterSearchTabs = ({ blogs }) => {
               .map((blog, index) => <FilterCard key={index} blog={blog} />)}
         </div>
       )}
-      <div className='filtersearch-pagination-c'>
+      {/* <div className='filtersearch-pagination-c'>
         <div className='fs-pagination-c'>
           <div className='fs-pagination-arrows-c'>
             <button>
@@ -139,7 +139,12 @@ const FilterSearchTabs = ({ blogs }) => {
             { length: Math.ceil(blogs?.length / limitPerPage) },
             (_, i) => {
               return (
-                <div className='fs-pagination-numbers' key={i} onClick={() => handlePagination(i + 1)} style={{color:page === i+1 && '#333'}}>
+                <div
+                  className='fs-pagination-numbers'
+                  key={i}
+                  onClick={() => handlePagination(i + 1)}
+                  style={{ color: page === i + 1 && '#333' }}
+                >
                   {i + 1}
                 </div>
               );
@@ -152,7 +157,7 @@ const FilterSearchTabs = ({ blogs }) => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -8,7 +8,9 @@ const Carousel = ({ children }) => {
   const nextSlide = useCallback(() => {
     setSlideIndex((prev) => (prev + 1) % children.length);
   }, [children.length]);
-
+  const currentSlide = (indexValue) => {
+    setSlideIndex(indexValue);
+  };
   useEffect(() => {
     const autoPlaySlide = setInterval(nextSlide, interval);
     return () => clearInterval(autoPlaySlide);
@@ -20,7 +22,7 @@ const Carousel = ({ children }) => {
         {children.map((element, index) => (
           <div key={index} className='carousel-dots'>
             <GoDot
-              onClick={nextSlide}
+              onClick={() => currentSlide(index)}
               style={{
                 border: slideIndex === index && '1px solid #263246',
                 borderRadius: '50%',

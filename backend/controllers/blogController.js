@@ -1,3 +1,4 @@
+const { openai } = require('../config/openai');
 const { uploadToCloudinary } = require('../middlewares/uploadMiddleware');
 const Blog = require('../models/blogModel');
 const User = require('../models/userModel');
@@ -461,5 +462,71 @@ exports.searchBlogByCategory = async (req, res, next) => {
     return res
       .status(500)
       .json({ message: 'Server Error', error: error.message });
+  }
+};
+
+// search by title content author
+exports.searchBlogs = async (req, res, next) => {
+  try {
+    const search = req.query.search || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = 6;
+
+    let query = {};
+    if (search) {
+      query = {
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { content: { $regex: search, $options: 'i' } },
+        ],
+      };
+    }
+    // fetch blogs with pagination
+    const skip = (page - 1) * limit;
+    const totalBlogs = await Blog.countDocuments(query);
+    const blogs = await Blog.find(query).skip(skip).limit(limit);
+
+    res.status(200).json({
+      blogs,
+      currentPage: page,
+      totalPages: Math.ceil(totalBlogs / limit),
+    });
+  } catch (error) {
+    next(error);
+    res.status(500).json({ message: 'Failed to fetch blogs' });
+  }
+};
+
+// generate content based on prompt
+exports.generateBlogContent = async (req, res, next) => {
+  const { title, category } = req.body;
+
+  if (!title || !category) {
+    return res.status(400).json({ message: 'title and category are required' });
+  }
+
+  try {
+    const prompt = `You are a professional blog writer. Generate a detailed blog post based on the following:
+    - Title: ${title}
+    - Category: ${category}
+    Include a captivating introduction, body with subheadings, and a conclusion.
+    `;
+    console.log('in section');
+    const resp = await openai.completions.create({
+      // model: 'gpt-3.5-turbo-instruct',
+      // prompt,
+      // max_tokens: 500,
+      // temperature: 0.7,
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: 'Test message' }],
+    });
+
+    const generatedContent = resp.data.choices[0].text.trim();
+
+    res.status(200).json({ content: generatedContent });
+  } catch (error) {
+    console.log(error);
+    next(error);
+    res.status(500).json({ message: 'Failed to generate content', error });
   }
 };
