@@ -26,6 +26,7 @@ const ProfileBlogCard = ({ blog, ...props }) => {
   useEffect(() => {
     fetchUseAvatar();
   }, []);
+  if(!blog) return <div>loading...</div>
   return (
     <div className='profile-blogs-card-c'>
       <div className='profile-b-card-header'>

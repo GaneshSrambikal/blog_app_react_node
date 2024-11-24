@@ -11,6 +11,7 @@ import { getCreatedDate } from '../../utils/formatDates';
 import BlogComments from '../../components/blogs/BlogComments';
 import AvatarPlaceHolder from '../../assets/images/avatarPlaceholder.png';
 import { Helmet } from 'react-helmet';
+import BlogPageSkeleton from '../../components/ui/skeletons/BlogPageSkeleton';
 const base_url = import.meta.env.VITE_API_BASE_URL;
 const BlogPage = () => {
   const { loading, user, token } = useContext(AuthContext);
@@ -48,7 +49,7 @@ const BlogPage = () => {
   if (loading || isloading)
     return (
       <div className='blogpage-container'>
-        <div className='blogpage-main-c'>Blog Loading</div>
+        <BlogPageSkeleton />
       </div>
     );
   return (
@@ -94,7 +95,7 @@ const BlogPage = () => {
                   {blog?.author?.name}
                 </Link>
               </p>
-              <span>Chef</span>
+              
               <span>
                 <CiCalendar /> {getCreatedDate(blog?.createdAt)}
               </span>

@@ -21,6 +21,7 @@ const FilterCard = ({ blog }) => {
   useEffect(() => {
     fetchUseAvatar();
   }, []);
+  if (!blog) return <div>loading...</div>;
   return (
     <article className='filtersearch-result-card-c'>
       <Link to={`/blogs/blog/${blog?._id}`}>

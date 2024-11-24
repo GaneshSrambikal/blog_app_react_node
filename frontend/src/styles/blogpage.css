@@ -108,10 +108,19 @@
 .bm-user-card .bm-user-card-info p {
   font-weight: 500;
   color: #333;
+  text-decoration: none;
+}
+.bm-user-card .bm-user-card-info p a {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #333;
 }
 .bm-user-card .bm-user-card-info span {
   font-weight: 400;
   color: gray;
+  display: flex;
+  align-items: center;
+  margin-top: 0.3rem;
 }
 .bm-user-card .bm-user-card-info span:nth-child(3) {
   font-weight: 300;

@@ -1,0 +1,37 @@
+.bmtag-skeleton {
+  width: 50px;
+  max-width: 50px;
+  background-color: #d1c1ee;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  color: #541bbe;
+  font-size: 14px;
+}
+.bmreadt-skeleton {
+  width: 70px;
+  max-width: 70px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  color: gray;
+}
+.bm-user-card-info-name {
+  width: 100px;
+  height: 20px;
+}
+.bm-user-card-info-title {
+  width: 100px;
+  height: 20px;
+  margin-top: 0.3rem;
+}
+
+.bm-image-content-c-skeleton {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2rem;
+  height: 20rem;
+  
+}
