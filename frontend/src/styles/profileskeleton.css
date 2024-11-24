@@ -1,0 +1,68 @@
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+.skeleton-shimmer {
+  animation: shimmer 1.2s ease-in-out infinite;
+  background-color: #ebebeb;
+  background-image: linear-gradient(90deg, #eee, #f5f5f5, #eee);
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+}
+.profile-c-avatar-circle-skeleton.skeleton-shimmer {
+  width: 8rem;
+  height: 8rem;
+  border: 1px solid #c0c0c0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  font-size: 2rem;
+}
+.profile-c-user-name-skeleton {
+  width: auto;
+  height: 50px;
+}
+.profile-c-user-title {
+  width: auto;
+  height: 20px;
+  margin-top: 0.2rem;
+}
+.pc-user-d-loc {
+  width: 100px;
+  height: 20px;
+  margin-top: 0.2rem;
+}
+.pc-user-d-joined {
+  width: 100px;
+  height: 20px;
+  margin-top: 0.2rem;
+}
+.pc-user-details-edit-btn-c-skeleton {
+  width: auto;
+  height: 20px;
+  margin-top: 0.2rem;
+}
+.profile-tabs-skeleton {
+  margin-top: 2rem;
+}
+.profile-details-about-c-skeleton {
+  width: auto;
+  height: 100px;
+  margin-top: 1rem;
+}
+.profile-blogs-c-skeleton {
+  width: auto;
+  height: 100px;
+  margin-top: 1rem;
+}
+.profile-connections-card-c-skeleton {
+  width: auto;
+  height: 50px;
+  border-radius: .2rem;
+}

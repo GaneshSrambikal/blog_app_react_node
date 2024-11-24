@@ -6,16 +6,18 @@ import axios from 'axios';
 import ProfileBlogCard from './ProfileBlogCard';
 import DeleteModal from '../ui/DeleteModal';
 import { useToast } from '../../context/ToastContext';
+import ProfileBlogSkeleton from '../ui/skeletons/ProfileBlogSkeleton';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const ProfileBlogs = ({ ...props }) => {
-  const { user, loading, token } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user, token } = useContext(AuthContext);
   const [selectedBlog, setSelectedBlog] = useState({});
   const [blogs, setBlogs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const addToast = useToast();
   console.log('Blogs', blogs);
   const fetchBlog = async () => {
+    setIsLoading(true);
     try {
       const res = await axios.get(`${react_base_url}/blogs`);
       console.log(res.data);
@@ -24,6 +26,7 @@ const ProfileBlogs = ({ ...props }) => {
           (blog) => blog.author.id === props.user._id
         );
         setBlogs(userBlogs);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -61,7 +64,7 @@ const ProfileBlogs = ({ ...props }) => {
   useEffect(() => {
     fetchBlog();
   }, []);
-  if (loading) return <div>loading...</div>;
+  if (isLoading) return <ProfileBlogSkeleton />;
   return (
     <>
       <div className='profile-blogs-container'>

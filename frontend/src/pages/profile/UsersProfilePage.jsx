@@ -6,12 +6,15 @@ import ProfileTabs from '../../components/profile/ProfileTabs';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import ProfileBlogSkeleton from '../../components/ui/skeletons/ProfileBlogSkeleton';
+import ProfileSkeleton from '../../components/ui/skeletons/ProfileSkeleton';
 const UsersProfilePage = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const params = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const { token, loading } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   //   const [blogs, setBlogs] = useState([]);
 
   //   const fetchUser = await axios.get;
@@ -25,6 +28,7 @@ const UsersProfilePage = () => {
       });
       console.log(res);
       setUser(res.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       navigate('/user-not-found');
@@ -34,8 +38,8 @@ const UsersProfilePage = () => {
   useEffect(() => {
     getUserData();
   }, [params]);
-  if (!user) return <div>Loading...</div>;
-  if (loading) return <div>Loading...</div>;
+  // if (!user) return <div>Loading...</div>;
+  if (loading) return <ProfileSkeleton />;
   return (
     <>
       <Helmet>

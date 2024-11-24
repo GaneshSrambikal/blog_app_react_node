@@ -2,11 +2,13 @@ import ProfileConnectionCard from './ProfileConnectionCard';
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
+import ProfileConnectionSkeleton from '../ui/skeletons/ProfileConnectionSkeleton';
 const ProfileConnections = ({ ...props }) => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
-  const { loading, token } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   console.log(props.user, token);
   const fetchFollower = async () => {
     try {
@@ -18,6 +20,7 @@ const ProfileConnections = ({ ...props }) => {
       );
       console.log(res);
       setFollowers(res.data.followers);
+      setIsLoading(false);
       return res.data.followers;
     } catch (error) {
       console.log(error);
@@ -33,6 +36,7 @@ const ProfileConnections = ({ ...props }) => {
       );
       console.log(res);
       setFollowing(res.data.following);
+      setIsLoading(false);
       return res.data.following;
     } catch (error) {
       console.log(error);
@@ -43,7 +47,7 @@ const ProfileConnections = ({ ...props }) => {
     fetchFollowing();
   }, [props.user]);
   console.log(followers, following);
-  if (loading) return <div>loading</div>;
+  if (isLoading) return <ProfileConnectionSkeleton />;
   return (
     <div className='profile-connections-container'>
       <h2>{`${props.user.name.split(' ')[0]}'s connections`}</h2>
