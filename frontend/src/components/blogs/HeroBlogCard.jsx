@@ -68,7 +68,7 @@ const HeroBlogCard = ({ blog }) => {
           </div>
           <div className='hbcui-info-c'>
             <p>{blog?.author?.name}</p>
-            <span>Chef</span>
+            {/* <span>Chef</span> */}
           </div>
         </div>
         <div className='hero-blog-card-read-link'>

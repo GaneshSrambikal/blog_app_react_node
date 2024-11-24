@@ -95,7 +95,7 @@ const BlogPage = () => {
                   {blog?.author?.name}
                 </Link>
               </p>
-              <span>Chef</span>
+              
               <span>
                 <CiCalendar /> {getCreatedDate(blog?.createdAt)}
               </span>
