@@ -51,14 +51,16 @@ const Home = () => {
         <div className='homepage-latest-post-c'>
           <h3>Latest blogs at Blog App</h3>
           {isLoading && <HeroBlogCardSkeleton />}
-          {!isLoading && <Carousel>
-            {blogs &&
-              blogs.slice(0, 6).map((blog, index) => (
-                <div className='homepage-carousel-slide' key={index}>
-                  <HeroBlogCard blog={blog} />
-                </div>
-              ))}
-          </Carousel>}
+          {!isLoading && (
+            <Carousel>
+              {blogs &&
+                blogs.slice(0, 6).map((blog, index) => (
+                  <div className='homepage-carousel-slide' key={index}>
+                    <HeroBlogCard blog={blog} />
+                  </div>
+                ))}
+            </Carousel>
+          )}
         </div>
 
         <FilterSearchTabs blogs={blogs} />
