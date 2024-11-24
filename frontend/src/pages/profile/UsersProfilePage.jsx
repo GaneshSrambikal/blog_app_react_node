@@ -6,7 +6,6 @@ import ProfileTabs from '../../components/profile/ProfileTabs';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import ProfileBlogSkeleton from '../../components/ui/skeletons/ProfileBlogSkeleton';
 import ProfileSkeleton from '../../components/ui/skeletons/ProfileSkeleton';
 const UsersProfilePage = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
