@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import AvatarPlaceholder from '../../assets/images/avatarPlaceholder.png';
+import HeroBlogCardSkeleton from '../ui/skeletons/HeroBlogCardSkeleton';
 const HeroBlogCard = ({ blog }) => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const { token } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const HeroBlogCard = ({ blog }) => {
   useEffect(() => {
     fetchUseAvatar();
   }, []);
-  if (!blog) return <div>loading</div>;
+  if (!blog) return <HeroBlogCardSkeleton />;
   return (
     <div className='hero-blog-card-c'>
       <div className='hero-blog-card-image-c'>

@@ -1,4 +1,3 @@
-import { CiCalendar } from 'react-icons/ci';
 import { MdOutlineAccessTime } from 'react-icons/md';
 import '../../../styles/blogpageskeleton.css';
 const BlogPageSkeleton = () => {

@@ -10,9 +10,11 @@ import { Navigate } from 'react-router-dom';
 import FilterSearchTabs from '../components/blogs/FilterSearchTabs';
 import AddBlogSection from '../components/blogs/AddBlogSection';
 import { Helmet } from 'react-helmet';
+import HeroBlogCardSkeleton from '../components/ui/skeletons/HeroBlogCardSkeleton';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Home = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
   const [blogs, setBlogs] = useState([]);
   console.log(user);
   const fetchBlog = async () => {
@@ -21,8 +23,10 @@ const Home = () => {
       console.log(res.data);
       if (res) {
         setBlogs(res.data.blogs);
+        setIsLoading(false);
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -31,7 +35,7 @@ const Home = () => {
   }, []);
 
   if (!user) return <Navigate to='/login' />;
-  if (loading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
   return (
     <>
       <Helmet>
@@ -46,38 +50,16 @@ const Home = () => {
         <AddBlogSection />
         <div className='homepage-latest-post-c'>
           <h3>Latest blogs at Blog App</h3>
-          <Carousel>
+          {isLoading && <HeroBlogCardSkeleton />}
+          {!isLoading && <Carousel>
             {blogs &&
               blogs.slice(0, 6).map((blog, index) => (
                 <div className='homepage-carousel-slide' key={index}>
                   <HeroBlogCard blog={blog} />
                 </div>
               ))}
-          </Carousel>
+          </Carousel>}
         </div>
-        {/* <div className='homepage-filtersearch-container'>
-          <div className='homepage-filter-search'>
-            <div className='h-fs-filter-c'>
-              <div className='h-fs-filter-option selected'>all</div>
-              <div className='h-fs-filter-option'>Technology</div>
-              <div className='h-fs-filter-option'>Travel</div>
-              <div className='h-fs-filter-option'>Food</div>
-            </div>
-            <div className='h-fs-search-c'>
-              <input
-                type='text'
-                placeholder='search blogs by title, author, date, order'
-              />
-              <FaSearch />
-            </div>
-          </div>
-          <div className='homepage-filtersearch-result-container'>
-            {blogs &&
-              blogs
-                .reverse()
-                .map((blog, index) => <FilterCard key={index} blog={blog} />)}
-          </div>
-        </div> */}
 
         <FilterSearchTabs blogs={blogs} />
 
