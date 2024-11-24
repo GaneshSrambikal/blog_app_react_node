@@ -5,6 +5,7 @@ import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { Oval } from 'react-loader-spinner';
 import { AiOutlineOpenAI } from 'react-icons/ai';
+import { chatSession, model } from '../../utils/gemini-ai';
 const CreateBlogForm = ({ ...props }) => {
   const fileInputRef = useRef(null);
   const { token } = useContext(AuthContext);
@@ -108,6 +109,22 @@ const CreateBlogForm = ({ ...props }) => {
     }
     console.log(formData);
   };
+  const handleAIOutput = async () => {
+    // let dataSet = {
+    //   title: 'How to make chicken sandwich',
+    //   category: 'food',
+    // };
+    // const result = await chatSession.sendMessage(
+    //   JSON.stringify(dataSet) +
+    //     ',' +
+    //     'Write a short blog based on given title and category and give me result in Rich Text Editor format'
+    // );
+    // console.log(result);
+    const res = await model.generateContent(
+      `Write a short blog on How a creator of React is rethinking IDEs and based on category React . Return response in plain text`
+    );
+    console.log(res.response.text());
+  };
   return (
     <>
       {/* <Modal /> */}
@@ -148,7 +165,7 @@ const CreateBlogForm = ({ ...props }) => {
         />
         {/* Content */}
         <label>{`Or generate with Openai's chatGPT`}</label>{' '}
-        <button>
+        <button type='button' onClick={handleAIOutput}>
           Generate with <AiOutlineOpenAI />
         </button>
         <InputComponent
