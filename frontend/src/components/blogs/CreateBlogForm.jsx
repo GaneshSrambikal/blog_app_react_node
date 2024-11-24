@@ -4,8 +4,9 @@ import { validateCreateBlogForm } from '../../validators/blog/createBlogValidato
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import { Oval } from 'react-loader-spinner';
-import { AiOutlineOpenAI } from 'react-icons/ai';
-import { chatSession, model } from '../../utils/gemini-ai';
+import { SiGooglegemini } from 'react-icons/si';
+import { model } from '../../utils/gemini-ai';
+import { validateGeminiInput } from '../../validators/blog/geminiValidator';
 const CreateBlogForm = ({ ...props }) => {
   const fileInputRef = useRef(null);
   const { token } = useContext(AuthContext);
@@ -22,7 +23,7 @@ const CreateBlogForm = ({ ...props }) => {
     heroImage: null,
   });
   const [errors, setErrors] = useState({});
-
+  const [aiLoading, setAiLoading] = useState(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -110,20 +111,27 @@ const CreateBlogForm = ({ ...props }) => {
     console.log(formData);
   };
   const handleAIOutput = async () => {
-    // let dataSet = {
-    //   title: 'How to make chicken sandwich',
-    //   category: 'food',
-    // };
-    // const result = await chatSession.sendMessage(
-    //   JSON.stringify(dataSet) +
-    //     ',' +
-    //     'Write a short blog based on given title and category and give me result in Rich Text Editor format'
-    // );
-    // console.log(result);
-    const res = await model.generateContent(
-      `Write a short blog on How a creator of React is rethinking IDEs and based on category React . Return response in plain text`
+    setAiLoading(true);
+    console.log(formData.title, formData.category);
+    const validationErrors = validateGeminiInput(
+      formData.title,
+      formData.category
     );
-    console.log(res.response.text());
+    if (validationErrors) {
+      setErrors(validationErrors);
+      setAiLoading(false);
+    } else {
+      try {
+        const res = await model.generateContent(
+          `Write a short blog on ${formData.title} and based on category ${formData.category} . Return response in plain text`
+        );
+        setAiLoading(false);
+        console.log(res.response.text());
+        setFormData(formData, (formData.content = res.response.text()));
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
   return (
     <>
@@ -164,10 +172,6 @@ const CreateBlogForm = ({ ...props }) => {
           error={errors.category}
         />
         {/* Content */}
-        <label>{`Or generate with Openai's chatGPT`}</label>{' '}
-        <button type='button' onClick={handleAIOutput}>
-          Generate with <AiOutlineOpenAI />
-        </button>
         <InputComponent
           label={'Content'}
           type={'textarea'}
@@ -177,7 +181,36 @@ const CreateBlogForm = ({ ...props }) => {
           onChange={handleInputChange}
           className={`${getInputClass('content')} create-blog-content-f`}
           error={errors.content}
+          disabled={aiLoading}
         />
+        <label>{`Or generate content with Google's Gemini`}</label>{' '}
+        <button
+          type='button'
+          onClick={handleAIOutput}
+          className='create-blog-ai-gen-btn'
+        >
+          {aiLoading ? (
+            <>
+              <Oval
+                visible={isLoading}
+                height='20'
+                width='20'
+                color='#f369f2'
+                ariaLabel='oval-loading'
+                wrapperStyle={{}}
+                wrapperClass=''
+              />{' '}
+              <span style={{ marginLeft: '1rem' }}>
+                {' '}
+                Generating content . . .
+              </span>{' '}
+            </>
+          ) : (
+            <>
+              Generate with <SiGooglegemini /> Gemini
+            </>
+          )}
+        </button>
         {/* Add Image */}
         <div className='form-group create-blog-file-container'>
           <label>Image</label>
@@ -213,17 +246,23 @@ const CreateBlogForm = ({ ...props }) => {
         {errors.server && <span>{errors.server}</span>}
         {/* submit */}
         <div className='create-blog-form-sub-btn'>
-          <button className='submit-button' disabled={isLoading}>
+          <button className='submit-button' disabled={isLoading || aiLoading}>
             {isLoading ? (
-              <Oval
-                visible={isLoading}
-                height='20'
-                width='20'
-                color='#fff'
-                ariaLabel='oval-loading'
-                wrapperStyle={{}}
-                wrapperClass=''
-              />
+              <>
+                <Oval
+                  visible={isLoading}
+                  height='20'
+                  width='20'
+                  color='#fff'
+                  ariaLabel='oval-loading'
+                  wrapperStyle={{}}
+                  wrapperClass=''
+                />{' '}
+                <span style={{ marginLeft: '1rem' }}>
+                  {' '}
+                  Creating new Blog . . .
+                </span>
+              </>
             ) : (
               `Add`
             )}
