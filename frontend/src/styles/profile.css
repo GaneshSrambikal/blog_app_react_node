@@ -289,3 +289,26 @@ hr {
     background-color: #fff8f8;
   }
 }
+
+.edit-profile-ai-gen-btn {
+  width: 100%;
+  border: 1px solid #9c9c9c;
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #f369f2 0%, #fc466b 0%, #3f5efb 100%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}
+.edit-profile-ai-gen-btn svg {
+  color: #0056b3;
+  margin-left: 0.5rem;
+  margin-right: 0.2rem;
+}
