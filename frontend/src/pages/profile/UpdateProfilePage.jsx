@@ -11,6 +11,9 @@ import { TbPhotoEdit } from 'react-icons/tb';
 import { resizeImage } from '../../utils/resizeImage';
 import { useToast } from '../../context/ToastContext';
 import { Helmet } from 'react-helmet';
+import { SiGooglegemini } from 'react-icons/si';
+import { model } from '../../utils/gemini-ai';
+import { Oval } from 'react-loader-spinner';
 const UpdateProfilePage = () => {
   const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
@@ -20,14 +23,17 @@ const UpdateProfilePage = () => {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [loadingGenerate, setLoadingGenerate] = useState(false);
   const [showUploadAction, setShowUploadAction] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
   const navigate = useNavigate();
   const addToast = useToast();
   const avatarActionRef = useRef(null);
   useEffect(() => {
     loadUser();
+    console.log('runs');
   }, []);
   useEffect(() => {
     setFormData(user);
+    console.log('user runs');
   }, []);
   // listen for outside div clicks
   useEffect(() => {
@@ -165,6 +171,23 @@ const UpdateProfilePage = () => {
       setLoadingGenerate(false);
     }
   };
+  const handleAiAbout = async () => {
+    setAiLoading(true);
+    try {
+      const res = await model.generateContent(
+        `Write a short bio for ${formData.title}. be creative and limit the response to 150 characters.`
+      );
+      setFormData({
+        ...formData,
+        about: res.response.text(),
+      });
+      console.log(res.response.text());
+      setAiLoading(false);
+    } catch (error) {
+      setAiLoading(false);
+      console.log(error);
+    }
+  };
   if (!user) return <div>Loading</div>;
   return (
     <>
@@ -231,13 +254,45 @@ const UpdateProfilePage = () => {
                 label='About'
                 id='about'
                 name='about'
-                value={formData && formData.about}
+                value={formData?.about}
                 onChange={handleChange}
                 className={`${getInputClass('about')} edit-profile-textarea`}
                 error={errors.about}
                 required={false}
                 placeholder='Introduce yourself...'
+                disabled={aiLoading}
               />
+              {/* Gemini AI for generating about content */}
+              <div className='form-group'>
+                <label>Or generate about with gemini AI</label>
+                <button
+                  type='button'
+                  onClick={handleAiAbout}
+                  className='edit-profile-ai-gen-btn'
+                >
+                  {aiLoading ? (
+                    <>
+                      <Oval
+                        visible={aiLoading}
+                        height='20'
+                        width='20'
+                        color='#f369f2'
+                        ariaLabel='oval-loading'
+                        wrapperStyle={{}}
+                        wrapperClass=''
+                      />{' '}
+                      <span style={{ marginLeft: '1rem' }}>
+                        {' '}
+                        Generating content . . .
+                      </span>{' '}
+                    </>
+                  ) : (
+                    <>
+                      Generate with <SiGooglegemini /> Gemini
+                    </>
+                  )}
+                </button>
+              </div>
               {/* title */}
               <InputComponent
                 type='select'
@@ -250,6 +305,7 @@ const UpdateProfilePage = () => {
                   'title'
                 )} edit-profile-title-select`}
                 error={errors.title}
+                disabled={aiLoading}
               />
               {/* Email*/}
               <InputComponent
@@ -348,7 +404,11 @@ const UpdateProfilePage = () => {
 
               {/* update btn */}
               <div className='edit-profile-update-btn-c'>
-                <button type='submit' className='submit-button'>
+                <button
+                  type='submit'
+                  className='submit-button'
+                  disabled={aiLoading}
+                >
                   Update Profile
                 </button>
               </div>
