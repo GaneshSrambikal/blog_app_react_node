@@ -13,6 +13,7 @@ const Layout = () => {
     `/blogs/blog/${params.id}`,
     `/blogs/blog/create-blog`,
     `/blogs/blog/edit/${params.id}`,
+    `/dashboard`,
   ];
   const showNavbar = routesWithNavbar.includes(location.pathname);
   return (

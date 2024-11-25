@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import { MdOutlineMenuOpen } from 'react-icons/md';
-import { RxAvatar } from 'react-icons/rx';
+import { RxAvatar, RxDashboard } from 'react-icons/rx';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { MdAddCircleOutline } from 'react-icons/md';
 import '../styles/navbar.css';
@@ -85,6 +85,16 @@ const Navbar = () => {
                       }
                     >
                       <RxAvatar /> profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to='/dashboard'
+                      className={({ isActive }) =>
+                        isActive ? 'navbar-navlinks-active' : 'navbar-navlinks'
+                      }
+                    >
+                      <RxDashboard /> dashboard
                     </NavLink>
                   </li>
                   <li onClick={handleSignout}>
