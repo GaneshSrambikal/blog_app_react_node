@@ -1,0 +1,104 @@
+.dashboardpage-container {
+  max-width: 1024px;
+  margin: auto;
+  /* background-color: aqua; */
+  padding: 2rem;
+  padding-top: 8rem;
+}
+
+.dashboardpage-greeting {
+  margin-bottom: 2rem;
+}
+.dashboardpage-greeting p {
+  color: #757575;
+}
+.dashboardpage-cards-container {
+  /* background-color: aquamarine; */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+@media screen and (max-width: 768px) {
+  .dashboardpage-cards-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 540px) {
+  .dashboardpage-cards-container {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+.dashboardpage-cards-container .dashboardpage-card-c {
+  /* background-color: cadetblue; */
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  border-radius: 5px;
+  color: #fff;
+  box-shadow: 1px 1px 5px 0px #cecece;
+}
+.dashboardpage-card-c .dashboardpage-card-info {
+  display: flex;
+  flex-direction: column;
+}
+.dashboardpage-card-c .dashboardpage-card-info h4 {
+  font-size: 2rem;
+}
+.dashboardpage-card-c .dashboardpage-card-info p {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+.dashboardpage-card-c .dashboardpage-card-img {
+  position: absolute;
+  bottom: -1.6rem;
+  right: -1rem;
+}
+.dashboardpage-card-c .dashboardpage-card-img svg {
+  font-size: 6rem;
+  opacity: 30%;
+}
+.dashboardpage-container .dashboardpage-ai-creditsbuy-container {
+  background-color: #eee;
+  margin-top: 3rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px dashed #d3d3d3;
+  border-radius: 5px;
+}
+@media screen and (max-width: 768px) {
+  .dashboardpage-container .dashboardpage-ai-creditsbuy-container {
+    flex-direction: column;
+    align-items: flex-start;
+    /* justify-content: flex-start; */
+  }
+}
+.dashboardpage-ai-creditsbuy-container p {
+  color: #525252;
+}
+.dashboardpage-ai-creditsbuy-container button {
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 0.8rem;
+  text-transform: capitalize;
+  background-color: #263246;
+  color: #fff;
+  cursor: pointer;
+}
+.dashboardpage-ai-creditsbuy-container button:hover {
+  background-color: #3b4250;
+}
+@media screen and (max-width: 768px) {
+  .dashboardpage-ai-creditsbuy-container p {
+    font-size: 15px;
+  }
+  .dashboardpage-ai-creditsbuy-container button {
+    margin-top: 2rem;
+    width: 100%;
+  }
+}
