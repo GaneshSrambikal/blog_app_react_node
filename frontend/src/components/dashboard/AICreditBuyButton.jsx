@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import '../../styles/dashboardpage.css';
 import { Oval } from 'react-loader-spinner';
-import { BsSpeedometer } from 'react-icons/bs';
+import { SiRazorpay } from 'react-icons/si';
 import axios from 'axios';
+import { useToast } from '../../context/ToastContext';
 const AICreditBuyButton = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState(100);
   const receiptId = '123456789';
   const currency = 'INR';
+  const addToast = useToast();
+
   const handlePayment = async () => {
     setLoading(true);
     const orders = await axios.post(`${base_url}/payment/razorpay/orders`, {
@@ -35,6 +38,7 @@ const AICreditBuyButton = () => {
         });
         console.log('purchased.');
         setLoading(false);
+        addToast('Credits Purchased successfully', 'toaster-success');
       },
       prefill: {
         name: 'Blog App',
@@ -43,9 +47,6 @@ const AICreditBuyButton = () => {
       },
       notes: {
         address: 'Razorpay Corporate Office',
-      },
-      theme: {
-        color: '#263246',
       },
     };
 
@@ -59,7 +60,7 @@ const AICreditBuyButton = () => {
 
   return (
     <>
-      <button type='button' onClick={handlePayment}>
+      <button type='button' onClick={handlePayment} disabled={loading}>
         {loading ? (
           <>
             <Oval
@@ -75,8 +76,8 @@ const AICreditBuyButton = () => {
           </>
         ) : (
           <>
-            <BsSpeedometer />
-            buy now
+            buy now with <SiRazorpay />
+            Razorpay
           </>
         )}
       </button>

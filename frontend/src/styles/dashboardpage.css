@@ -89,10 +89,18 @@
   background-color: #263246;
   color: #fff;
   cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 .dashboardpage-ai-creditsbuy-container button:hover {
   background-color: #3b4250;
 }
+.dashboardpage-ai-creditsbuy-container button svg {
+  margin-left: 0.5rem;
+  margin-right: 0.2rem;
+}
+
 @media screen and (max-width: 768px) {
   .dashboardpage-ai-creditsbuy-container p {
     font-size: 15px;
