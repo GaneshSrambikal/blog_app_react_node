@@ -4,7 +4,21 @@ import { FaArrowsDownToPeople, FaPeopleLine } from 'react-icons/fa6';
 import { GrMoney } from 'react-icons/gr';
 import { FaMedal } from 'react-icons/fa';
 import AICreditBuyButton from '../../components/dashboard/AICreditBuyButton';
+import { useContext, useEffect, useState } from 'react';
+import AuthContext from '../../context/AuthContext';
 const DashboardPage = () => {
+  const { user, loadUser, allBlogs } = useContext(AuthContext);
+  const [userBlogs, setUserBlogs] = useState(0);
+  console.log(user);
+  const fetchUserBlogs = async () => {
+    const blogs = allBlogs.filter((blog) => blog.author.id === user._id);
+    console.log('user blogs', blogs);
+    setUserBlogs(blogs.length);
+  };
+  useEffect(() => {
+    loadUser();
+    fetchUserBlogs();
+  }, []);
   return (
     <div className='dashboardpage-container'>
       <section className='dashboardpage-greeting'>
@@ -20,7 +34,7 @@ const DashboardPage = () => {
           }}
         >
           <div className='dashboardpage-card-info'>
-            <h4>08</h4>
+            <h4>{userBlogs}</h4>
             <p>blogs</p>
           </div>
           <div className='dashboardpage-card-img'>
@@ -35,7 +49,7 @@ const DashboardPage = () => {
           }}
         >
           <div className='dashboardpage-card-info'>
-            <h4>10</h4>
+            <h4>{user.followers.length}</h4>
             <p>followers</p>
           </div>
           <div className='dashboardpage-card-img'>
@@ -50,7 +64,7 @@ const DashboardPage = () => {
           }}
         >
           <div className='dashboardpage-card-info'>
-            <h4>2</h4>
+            <h4>{user.following.length}</h4>
             <p>following</p>
           </div>
           <div className='dashboardpage-card-img'>
@@ -65,7 +79,7 @@ const DashboardPage = () => {
           }}
         >
           <div className='dashboardpage-card-info'>
-            <h4>80 / 100</h4>
+            <h4>{user.totalAiCredits}</h4>
             <p>ai credits</p>
           </div>
           <div className='dashboardpage-card-img'>
@@ -80,8 +94,8 @@ const DashboardPage = () => {
           }}
         >
           <div className='dashboardpage-card-info'>
-            <h4>8</h4>
-            <p>points</p>
+            <h4>{user.rewards}</h4>
+            <p>rewards</p>
           </div>
           <div className='dashboardpage-card-img'>
             <GrMoney style={{ color: 'rgb(253, 224, 255)' }} />

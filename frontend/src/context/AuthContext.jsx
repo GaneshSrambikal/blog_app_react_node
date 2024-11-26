@@ -133,6 +133,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     loadUser();
+    fetchAllBlog();
     console.log('after loading user:', initialState);
   }, []);
   return (

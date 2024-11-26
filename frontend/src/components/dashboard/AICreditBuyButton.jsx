@@ -12,7 +12,7 @@ const AICreditBuyButton = () => {
   const receiptId = '123456789';
   const currency = 'INR';
   const addToast = useToast();
-  const { token } = useContext(AuthContext);
+  const { token, loadUser } = useContext(AuthContext);
 
   const handlePayment = async () => {
     setLoading(true);
@@ -53,6 +53,7 @@ const AICreditBuyButton = () => {
         console.log('purchased.');
         console.log(resp);
         setLoading(false);
+        loadUser();
         addToast('Credits Purchased successfully', 'toaster-success');
       },
       prefill: {
