@@ -4,6 +4,7 @@ const cors = require('cors');
 const userRouter = require('./routes/users/userRoutes');
 const adminRouter = require('./routes/users/adminRoutes');
 const blogRouter = require('./routes/blog/blogRoutes');
+const razorpayRouter = require('./routes/payment/razorpay/razorpayRoutes');
 const { allowedOrigins } = require('./utils/constants/corsOrigins');
 const app = express();
 
@@ -36,5 +37,7 @@ app.use('/api/admin', adminRouter);
 app.use('/api/users', userRouter);
 // Blog routes
 app.use('/api/blogs', blogRouter);
+// Razorpay routes
+app.use('/api/payment/razorpay', razorpayRouter);
 
 module.exports = app;

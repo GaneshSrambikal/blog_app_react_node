@@ -5,5 +5,7 @@ const {
 
 const router = require('express').Router();
 
-router.post('/payment/razorpay/orders', initialOrders);
-router.post('/payment/razorpay/validate', validateRazPayment);
+router.post('/orders', initialOrders);
+router.post('/validate', validateRazPayment);
+
+module.exports = router;

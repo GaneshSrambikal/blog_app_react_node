@@ -3,6 +3,7 @@ import { BsPostcardHeart, BsSpeedometer } from 'react-icons/bs';
 import { FaArrowsDownToPeople, FaPeopleLine } from 'react-icons/fa6';
 import { GrMoney } from 'react-icons/gr';
 import { FaMedal } from 'react-icons/fa';
+import AICreditBuyButton from '../../components/dashboard/AICreditBuyButton';
 const DashboardPage = () => {
   return (
     <div className='dashboardpage-container'>
@@ -108,7 +109,7 @@ const DashboardPage = () => {
             {` Running out of ai credits, Buy more ai credits to create new blogs
             with google's gemini!`}
           </p>
-          <button>buy now</button>
+          <AICreditBuyButton />
         </>
       </section>
     </div>

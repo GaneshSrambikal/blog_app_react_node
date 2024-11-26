@@ -14,6 +14,7 @@ exports.initialOrders = async (req, res, next) => {
         .status(400)
         .json({ message: 'Failed to place order. Bad request' });
     }
+    console.log(orders);
     return res.status(200).json(orders);
   } catch (error) {
     next(error);
@@ -23,11 +24,13 @@ exports.initialOrders = async (req, res, next) => {
 };
 
 exports.validateRazPayment = async (req, res, next) => {
+  console.log(req.body);
+  console.log(process.env.RAZORPAY_KEY_SECRET);
   try {
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
       req.body;
     const sha = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
-    sha.update(`${razorpay_order_id} | ${razorpay_payment_id}`);
+    sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
     const digest = sha.digest('hex');
 
     if (digest !== razorpay_signature) {
