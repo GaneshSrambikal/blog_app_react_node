@@ -71,11 +71,15 @@
   border: 1px dashed #d3d3d3;
   border-radius: 5px;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 960px) {
   .dashboardpage-container .dashboardpage-ai-creditsbuy-container {
     flex-direction: column;
     align-items: flex-start;
     /* justify-content: flex-start; */
+  }
+  .dashboardpage-ai-creditsbuy-container button {
+    margin-top: 2rem;
+    width: 100%;
   }
 }
 .dashboardpage-ai-creditsbuy-container p {
@@ -84,8 +88,8 @@
 .dashboardpage-ai-creditsbuy-container button {
   border: none;
   border-radius: 5px;
-  padding: 0.5rem 0.8rem;
-  text-transform: capitalize;
+  padding: 0.6rem 0.8rem;
+  text-transform: lowercase;
   background-color: #263246;
   color: #fff;
   cursor: pointer;
@@ -97,16 +101,14 @@
   background-color: #3b4250;
 }
 .dashboardpage-ai-creditsbuy-container button svg {
-  margin-left: 0.5rem;
+  margin-left: 0.6rem;
   margin-right: 0.2rem;
+  font-size: 1.1rem;
 }
 
 @media screen and (max-width: 768px) {
   .dashboardpage-ai-creditsbuy-container p {
     font-size: 15px;
   }
-  .dashboardpage-ai-creditsbuy-container button {
-    margin-top: 2rem;
-    width: 100%;
-  }
+  
 }

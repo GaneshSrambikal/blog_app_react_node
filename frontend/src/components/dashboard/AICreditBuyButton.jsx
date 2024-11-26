@@ -1,24 +1,34 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../../styles/dashboardpage.css';
 import { Oval } from 'react-loader-spinner';
 import { SiRazorpay } from 'react-icons/si';
 import axios from 'axios';
 import { useToast } from '../../context/ToastContext';
+import AuthContext from '../../context/AuthContext';
 const AICreditBuyButton = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState(false);
-  const [amount, setAmount] = useState(100);
+  const amount = 100;
   const receiptId = '123456789';
   const currency = 'INR';
   const addToast = useToast();
+  const { token } = useContext(AuthContext);
 
   const handlePayment = async () => {
     setLoading(true);
-    const orders = await axios.post(`${base_url}/payment/razorpay/orders`, {
-      amount: amount * 100,
-      currency,
-      receipt: receiptId,
-    });
+    const orders = await axios.post(
+      `${base_url}/payment/razorpay/orders`,
+      {
+        amount: amount * 100,
+        currency,
+        receipt: receiptId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const response = await orders.data;
     console.log(response);
     setLoading(false);
@@ -33,10 +43,15 @@ const AICreditBuyButton = () => {
       handler: async function (res) {
         console.log('payment captured');
         console.log(res);
-        const resp = await axios.post(`${base_url}/payment/razorpay/validate`, {
-          ...res,
-        });
+        const resp = await axios.post(
+          `${base_url}/payment/razorpay/validate`,
+          {
+            ...res,
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         console.log('purchased.');
+        console.log(resp);
         setLoading(false);
         addToast('Credits Purchased successfully', 'toaster-success');
       },

@@ -1,5 +1,7 @@
 const rp1 = require('../config/razorpay');
 const crypto = require('crypto');
+const Payment = require('../models/paymentModel');
+const User = require('../models/userModel');
 exports.initialOrders = async (req, res, next) => {
   if (!req.body) {
     return res
@@ -38,10 +40,20 @@ exports.validateRazPayment = async (req, res, next) => {
         .status(400)
         .json({ message: 'Transaction not legit', isValid: false });
     }
+    const user = await User.findById(req.user.id);
+    const newPayment = new Payment({
+      paymentId: razorpay_payment_id,
+      noOfCredits: 100,
+      userId: user._id,
+      userEmail: user.email,
+      platform: 'razorpay',
+    });
+    const savedPayment = await newPayment.save();
     return res.json({
       message: 'Transaction is legit',
       orderId: razorpay_order_id,
       isValid: true,
+      savedPayment: savedPayment,
     });
   } catch (error) {
     console.log(error);
