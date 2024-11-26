@@ -40,7 +40,8 @@ exports.validateRazPayment = async (req, res, next) => {
         .status(400)
         .json({ message: 'Transaction not legit', isValid: false });
     }
-    const user = await User.findById(req.user.id);
+    // Save the payment records to db
+    const user = await User.findById(req.user.id).select('-password');
     const newPayment = new Payment({
       paymentId: razorpay_payment_id,
       noOfCredits: 100,
@@ -49,6 +50,18 @@ exports.validateRazPayment = async (req, res, next) => {
       platform: 'razorpay',
     });
     const savedPayment = await newPayment.save();
+
+    // update user credits after purchase
+    const newCredit = user?.totalAiCredits ? user.totalAiCredits + 100 : 100;
+    const updateUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        totalAiCredits: newCredit,
+      },
+      { new: true }
+    );
+
+    console.log('updatedUser', updateUser);
     return res.json({
       message: 'Transaction is legit',
       orderId: razorpay_order_id,

@@ -62,6 +62,18 @@ const userSchema = new mongoose.Schema({
   },
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  rewards: {
+    type: Number,
+    default: 10,
+  },
+  totalAiCredits: {
+    type: Number,
+    default: 100,
+  },
+  leftAiCredits: {
+    type: Number,
+    default: 100,
+  },
   isAdmin: {
     type: Boolean,
     required: true,
