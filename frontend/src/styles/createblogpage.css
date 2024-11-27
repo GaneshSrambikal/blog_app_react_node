@@ -96,3 +96,9 @@
   font-weight: 400;
   margin-left: 1rem;
 }
+.create-blog-buy-credits-span {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

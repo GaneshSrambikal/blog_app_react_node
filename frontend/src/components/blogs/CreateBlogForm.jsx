@@ -7,6 +7,7 @@ import { Oval } from 'react-loader-spinner';
 import { SiGooglegemini } from 'react-icons/si';
 import { model } from '../../utils/gemini-ai';
 import { validateGeminiInput } from '../../validators/blog/geminiValidator';
+import { Link } from 'react-router-dom';
 const CreateBlogForm = ({ ...props }) => {
   const fileInputRef = useRef(null);
   const { token, user, loadUser } = useContext(AuthContext);
@@ -200,12 +201,21 @@ const CreateBlogForm = ({ ...props }) => {
         />
         <label>
           {`Or generate content with Google's Gemini`}{' '}
-          <span className='create-blog-ai-credits-label'>{`(${user?.totalAiCredits} credits left)`}</span>
+          <span
+            className='create-blog-ai-credits-label'
+            style={{ color: user?.totalAiCredits < 20 ? 'red' : '#3a50cc' }}
+          >{`(${user?.totalAiCredits} credits left)`}</span>
         </label>{' '}
         <button
           type='button'
           onClick={handleAIOutput}
           className='create-blog-ai-gen-btn'
+          style={{
+            opacity: user?.totalAiCredits < 20 && 0.6,
+            filter: user?.totalAiCredits < 20 && 'blur(1px)',
+            cursor: user?.totalAiCredits < 20 && 'not-allowed',
+          }}
+          disabled={user?.totalAiCredits < 20 && true}
         >
           {aiLoading ? (
             <>
@@ -229,6 +239,9 @@ const CreateBlogForm = ({ ...props }) => {
             </>
           )}
         </button>
+        <span className='create-blog-buy-credits-span'>
+          <Link to={`/dashboard`}>buy more credits now!</Link>
+        </span>
         {/* Add Image */}
         <div className='form-group create-blog-file-container'>
           <label>Image</label>

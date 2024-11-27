@@ -175,19 +175,28 @@ const UpdateProfilePage = () => {
   };
   const handleAiAbout = async () => {
     setAiLoading(true);
-    try {
-      const res = await model.generateContent(
-        `Write a short bio for ${formData.title}. be creative and limit the response to 150 characters.`
-      );
-      setFormData({
-        ...formData,
-        about: res.response.text(),
-      });
-      console.log(res.response.text());
-      setAiLoading(false);
-    } catch (error) {
-      setAiLoading(false);
-      console.log(error);
+    if (user?.totalAiCredits > 20) {
+      try {
+        const res = await model.generateContent(
+          `Write a short bio for ${formData.title}. be creative and limit the response to 150 characters.`
+        );
+        setFormData({
+          ...formData,
+          about: res.response.text(),
+        });
+        console.log(res.response.text());
+        setAiLoading(false);
+        // update user ai credits
+        await axios.post(
+          `${react_base_url}/users/update-credits`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        loadUser();
+      } catch (error) {
+        setAiLoading(false);
+        console.log(error);
+      }
     }
   };
   if (!user) return <div>Loading</div>;
@@ -266,11 +275,25 @@ const UpdateProfilePage = () => {
               />
               {/* Gemini AI for generating about content */}
               <div className='form-group'>
-                <label>Or generate about with gemini AI</label>
+                <label>
+                  Or generate about with gemini AI{' '}
+                  <span
+                    className='edit-profile-ai-credits-label'
+                    style={{
+                      color: user?.totalAiCredits < 20 ? 'red' : 'blue',
+                    }}
+                  >{`(${user?.totalAiCredits} credits left)`}</span>
+                </label>
                 <button
                   type='button'
                   onClick={handleAiAbout}
                   className='edit-profile-ai-gen-btn'
+                  disabled={user?.totalAiCredits < 20 ? true : false}
+                  style={{
+                    opacity: user?.totalAiCredits < 20 && 0.6,
+                    filter: user?.totalAiCredits < 20 && 'blur(1px)',
+                    cursor: user?.totalAiCredits < 20 && 'not-allowed',
+                  }}
                 >
                   {aiLoading ? (
                     <>

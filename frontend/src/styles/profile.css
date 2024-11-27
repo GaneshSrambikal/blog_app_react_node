@@ -312,3 +312,8 @@ hr {
   margin-left: 0.5rem;
   margin-right: 0.2rem;
 }
+.edit-profile-ai-credits-label {
+  font-weight: 400;
+  font-size: 15px;
+  display: block;
+}
