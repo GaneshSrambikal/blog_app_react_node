@@ -307,8 +307,18 @@ hr {
   -webkit-text-fill-color: transparent;
   cursor: pointer;
 }
+.edit-profile-ai-gen-btn.ep-p-ai-disabled {
+  opacity: 0.6;
+  filter: blur(1px);
+  cursor: not-allowed;
+}
 .edit-profile-ai-gen-btn svg {
   color: #0056b3;
   margin-left: 0.5rem;
   margin-right: 0.2rem;
+}
+.edit-profile-ai-credits-label {
+  font-weight: 400;
+  font-size: 15px;
+  display: block;
 }

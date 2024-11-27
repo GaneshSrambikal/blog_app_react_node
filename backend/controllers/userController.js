@@ -313,7 +313,7 @@ exports.uploadAvatar = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-   
+
     return res.status(500).json({
       message: 'Failed to upload profile picture.',
       error: error.message,
@@ -647,5 +647,88 @@ exports.listFollowing = async (req, res, next) => {
     return res
       .status(500)
       .json({ message: 'server error', error: error.message });
+  }
+};
+
+// Update users ai credits after every ai generated content
+exports.updateCredits = async (req, res, next) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        totalAiCredits: req.user.totalAiCredits - 20,
+      },
+      { new: true }
+    );
+
+    return res
+      .status(200)
+      .send({ message: 'Credit updated successfully', user });
+  } catch (error) {
+    console.log(error);
+    next(error);
+    res
+      .status(500)
+      .json({ message: 'Failed to update credits', error: error.message });
+  }
+};
+
+// Update user rewards based of reward type ex. [like | comment | blog]
+exports.updateRewards = async (req, res, next) => {
+  let updatedUser = {};
+  let typeOfRewards = ['like', 'comment', 'blog'];
+  const { rewardType } = req.body;
+  if (!rewardType) {
+    return res.status(400).json({ message: 'Please provide reward type.' });
+  }
+  const user = await User.findById(req.user._id).select('-password');
+  if (!user) {
+    res.status(400).json({ message: 'User not found.' });
+  }
+  if (!typeOfRewards.includes(rewardType)) {
+    res.status(400).json({
+      message:
+        'Please provide a correct reward type. ex. [like | comment | blog]',
+    });
+  }
+  try {
+    switch (rewardType) {
+      case 'blog':
+        updatedUser = await User.findByIdAndUpdate(
+          req.user._id,
+          { rewards: user.rewards + 10 },
+          { new: true }
+        );
+        return res
+          .status(200)
+          .json({ message: 'Rewards updated successfully.', updatedUser });
+
+      case 'like':
+        updatedUser = await User.findByIdAndUpdate(
+          req.user._id,
+          { rewards: user.rewards + 1 },
+          { new: true }
+        );
+        return res
+          .status(200)
+          .json({ message: 'Rewards updated successfully.', updatedUser });
+
+      case 'comment':
+        updatedUser = await User.findByIdAndUpdate(
+          req.user._id,
+          { rewards: user.rewards + 5 },
+          { new: true }
+        );
+        return res.status(200).json({
+          message: 'Rewards updated successfully.',
+          updatedUser,
+        });
+
+      default:
+        break;
+    }
+  } catch (error) {
+    next(error);
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };

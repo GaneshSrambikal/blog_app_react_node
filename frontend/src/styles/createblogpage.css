@@ -85,8 +85,25 @@
   -webkit-text-fill-color: transparent;
   cursor: pointer;
 }
+.create-blog-ai-gen-btn.cb-ai-disabled {
+  opacity: 0.6;
+  filter: blur(1px);
+  cursor: not-allowed;
+}
 .create-blog-ai-gen-btn svg {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   color: #3f5efb;
+}
+.create-blog-ai-credits-label {
+  text-transform: lowercase;
+  color: #3a50cc;
+  font-weight: 400;
+  margin-left: 1rem;
+}
+.create-blog-buy-credits-span {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

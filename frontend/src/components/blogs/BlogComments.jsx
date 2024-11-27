@@ -52,6 +52,12 @@ const BlogComments = () => {
         fetchComments();
         setIsloading(false);
         addToast('Comment added successfully', 'toaster-success');
+        // update user rewards for comments. Rewards: 5
+        await axios.post(
+          `${base_url}/users/update-rewards`,
+          { rewardType: 'comment' },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       } catch (error) {
         setIsloading(false);
         console.log(error);

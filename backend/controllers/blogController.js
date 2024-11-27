@@ -497,36 +497,4 @@ exports.searchBlogs = async (req, res, next) => {
   }
 };
 
-// generate content based on prompt
-exports.generateBlogContent = async (req, res, next) => {
-  const { title, category } = req.body;
 
-  if (!title || !category) {
-    return res.status(400).json({ message: 'title and category are required' });
-  }
-
-  try {
-    const prompt = `You are a professional blog writer. Generate a detailed blog post based on the following:
-    - Title: ${title}
-    - Category: ${category}
-    Include a captivating introduction, body with subheadings, and a conclusion.
-    `;
-    console.log('in section');
-    const resp = await openai.completions.create({
-      // model: 'gpt-3.5-turbo-instruct',
-      // prompt,
-      // max_tokens: 500,
-      // temperature: 0.7,
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: 'Test message' }],
-    });
-
-    const generatedContent = resp.data.choices[0].text.trim();
-
-    res.status(200).json({ content: generatedContent });
-  } catch (error) {
-    console.log(error);
-    next(error);
-    res.status(500).json({ message: 'Failed to generate content', error });
-  }
-};

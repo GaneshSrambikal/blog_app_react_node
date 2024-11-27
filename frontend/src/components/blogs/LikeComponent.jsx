@@ -34,6 +34,14 @@ const LikeComponent = () => {
         },
       });
       fetchBlog();
+      // update user rewards for like. Rewards: 1
+      if (liked === false) {
+        await axios.post(
+          `${base_url}/users/update-rewards`,
+          { rewardType: 'like' },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      }
     } catch (error) {
       console.log(error);
     }
