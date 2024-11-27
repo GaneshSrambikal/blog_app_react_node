@@ -706,7 +706,7 @@ exports.updateRewards = async (req, res, next) => {
       case 'like':
         updatedUser = await User.findByIdAndUpdate(
           req.user._id,
-          { rewards: user.rewards + 2 },
+          { rewards: user.rewards + 1 },
           { new: true }
         );
         return res

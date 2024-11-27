@@ -23,6 +23,7 @@ const CommentCard = ({ comment, ...props }) => {
     console.log(res.data);
     setUserAvatar(res.data.avatar_url);
     // return currentAvatar;
+    
   };
   useEffect(() => {
     fetchUseAvatar();
