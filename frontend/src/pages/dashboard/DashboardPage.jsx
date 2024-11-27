@@ -6,6 +6,7 @@ import { FaMedal } from 'react-icons/fa';
 import AICreditBuyButton from '../../components/dashboard/AICreditBuyButton';
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
+import RedeemRewardButton from '../../components/dashboard/RedeemRewardButton';
 const DashboardPage = () => {
   const { user, loadUser, allBlogs } = useContext(AuthContext);
   const [userBlogs, setUserBlogs] = useState(allBlogs.length);
@@ -124,6 +125,13 @@ const DashboardPage = () => {
             with google's gemini!`}
           </p>
           <AICreditBuyButton />
+          {user?.rewards > 100 && (
+            <>
+              {' '}
+              <span>OR</span>
+              <RedeemRewardButton />
+            </>
+          )}
         </>
       </section>
     </div>
