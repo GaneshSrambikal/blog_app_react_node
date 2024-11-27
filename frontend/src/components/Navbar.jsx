@@ -50,62 +50,77 @@ const Navbar = () => {
             <h2>Blog_App</h2>
           </Link>
         </div>
-        <div className='navbar-right'>
-          <Link to='/blogs/blog/create-blog' className='navbar-add-blog-btn'>
-            <MdAddCircleOutline /> Add blog
-          </Link>
-          <div className='navbar-avatar' onClick={toggleDropdown}>
-            {user?.avatar_url ? (
-              <img
-                src={user.avatar_url}
-                alt='navbar-avatar'
-                className='navbar-avatar-img'
-              />
-            ) : (
-              <div className='navbar-avatar-initials'>
-                {user?.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')}
-              </div>
-            )}
-            <MdOutlineMenuOpen
-              className='navbar-menu-icon'
-              onClick={toggleDropdown}
-            />
-            {showDropdown && (
-              <div className='navbar-dropdown' ref={dropdownRef}>
-                <p>Signed in as: {user.email}</p>
-                <ul>
-                  <li>
-                    <NavLink
-                      to='/profile'
-                      className={({ isActive }) =>
-                        isActive ? 'navbar-navlinks-active' : 'navbar-navlinks'
-                      }
-                    >
-                      <RxAvatar /> profile
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to='/dashboard'
-                      className={({ isActive }) =>
-                        isActive ? 'navbar-navlinks-active' : 'navbar-navlinks'
-                      }
-                    >
-                      <RxDashboard /> dashboard
-                    </NavLink>
-                  </li>
-                  <li onClick={handleSignout}>
-                    <RiLogoutBoxRLine />
-                    sign out
-                  </li>
-                </ul>
-              </div>
-            )}
+        {!user ? (
+          <div className='navbar-right'>
+            <Link to='/login' className='navbar-user-action-btn'>
+              login
+            </Link>
+            <Link to='/register' className='navbar-user-action-btn'>
+              sign up
+            </Link>
           </div>
-        </div>
+        ) : (
+          <div className='navbar-right'>
+            <Link to='/blogs/blog/create-blog' className='navbar-add-blog-btn'>
+              <MdAddCircleOutline /> Add blog
+            </Link>
+            <div className='navbar-avatar' onClick={toggleDropdown}>
+              {user?.avatar_url ? (
+                <img
+                  src={user.avatar_url}
+                  alt='navbar-avatar'
+                  className='navbar-avatar-img'
+                />
+              ) : (
+                <div className='navbar-avatar-initials'>
+                  {user?.name
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')}
+                </div>
+              )}
+              <MdOutlineMenuOpen
+                className='navbar-menu-icon'
+                onClick={toggleDropdown}
+              />
+              {showDropdown && (
+                <div className='navbar-dropdown' ref={dropdownRef}>
+                  <p>Signed in as: {user.email}</p>
+                  <ul>
+                    <li>
+                      <NavLink
+                        to='/profile'
+                        className={({ isActive }) =>
+                          isActive
+                            ? 'navbar-navlinks-active'
+                            : 'navbar-navlinks'
+                        }
+                      >
+                        <RxAvatar /> profile
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to='/dashboard'
+                        className={({ isActive }) =>
+                          isActive
+                            ? 'navbar-navlinks-active'
+                            : 'navbar-navlinks'
+                        }
+                      >
+                        <RxDashboard /> dashboard
+                      </NavLink>
+                    </li>
+                    <li onClick={handleSignout}>
+                      <RiLogoutBoxRLine />
+                      sign out
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
     </div>
   );

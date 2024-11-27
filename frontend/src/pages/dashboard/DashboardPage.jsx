@@ -10,10 +10,8 @@ import RedeemRewardButton from '../../components/dashboard/RedeemRewardButton';
 const DashboardPage = () => {
   const { user, loadUser, allBlogs } = useContext(AuthContext);
   const [userBlogs, setUserBlogs] = useState(allBlogs.length);
-  console.log(user);
   const fetchUserBlogs = () => {
     const blogs = allBlogs.filter((blog) => blog.author.id === user._id);
-    console.log('user blogs', blogs);
     setUserBlogs(blogs.length);
   };
   useEffect(() => {
@@ -27,6 +25,7 @@ const DashboardPage = () => {
         <p>{`John's overall insights`}</p>
       </section>
       <section className='dashboardpage-cards-container'>
+        {/* blogs */}
         <article
           className='dashboardpage-card-c'
           style={{
@@ -42,6 +41,8 @@ const DashboardPage = () => {
             <BsPostcardHeart style={{ color: 'rgb(253, 224, 255)' }} />
           </div>
         </article>
+
+        {/* follower */}
         <article
           className='dashboardpage-card-c'
           style={{
@@ -57,6 +58,8 @@ const DashboardPage = () => {
             <FaArrowsDownToPeople style={{ color: 'rgb(253, 224, 255)' }} />
           </div>
         </article>
+
+        {/* following  */}
         <article
           className='dashboardpage-card-c'
           style={{
@@ -72,6 +75,8 @@ const DashboardPage = () => {
             <FaPeopleLine style={{ color: 'rgb(253, 224, 255)' }} />
           </div>
         </article>
+
+        {/* ai credits */}
         <article
           className='dashboardpage-card-c'
           style={{
@@ -87,6 +92,8 @@ const DashboardPage = () => {
             <BsSpeedometer style={{ color: 'rgb(253, 224, 255)' }} />
           </div>
         </article>
+
+        {/* rewards */}
         <article
           className='dashboardpage-card-c'
           style={{
@@ -102,6 +109,8 @@ const DashboardPage = () => {
             <GrMoney style={{ color: 'rgb(253, 224, 255)' }} />
           </div>
         </article>
+
+        {/* leadersboard */}
         <article
           className='dashboardpage-card-c'
           style={{

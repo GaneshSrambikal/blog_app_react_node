@@ -146,6 +146,9 @@ input {
 .register-branding {
   padding: 1rem;
 }
+.register-branding a {
+  text-decoration: none;
+}
 
 /* labels and errors span */
 /* .register-email {
