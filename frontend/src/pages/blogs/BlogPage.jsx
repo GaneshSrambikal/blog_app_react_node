@@ -23,7 +23,7 @@ const BlogPage = () => {
     setIsloading(true);
     try {
       const blog = await axios.get(`${base_url}/blogs/blog/${params.id}`);
-      console.log('from blog page', blog.data.blog);
+
       setBlog(blog.data.blog);
       if (blog) {
         fetchUseAvatar(blog.data.blog?.author?.id);
@@ -38,7 +38,7 @@ const BlogPage = () => {
     const res = await axios.get(`${base_url}/users/user/${id}/get-avatar-url`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(res.data);
+
     setUserAvatar(res.data.avatar_url);
     // return currentAvatar;
   };
@@ -95,7 +95,7 @@ const BlogPage = () => {
                   {blog?.author?.name}
                 </Link>
               </p>
-              
+
               <span>
                 <CiCalendar /> {getCreatedDate(blog?.createdAt)}
               </span>

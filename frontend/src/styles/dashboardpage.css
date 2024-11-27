@@ -66,10 +66,14 @@
   margin-top: 3rem;
   padding: 1rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border: 1px dashed #d3d3d3;
   border-radius: 5px;
+}
+.dashboardpage-container .dashboardpage-ai-creditsbuy-container span {
+  margin-top: 1rem;
 }
 @media screen and (max-width: 960px) {
   .dashboardpage-container .dashboardpage-ai-creditsbuy-container {
@@ -78,16 +82,17 @@
     /* justify-content: flex-start; */
   }
   .dashboardpage-ai-creditsbuy-container button {
-    margin-top: 2rem;
     width: 100%;
   }
 }
 .dashboardpage-ai-creditsbuy-container p {
   color: #525252;
+  margin-bottom: 1rem;
 }
 .dashboardpage-ai-creditsbuy-container button {
   border: none;
   border-radius: 5px;
+  margin-top: 1rem;
   padding: 0.6rem 0.8rem;
   text-transform: lowercase;
   background-color: #263246;
@@ -110,5 +115,13 @@
   .dashboardpage-ai-creditsbuy-container p {
     font-size: 15px;
   }
-  
+}
+
+.dashboardpage-ai-creditsbuy-container .dashboardpage-redeem-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dashboardpage-ai-creditsbuy-container .dashboardpage-redeem-btn svg {
+  margin-right: 0.5rem;
 }

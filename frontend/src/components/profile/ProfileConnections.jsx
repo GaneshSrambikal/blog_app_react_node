@@ -9,7 +9,7 @@ const ProfileConnections = ({ ...props }) => {
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(props.user, token);
+
   const fetchFollower = async () => {
     try {
       const res = await axios.get(
@@ -18,7 +18,7 @@ const ProfileConnections = ({ ...props }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res);
+
       setFollowers(res.data.followers);
       setIsLoading(false);
       return res.data.followers;
@@ -34,7 +34,7 @@ const ProfileConnections = ({ ...props }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res);
+
       setFollowing(res.data.following);
       setIsLoading(false);
       return res.data.following;
@@ -46,7 +46,7 @@ const ProfileConnections = ({ ...props }) => {
     fetchFollower();
     fetchFollowing();
   }, [props.user]);
-  console.log(followers, following);
+
   if (isLoading) return <ProfileConnectionSkeleton />;
   return (
     <div className='profile-connections-container'>

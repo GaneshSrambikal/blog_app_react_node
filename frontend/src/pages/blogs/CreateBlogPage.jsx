@@ -8,11 +8,11 @@ const CreateBlogPage = () => {
   const [newBlogLink, setNewBlogLink] = useState('');
   const handleSuccess = () => {
     setSuccess(!success);
-    console.log('success called', success);
+    
   };
   const handleNewLink = (link) => {
     setNewBlogLink(`/blogs/blog/${link}`);
-    console.log('link called', newBlogLink);
+    // console.log('link called', newBlogLink);
   };
   return (
     <>

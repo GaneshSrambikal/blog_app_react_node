@@ -732,3 +732,37 @@ exports.updateRewards = async (req, res, next) => {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
+
+exports.redeemCredits = async (req, res, next) => {
+  if (!req.user) {
+    return res.status(400).json({ message: 'No user found, unauthorized.' });
+  }
+  const user = await User.findById(req.user._id).select('-password');
+
+  let rewards = user?.rewards;
+  if (rewards < 100) {
+    return res.status(400).json({ message: 'Not enough rewards to redeem' });
+  } else {
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+          rewards: user.rewards - 100,
+          totalAiCredits: user.totalAiCredits + 100,
+        },
+        { new: true }
+      );
+      return res.status(200).json({
+        message: 'Reward Redeemed',
+        updatedUser: {
+          rewards: updatedUser.rewards,
+          totalAiCredits: updatedUser.totalAiCredits,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+      res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+  }
+};

@@ -37,7 +37,6 @@ const ProfileComponent = ({ ...props }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res);
       setFollowers(res.data.followers);
       return res.data.followers;
     } catch (error) {
@@ -52,7 +51,7 @@ const ProfileComponent = ({ ...props }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(res);
+
       setFollowing(res.data.following);
       return res.data.following;
     } catch (error) {
@@ -72,7 +71,6 @@ const ProfileComponent = ({ ...props }) => {
       await fetchFollowing();
       setIsFollow(true);
       setIsLoading(false);
-      console.log(followers);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -92,8 +90,6 @@ const ProfileComponent = ({ ...props }) => {
       await fetchFollowing();
       setIsFollow(false);
       setIsLoading(false);
-
-      console.log(props.user);
     } catch (error) {
       setIsLoading(false);
 

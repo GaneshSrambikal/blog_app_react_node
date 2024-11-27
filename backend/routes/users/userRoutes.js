@@ -20,6 +20,7 @@ const {
   getUserCurrentAvatar,
   updateCredits,
   updateRewards,
+  redeemCredits,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const { upload } = require('../../middlewares/uploadMiddleware');
@@ -126,4 +127,5 @@ router.post('/update-credits', protect, updateCredits);
 
 router.post('/update-rewards', protect, updateRewards);
 
+router.post('/redeem-credits', protect, redeemCredits);
 module.exports = router;

@@ -19,7 +19,7 @@ const ProfileBlogCard = ({ blog, ...props }) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log(res.data);
+   
     setUserAvatar(res.data.avatar_url);
     // return currentAvatar;
   };
