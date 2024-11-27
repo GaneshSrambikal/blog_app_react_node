@@ -8,13 +8,11 @@ const ProfileDetails = ({ ...props }) => {
   const { loading } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [blogs, setBlogs] = useState([]);
-  console.log('Blogs', blogs);
   const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const fetchBlog = async () => {
     setIsLoading(true);
     try {
       const res = await axios.get(`${react_base_url}/blogs`);
-      console.log(res.data);
       if (res) {
         const userBlogs = res.data.blogs.filter(
           (blog) => blog.author.id === props.user._id
@@ -44,11 +42,17 @@ const ProfileDetails = ({ ...props }) => {
       </div>
       <div className='profile-details-about-c'>
         <h3>Recent Blogs</h3>
-        {blogs.slice(0, 3).map((blog, index) => (
-          <p key={index}>
-            <Link to={`/blogs/blog/${blog._id}`}>{blog.title}</Link>
-          </p>
-        ))}
+        {isLoading ? (
+          <>loading..</>
+        ) : (
+          <>
+            {blogs.slice(0, 3).map((blog, index) => (
+              <p key={index}>
+                <Link to={`/blogs/blog/${blog._id}`}>{blog.title}</Link>
+              </p>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

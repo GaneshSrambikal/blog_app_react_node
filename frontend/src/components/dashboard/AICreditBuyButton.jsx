@@ -30,7 +30,7 @@ const AICreditBuyButton = () => {
       }
     );
     const response = await orders.data;
-    console.log(response);
+    // console.log(response);
     setLoading(false);
     const option = {
       key: '',
@@ -43,7 +43,7 @@ const AICreditBuyButton = () => {
       handler: async function (res) {
         console.log('payment captured');
         console.log(res);
-        const resp = await axios.post(
+        await axios.post(
           `${base_url}/payment/razorpay/validate`,
           {
             ...res,
@@ -51,7 +51,7 @@ const AICreditBuyButton = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log('purchased.');
-        console.log(resp);
+        // console.log(resp);
         setLoading(false);
         loadUser();
         addToast('Credits Purchased successfully', 'toaster-success');

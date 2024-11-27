@@ -70,13 +70,12 @@ export const AuthProvider = ({ children }) => {
         const res = await axios.get(`${react_base_url}/users/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log('in load user:res', res.data);
+
         const userData = res.data;
         dispatch({
           type: actionTypes.LOAD_USER,
           payload: { userData, token },
         });
-        console.log('in try of load user', initialState);
       } catch (error) {
         console.log(error);
         dispatch({ type: actionTypes.LOGOUT });
@@ -134,7 +133,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     loadUser();
     fetchAllBlog();
-    console.log('after loading user:', initialState);
   }, []);
   return (
     <AuthContext.Provider

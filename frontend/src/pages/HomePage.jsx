@@ -16,11 +16,10 @@ const Home = () => {
   const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [blogs, setBlogs] = useState([]);
-  console.log(user);
   const fetchBlog = async () => {
     try {
       const res = await axios.get(`${react_base_url}/blogs`);
-      console.log(res.data);
+
       if (res) {
         setBlogs(res.data.blogs);
         setIsLoading(false);

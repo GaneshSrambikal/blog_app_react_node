@@ -44,7 +44,7 @@ const LoginForm = () => {
       console.log(validationErrors);
     } else {
       setLoading(true);
-      console.log('Form submitted:', formData);
+      // console.log('Form submitted:', formData);
       setErrors({}); // Clear previous errors
       try {
         await loginUser(formData);

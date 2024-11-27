@@ -9,7 +9,7 @@ const ProfileConnectionCard = ({ data }) => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const { user, token } = useContext(AuthContext);
   const [userAvatar, setUserAvatar] = useState(AvatarPlaceHolder);
-  console.log(data);
+  
   const fetchUseAvatar = async () => {
     const res = await axios.get(
       `${base_url}/users/user/${data._id}/get-avatar-url`,
@@ -17,7 +17,7 @@ const ProfileConnectionCard = ({ data }) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log(res.data);
+   
     setUserAvatar(res.data.avatar_url);
     // return currentAvatar;
   };

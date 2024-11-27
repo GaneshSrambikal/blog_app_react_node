@@ -14,7 +14,7 @@ const RedeemRewardButton = () => {
   const addToast = useToast();
   const handleRedeem = async () => {
     setLoading(true);
-    console.log('clicked');
+
     try {
       await axios.post(
         `${base_url}/users/redeem-credits`,

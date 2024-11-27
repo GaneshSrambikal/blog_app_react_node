@@ -11,7 +11,7 @@ export const ToastProvider = ({ children }) => {
     const id = Date.now();
 
     setToasts((prev) => [...prev, { id, message, type }]);
-    console.log(toasts, message, type, id);
+    // console.log(toasts, message, type, id);
   }, []);
 
   const removeToast = useCallback((id) => {

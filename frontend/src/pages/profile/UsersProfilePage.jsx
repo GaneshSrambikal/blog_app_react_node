@@ -14,10 +14,7 @@ const UsersProfilePage = () => {
   const [user, setUser] = useState(null);
   const { token } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
-  //   const [blogs, setBlogs] = useState([]);
 
-  //   const fetchUser = await axios.get;
-  user && console.log(user);
   const getUserData = async () => {
     try {
       const res = await axios.get(`${base_url}/users/profile/${params.id}`, {
@@ -25,7 +22,6 @@ const UsersProfilePage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
       setUser(res.data);
       setLoading(false);
     } catch (error) {

@@ -8,10 +8,7 @@ import ProfileSkeleton from '../../components/ui/skeletons/ProfileSkeleton';
 const ProfilePage = () => {
   const { user, loadUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
-  //   const [blogs, setBlogs] = useState([]);
 
-  //   const fetchUser = await axios.get;
-  user && console.log(user);
   useEffect(() => {
     loadUser();
     setLoading(false);

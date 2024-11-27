@@ -41,7 +41,7 @@ const RegisterForm = () => {
       setErrors({});
       setIsLoading(true);
       // Submit the form data (e.g., API call)
-      console.log('Form submitted:', formData);
+      // console.log('Form submitted:', formData);
       try {
         const response = await axios.post(
           `${react_base_url}/users/register`,
