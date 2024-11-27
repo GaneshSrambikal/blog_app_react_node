@@ -8,9 +8,9 @@ import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 const DashboardPage = () => {
   const { user, loadUser, allBlogs } = useContext(AuthContext);
-  const [userBlogs, setUserBlogs] = useState(0);
+  const [userBlogs, setUserBlogs] = useState(allBlogs.length);
   console.log(user);
-  const fetchUserBlogs = async () => {
+  const fetchUserBlogs = () => {
     const blogs = allBlogs.filter((blog) => blog.author.id === user._id);
     console.log('user blogs', blogs);
     setUserBlogs(blogs.length);
@@ -18,7 +18,7 @@ const DashboardPage = () => {
   useEffect(() => {
     loadUser();
     fetchUserBlogs();
-  }, []);
+  }, [allBlogs]);
   return (
     <div className='dashboardpage-container'>
       <section className='dashboardpage-greeting'>

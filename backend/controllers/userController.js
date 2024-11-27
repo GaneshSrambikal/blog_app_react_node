@@ -250,24 +250,6 @@ exports.updateProfile = async (req, res, next) => {
     } else {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    // OR can optimized the above code to only update changed fields
-    // const updates = {
-    //   name: req.body.name,
-    //   email: req.body.email,
-    //   address: req.body.address,
-    //   gender: req.body.gender,
-    //   dob: req.body.dob
-    // };
-    // if (user) {
-    //   // Filter out undefined values to only update provided fields
-    //   Object.keys(updates).forEach((key) => {
-    //     if (updates[key] !== undefined) {
-    //       user[key] = updates[key];
-    //     }
-    //   });
-    // }
-    // const updatedUser = await user.save();
   } catch (error) {
     console.log(`Error:${error.message}`);
     next(error);
@@ -303,6 +285,9 @@ exports.uploadAvatar = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found!' });
     }
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
 
     user.avatar_url = req.file.path;
     const newData = await user.save();
@@ -328,7 +313,7 @@ exports.uploadAvatar = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    next();
+   
     return res.status(500).json({
       message: 'Failed to upload profile picture.',
       error: error.message,

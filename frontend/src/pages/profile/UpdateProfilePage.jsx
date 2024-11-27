@@ -78,7 +78,9 @@ const UpdateProfilePage = () => {
           `${react_base_url}/users/upload-avatar`,
           avatarFormData,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         dispatch({
