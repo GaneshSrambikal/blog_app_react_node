@@ -307,6 +307,11 @@ hr {
   -webkit-text-fill-color: transparent;
   cursor: pointer;
 }
+.edit-profile-ai-gen-btn.ep-p-ai-disabled {
+  opacity: 0.6;
+  filter: blur(1px);
+  cursor: not-allowed;
+}
 .edit-profile-ai-gen-btn svg {
   color: #0056b3;
   margin-left: 0.5rem;

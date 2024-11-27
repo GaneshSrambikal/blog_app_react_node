@@ -287,13 +287,10 @@ const UpdateProfilePage = () => {
                 <button
                   type='button'
                   onClick={handleAiAbout}
-                  className='edit-profile-ai-gen-btn'
+                  className={`edit-profile-ai-gen-btn ${
+                    user?.totalAiCredits < 20 && 'ep-p-ai-disabled'
+                  }`}
                   disabled={user?.totalAiCredits < 20 ? true : false}
-                  style={{
-                    opacity: user?.totalAiCredits < 20 && 0.6,
-                    filter: user?.totalAiCredits < 20 && 'blur(1px)',
-                    cursor: user?.totalAiCredits < 20 && 'not-allowed',
-                  }}
                 >
                   {aiLoading ? (
                     <>

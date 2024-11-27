@@ -85,6 +85,11 @@
   -webkit-text-fill-color: transparent;
   cursor: pointer;
 }
+.create-blog-ai-gen-btn.cb-ai-disabled {
+  opacity: 0.6;
+  filter: blur(1px);
+  cursor: not-allowed;
+}
 .create-blog-ai-gen-btn svg {
   margin-left: 0.5rem;
   margin-right: 0.5rem;

@@ -209,12 +209,9 @@ const CreateBlogForm = ({ ...props }) => {
         <button
           type='button'
           onClick={handleAIOutput}
-          className='create-blog-ai-gen-btn'
-          style={{
-            opacity: user?.totalAiCredits < 20 && 0.6,
-            filter: user?.totalAiCredits < 20 && 'blur(1px)',
-            cursor: user?.totalAiCredits < 20 && 'not-allowed',
-          }}
+          className={`create-blog-ai-gen-btn ${
+            user?.totalAiCredits < 20 && 'cb-ai-disabled'
+          }`}
           disabled={user?.totalAiCredits < 20 && true}
         >
           {aiLoading ? (
@@ -239,9 +236,11 @@ const CreateBlogForm = ({ ...props }) => {
             </>
           )}
         </button>
-        <span className='create-blog-buy-credits-span'>
-          <Link to={`/dashboard`}>buy more credits now!</Link>
-        </span>
+        {user?.totalAiCredits < 20 && (
+          <span className='create-blog-buy-credits-span'>
+            <Link to={`/dashboard`}>buy more credits now!</Link>
+          </span>
+        )}
         {/* Add Image */}
         <div className='form-group create-blog-file-container'>
           <label>Image</label>
