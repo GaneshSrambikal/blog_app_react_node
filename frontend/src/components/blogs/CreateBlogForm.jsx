@@ -9,7 +9,7 @@ import { model } from '../../utils/gemini-ai';
 import { validateGeminiInput } from '../../validators/blog/geminiValidator';
 const CreateBlogForm = ({ ...props }) => {
   const fileInputRef = useRef(null);
-  const { token } = useContext(AuthContext);
+  const { token, user, loadUser } = useContext(AuthContext);
   const react_base_url = import.meta.env.VITE_API_BASE_URL;
   const preset = import.meta.env.VITE_CLOUDINARY_PRESET;
   const c_upload_url = import.meta.env.VITE_CLOUDINARY_UPLOAD_URL;
@@ -103,6 +103,14 @@ const CreateBlogForm = ({ ...props }) => {
         });
         handleRemoveImage();
         props.handleSuccess();
+        // update user rewards for creating blog. Rewards: 10
+        await axios.post(
+          `${react_base_url}/users/update-rewards`,
+          {
+            rewardType: 'blog',
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       } catch (error) {
         setIsLoading(false);
         console.log(error);
@@ -128,6 +136,13 @@ const CreateBlogForm = ({ ...props }) => {
         setAiLoading(false);
         console.log(res.response.text());
         setFormData(formData, (formData.content = res.response.text()));
+        // update user credits and successfully creating content. Each new generate spends 20 credits
+        await axios.post(
+          `${react_base_url}/users/update-credits`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        loadUser();
       } catch (error) {
         console.log(error);
       }
@@ -183,7 +198,10 @@ const CreateBlogForm = ({ ...props }) => {
           error={errors.content}
           disabled={aiLoading}
         />
-        <label>{`Or generate content with Google's Gemini`}</label>{' '}
+        <label>
+          {`Or generate content with Google's Gemini`}{' '}
+          <span className='create-blog-ai-credits-label'>{`(${user?.totalAiCredits} credits left)`}</span>
+        </label>{' '}
         <button
           type='button'
           onClick={handleAIOutput}

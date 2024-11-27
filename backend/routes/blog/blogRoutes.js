@@ -99,6 +99,5 @@ router.get('/searchblog', searchBlogs);
 // @access  Private
 router.get('/search/category', searchBlogByCategory);
 
-router.post('/ai/generate-blog', generateBlogContent);
 
 module.exports = router;

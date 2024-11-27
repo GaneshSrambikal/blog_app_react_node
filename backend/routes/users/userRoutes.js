@@ -18,6 +18,8 @@ const {
   generateAvatar,
   getUsersProfile,
   getUserCurrentAvatar,
+  updateCredits,
+  updateRewards,
 } = require('../../controllers/userController');
 const { protect } = require('../../middlewares/auth/authMiddleware');
 const { upload } = require('../../middlewares/uploadMiddleware');
@@ -119,4 +121,9 @@ router.post('/upload-avatar', protect, upload.single('image'), uploadAvatar);
 // @route    get /api/users/generate-avatar
 // @access  Private / Protected
 router.get('/generate-avatar', protect, generateAvatar);
+
+router.post('/update-credits', protect, updateCredits);
+
+router.post('/update-rewards', protect, updateRewards);
+
 module.exports = router;
