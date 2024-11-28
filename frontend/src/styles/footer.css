@@ -1,6 +1,9 @@
 footer {
+  border-top: 1px solid #dddddd;
   position: relative;
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
+  background: rgb(73,75,81);
+background: linear-gradient(0deg, rgba(73,75,81,0.22461484593837533) 2%, rgba(255,255,255,1) 100%);
   color: #333;
   padding: 2rem 4rem;
   overflow: hidden;

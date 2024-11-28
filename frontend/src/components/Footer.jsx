@@ -6,6 +6,7 @@ import {
   FaGithub,
   FaJoint,
   FaNodeJs,
+  FaPen,
   FaReact,
   FaTwitter,
 } from 'react-icons/fa';
@@ -152,6 +153,11 @@ const Footer = () => {
             <p>
               <Link to='https://cloudinary.com/' target='_blank'>
                 <SiCloudinary /> cloudinary
+              </Link>
+            </p>
+            <p>
+              <Link to='https://undraw.co/' target='_blank'>
+                <FaPen /> illustrations
               </Link>
             </p>
           </div>
