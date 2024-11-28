@@ -20,6 +20,17 @@
   flex-direction: row;
   align-items: center;
 }
+.navbar-right svg {
+}
+.navbar-user-action-c {
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 540px) {
+  .navbar-user-action-c {
+    display: none;
+  }
+}
 .navbar-right .navbar-user-action-btn {
   text-decoration: none;
   text-transform: capitalize;
@@ -37,7 +48,33 @@
   background-color: #ffffff;
   color: #333;
 }
-
+.navbar .navbar-dropdown-mb {
+  z-index: 10;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  padding: 1rem;
+  min-width: 300px;
+  background-color: #fff;
+  color: #333;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.navbar .navbar-dropdown-mb ul {
+  list-style: none;
+}
+.navbar .navbar-dropdown-mb ul li a {
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0.5rem;
+  color: gray;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
 .navbar-right .navbar-add-blog-btn {
   text-decoration: none;
   color: #333;
@@ -57,6 +94,11 @@
 }
 .navbar-right .navbar-add-blog-btn svg {
   margin-right: 0.3rem;
+}
+@media screen and (max-width: 540px) {
+  .navbar-right .navbar-add-blog-btn {
+    display: none;
+  }
 }
 .navbar .navbar-brand a {
   text-decoration: none;
@@ -144,10 +186,21 @@
 .navbar-avatar .navbar-dropdown ul a:hover {
   color: #333;
 }
+.navbar-right .navbar-menu-icon {
+  color: #333;
+  font-size: 1.5rem;
+  display: none;
+}
+@media screen and (max-width: 540px) {
+  .navbar-right .navbar-menu-icon {
+    display: block;
+  }
+}
 .navbar .navbar-avatar .navbar-menu-icon {
   display: none;
   font-size: 1.8rem;
   cursor: pointer;
+  color: #333;
 }
 /* max-width 640px */
 @media screen and (max-width: 640px) {

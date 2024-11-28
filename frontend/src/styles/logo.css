@@ -28,3 +28,11 @@
   font-size: 1.2rem;
   letter-spacing: 1px;
 }
+@media screen and (max-width: 540px) {
+  .logo-c svg {
+    font-size: 1.2rem;
+  }
+  .logo-c p {
+    font-size: 1rem;
+  }
+}

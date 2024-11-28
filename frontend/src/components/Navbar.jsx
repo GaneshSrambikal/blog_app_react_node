@@ -12,8 +12,10 @@ const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Navbar = () => {
   const { logout, user } = useContext(AuthContext);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdownMb, setShowDropdownMb] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const dropdownRefMb = useRef(null);
 
   const handleSignout = async (e) => {
     e.preventDefault();
@@ -30,12 +32,19 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+  const toggleDropdownMb = () => {
+    console.log('mobile click')
+    setShowDropdownMb(!showDropdownMb);
+  };
 
   // listen for outside div clicks
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setShowDropdown(false);
+      }
+      if (dropdownRefMb.current && !dropdownRefMb.current.contains(e.target)) {
+        setShowDropdownMb(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -53,12 +62,31 @@ const Navbar = () => {
         </div>
         {!user ? (
           <div className='navbar-right'>
-            <Link to='/login' className='navbar-user-action-btn'>
-              login
-            </Link>
-            <Link to='/register' className='navbar-user-action-btn'>
-              sign up
-            </Link>
+            <div className='navbar-user-action-c'>
+              <Link to='/login' className='navbar-user-action-btn'>
+                login
+              </Link>
+              <Link to='/register' className='navbar-user-action-btn'>
+                sign up
+              </Link>
+            </div>
+
+            <MdOutlineMenuOpen
+              className='navbar-menu-icon'
+              onClick={toggleDropdownMb}
+            />
+            {showDropdownMb && (
+              <div className='navbar-dropdown-mb' ref={dropdownRefMb}>
+                <ul>
+                  <li>
+                    <Link to='/login'>login</Link>
+                  </li>
+                  <li>
+                    <Link to='/register'>sign up</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         ) : (
           <div className='navbar-right'>
