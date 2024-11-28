@@ -123,6 +123,9 @@ input .error {
 .login-branding {
   padding: 1rem;
 }
+.login-branding a {
+  text-decoration: none;
+}
 
 /* labels and errors span */
 /* .login-email {

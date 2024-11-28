@@ -1,7 +1,7 @@
 import '../../styles/login.css';
 import { useContext, useState } from 'react';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../validators/auth/loginValidator';
 import InputComponent from '../ui/InputComponent';
 import AuthContext from '../../context/AuthContext';
@@ -65,7 +65,7 @@ const LoginForm = () => {
   return (
     <div className='login-div'>
       <div className='login-branding'>
-        <h2>Blog_App</h2>
+        <Link to='/'><h2>Blog_App</h2></Link>
       </div>
       <div className='login-container'>
         <div className='login-fm-header'>

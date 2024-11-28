@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../../styles/register.css';
 import { validateRegisterForm } from '../../validators/auth/registerValidator';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TailSpin } from 'react-loader-spinner';
 import InputComponent from '../ui/InputComponent';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
@@ -70,7 +70,9 @@ const RegisterForm = () => {
   return (
     <div className='register-div'>
       <div className='register-branding'>
-        <h2>Blog_App</h2>
+        <Link to='/'>
+          <h2>Blog_App</h2>
+        </Link>
       </div>
       <div className='register-container'>
         <div className='login-fm-header'>
