@@ -380,10 +380,11 @@
 .fs-res-content-user-card .fs-res-content-user-card-av-c {
   width: 2.5rem;
   height: 2.5rem;
-  border: 50%;
+  border-radius: 50%;
 }
 .fs-res-content-user-card .fs-res-content-user-card-av-c img {
-  width: 100%;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   object-fit: cover;
 }

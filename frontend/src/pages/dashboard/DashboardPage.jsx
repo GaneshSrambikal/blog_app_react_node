@@ -2,7 +2,7 @@ import '../../styles/dashboardpage.css';
 import { BsPostcardHeart, BsSpeedometer } from 'react-icons/bs';
 import { FaArrowsDownToPeople, FaPeopleLine } from 'react-icons/fa6';
 import { GrMoney } from 'react-icons/gr';
-import { FaMedal } from 'react-icons/fa';
+// import { FaMedal } from 'react-icons/fa';
 import AICreditBuyButton from '../../components/dashboard/AICreditBuyButton';
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
@@ -116,7 +116,7 @@ const DashboardPage = () => {
           </article>
 
           {/* leadersboard */}
-          <article
+          {/* <article
             className='dashboardpage-card-c'
             style={{
               background:
@@ -130,7 +130,7 @@ const DashboardPage = () => {
             <div className='dashboardpage-card-img'>
               <FaMedal style={{ color: 'rgb(253, 224, 255)' }} />
             </div>
-          </article>
+          </article> */}
         </section>
         <section className='dashboardpage-ai-creditsbuy-container'>
           <>
