@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
-import { MdOutlineMenuOpen } from 'react-icons/md';
+import { MdOutlineMenuOpen, MdPostAdd } from 'react-icons/md';
 import { RxAvatar, RxDashboard } from 'react-icons/rx';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { MdAddCircleOutline } from 'react-icons/md';
@@ -33,7 +33,7 @@ const Navbar = () => {
     setShowDropdown(!showDropdown);
   };
   const toggleDropdownMb = () => {
-    console.log('mobile click')
+    console.log('mobile click');
     setShowDropdownMb(!showDropdownMb);
   };
 
@@ -116,6 +116,18 @@ const Navbar = () => {
                 <div className='navbar-dropdown' ref={dropdownRef}>
                   <p>Signed in as: {user.email}</p>
                   <ul>
+                    <li className='only-mb-d'>
+                      <NavLink
+                        to='/blogs/blog/create-blog'
+                        className={({ isActive }) =>
+                          isActive
+                            ? 'navbar-navlinks-active'
+                            : 'navbar-navlinks'
+                        }
+                      >
+                        <MdPostAdd /> Add Blog
+                      </NavLink>
+                    </li>
                     <li>
                       <NavLink
                         to='/profile'
