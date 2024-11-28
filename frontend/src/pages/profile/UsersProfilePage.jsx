@@ -38,7 +38,7 @@ const UsersProfilePage = () => {
   return (
     <>
       <Helmet>
-        <title>{user?.name} | Profile | Blog_app</title>
+        <title>{user?.name} | Profile | Blogshpere</title>
       </Helmet>
       <div className='user-profile-container'>
         <ProfileComponent user={user} />

@@ -5,6 +5,8 @@ import axios from 'axios';
 import { FaCheckCircle } from 'react-icons/fa';
 import { ForgotPasswordSchema } from '../../validators/auth/loginValidator';
 import { TailSpin } from 'react-loader-spinner';
+import { Link } from 'react-router-dom';
+import Logo from '../Logo';
 const base_url = import.meta.env.VITE_API_BASE_URL;
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState('');
@@ -70,7 +72,9 @@ const ForgotPasswordForm = () => {
   return (
     <div className='login-div'>
       <div className='login-branding'>
-        <h2>Blog_App</h2>
+        <Link to='/'>
+          <Logo />
+        </Link>
       </div>
       <div className='login-container'>
         <div className='login-fm-header'>
