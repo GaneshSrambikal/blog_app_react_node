@@ -29,6 +29,11 @@
   .landingpage-herosection-container .ldp-herosection-image-desp-c {
     flex-direction: column-reverse;
   }
+  .landingpage-herosection-container
+    .ldp-herosection-image-desp-c
+    .ldp-herosection-desp-action-btn-c {
+    justify-content: center;
+  }
   .ldp-herosection-image-desp-c .ldp-herosection-image-c {
     margin-top: 2rem;
   }
@@ -175,7 +180,8 @@
   /* background-color: chartreuse; */
   justify-content: center;
   align-items: center;
-  padding: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
 }
 .ldp-features-card-c .ldp-features-card-img-c svg {
   font-size: 4rem;

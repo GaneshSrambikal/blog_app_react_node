@@ -47,7 +47,10 @@ const LandingPage = () => {
             </div>
             <div className='ldp-features-cards-container'>
               <div className='ldp-features-card-c'>
-                <div className='ldp-features-card-img-c'>
+                <div
+                  className='ldp-features-card-img-c'
+                  style={{ backgroundColor: 'rgb(255 231 231)' }}
+                >
                   <BsPostcardHeart style={{ color: '#eb7373' }} />
                 </div>
                 <div className='ldp-features-card-desp-c'>
@@ -59,7 +62,10 @@ const LandingPage = () => {
               </div>
 
               <div className='ldp-features-card-c'>
-                <div className='ldp-features-card-img-c'>
+                <div
+                  className='ldp-features-card-img-c'
+                  style={{ backgroundColor: '#ede6ff' }}
+                >
                   <FaPeopleGroup style={{ color: '#9773eb' }} />
                 </div>
                 <div className='ldp-features-card-desp-c'>
@@ -68,7 +74,10 @@ const LandingPage = () => {
               </div>
 
               <div className='ldp-features-card-c'>
-                <div className='ldp-features-card-img-c'>
+                <div
+                  className='ldp-features-card-img-c'
+                  style={{ backgroundColor: '#d5ffea' }}
+                >
                   <FaHouseUser style={{ color: '#73ebaf' }} />
                 </div>
                 <div className='ldp-features-card-desp-c'>
@@ -80,7 +89,10 @@ const LandingPage = () => {
               </div>
 
               <div className='ldp-features-card-c'>
-                <div className='ldp-features-card-img-c'>
+                <div
+                  className='ldp-features-card-img-c'
+                  style={{ backgroundColor: '#dce4ff' }}
+                >
                   <SiGooglegemini style={{ color: '#738feb' }} />
                 </div>
                 <div className='ldp-features-card-desp-c'>
@@ -88,7 +100,10 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className='ldp-features-card-c'>
-                <div className='ldp-features-card-img-c'>
+                <div
+                  className='ldp-features-card-img-c'
+                  style={{ backgroundColor: '#fdffef' }}
+                >
                   <GrMoney style={{ color: '#d9eb73' }} />
                 </div>
                 <div className='ldp-features-card-desp-c'>
@@ -98,7 +113,10 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className='ldp-features-card-c'>
-                <div className='ldp-features-card-img-c'>
+                <div
+                  className='ldp-features-card-img-c'
+                  style={{ backgroundColor: '#e8ffe8' }}
+                >
                   <BsSpeedometer style={{ color: '#77eb73' }} />
                 </div>
                 <div className='ldp-features-card-desp-c'>
@@ -106,7 +124,10 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className='ldp-features-card-c'>
-                <div className='ldp-features-card-img-c'>
+                <div
+                  className='ldp-features-card-img-c'
+                  style={{ backgroundColor: '#d0d9ff' }}
+                >
                   <SiRazorpay style={{ color: '#294be2' }} />
                 </div>
                 <div className='ldp-features-card-desp-c'>

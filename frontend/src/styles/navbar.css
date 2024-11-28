@@ -22,9 +22,9 @@
 }
 .navbar-right .navbar-user-action-btn {
   text-decoration: none;
-  text-transform: lowercase;
-  background-color: #b0c1da;
-  color: #333;
+  text-transform: capitalize;
+  background-color: #263246;
+  color: #fff;
   border: 1px solid #eee;
   border-radius: 0.5rem;
   padding: 0.4rem 1rem;

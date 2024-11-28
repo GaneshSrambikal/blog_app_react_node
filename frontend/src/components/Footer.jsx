@@ -22,7 +22,10 @@ import {
   SiReactrouter,
 } from 'react-icons/si';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext';
 const Footer = () => {
+  const { user } = useContext(AuthContext);
   return (
     <footer>
       <div className='svg-c'>
@@ -50,18 +53,28 @@ const Footer = () => {
         <div className='footer-links'>
           <div className='footer-link-c'>
             <span>pages</span>
-            <p>
-              <Link to='/login'>login</Link>
-            </p>
-            <p>
-              <Link to='/register'>signup</Link>
-            </p>
-            <p>
-              <Link to='/home'>home</Link>
-            </p>
-            <p>
-              <Link to='/profile'>profile</Link>
-            </p>
+            {!user && (
+              <>
+                {' '}
+                <p>
+                  <Link to='/login'>login</Link>
+                </p>
+                <p>
+                  <Link to='/register'>sign up</Link>
+                </p>
+              </>
+            )}
+            {user && (
+              <>
+                {' '}
+                <p>
+                  <Link to='/home'>home</Link>
+                </p>
+                <p>
+                  <Link to='/profile'>profile</Link>
+                </p>
+              </>
+            )}
           </div>
           <div className='footer-link-c'>
             <span>social</span>
