@@ -1,6 +1,7 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../index.css';
+import Footer from '../components/Footer';
 const Layout = () => {
   const location = useLocation();
   const params = useParams();
@@ -23,6 +24,7 @@ const Layout = () => {
 
       {/* Render the main content */}
       <Outlet />
+      <Footer />
     </div>
   );
 };

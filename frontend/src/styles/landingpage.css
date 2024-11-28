@@ -29,6 +29,11 @@
   .landingpage-herosection-container .ldp-herosection-image-desp-c {
     flex-direction: column-reverse;
   }
+  .landingpage-herosection-container
+    .ldp-herosection-image-desp-c
+    .ldp-herosection-desp-action-btn-c {
+    justify-content: center;
+  }
   .ldp-herosection-image-desp-c .ldp-herosection-image-c {
     margin-top: 2rem;
   }
@@ -96,6 +101,8 @@
   .ldp-herosection-desp-c
   .ldp-herosection-desp-action-btn-c {
   margin-top: 3rem;
+  width: 100%;
+  display: flex;
 }
 .ldp-herosection-desp-c .ldp-herosection-desp-action-btn-c a {
   text-decoration: none;
@@ -173,7 +180,8 @@
   /* background-color: chartreuse; */
   justify-content: center;
   align-items: center;
-  padding: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
 }
 .ldp-features-card-c .ldp-features-card-img-c svg {
   font-size: 4rem;
@@ -218,6 +226,7 @@
 }
 .ldp-about-c .ldp-about-desp p {
   font-size: 1.1rem;
+  font-weight: 300;
   color: #333;
   margin-top: 1rem;
   line-height: 2;

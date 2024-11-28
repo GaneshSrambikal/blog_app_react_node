@@ -25,11 +25,13 @@ import BlogPage from './pages/blogs/BlogPage';
 import CreateBlogPage from './pages/blogs/CreateBlogPage';
 import UpdateBlogPage from './pages/blogs/UpdateBlogPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
+import ScrollToTop from './utils/ScrollToTop';
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route element={<PublicRoutes />}>
             <Route path='/' element={<LandingPage />} />

@@ -22,7 +22,7 @@
 }
 .navbar-right .navbar-user-action-btn {
   text-decoration: none;
-  text-transform: lowercase;
+  text-transform: capitalize;
   background-color: #263246;
   color: #fff;
   border: 1px solid #eee;
@@ -34,7 +34,7 @@
 }
 .navbar-right .navbar-user-action-btn:nth-child(2) {
   margin-left: 1.2rem;
-  background-color: #e7e7e7;
+  background-color: #ffffff;
   color: #333;
 }
 
