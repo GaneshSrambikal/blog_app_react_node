@@ -203,7 +203,7 @@ const UpdateProfilePage = () => {
   return (
     <>
       <Helmet>
-        <title>{`Edit Profile | ${user?.name} | Blog_app`}</title>
+        <title>{`Edit Profile | ${user?.name} | Blogsphere`}</title>
       </Helmet>
       <div className='edit-profile-container'>
         <div className='edit-profile-avatar-c'>

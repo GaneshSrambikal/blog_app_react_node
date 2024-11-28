@@ -55,7 +55,7 @@ const BlogPage = () => {
   return (
     <>
       <Helmet>
-        <title>{`${blog?.title} | ${blog?.author?.name} | Blog_app`}</title>
+        <title>{`${blog?.title} | ${blog?.author?.name} | Blogsphere`}</title>
       </Helmet>
       <div className='blogpage-container'>
         <div className='blogpage-back-c'>

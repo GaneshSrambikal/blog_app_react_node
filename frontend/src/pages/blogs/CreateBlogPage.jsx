@@ -17,7 +17,7 @@ const CreateBlogPage = () => {
   return (
     <>
       <Helmet>
-        <title>Create New Blog Post | Blog_app</title>
+        <title>Create New Blog Post | Blogshpere</title>
       </Helmet>
       <div className='create-blog-container'>
         <div className='create-blog-header'>

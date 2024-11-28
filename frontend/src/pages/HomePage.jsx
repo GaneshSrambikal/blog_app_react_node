@@ -38,7 +38,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Home | Blog_app</title>
+        <title>Home | Blogshpere</title>
       </Helmet>
       <div className='homepage-container'>
         {/* <div className='homepage-left-c'> */}
