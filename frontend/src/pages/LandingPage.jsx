@@ -147,7 +147,7 @@ const LandingPage = () => {
             </div>
             <div className='ldp-about-desp'>
               <p>
-                {`BlogAI is an innovative platform that leverages artificial
+                {`Blogshpere is an innovative platform that leverages artificial
                 intelligence to simplify content creation with google's gemini ai. Whether you're a
                 professional writer or a hobbyist, our tools help you craft
                 compelling blogs, manage images, and reach your audience

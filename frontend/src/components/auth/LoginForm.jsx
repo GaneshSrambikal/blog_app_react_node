@@ -6,7 +6,7 @@ import { validateLoginForm } from '../../validators/auth/loginValidator';
 import InputComponent from '../ui/InputComponent';
 import AuthContext from '../../context/AuthContext';
 import { Oval } from 'react-loader-spinner';
-
+import Logo from '../Logo'
 const LoginForm = () => {
   const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -65,7 +65,9 @@ const LoginForm = () => {
   return (
     <div className='login-div'>
       <div className='login-branding'>
-        <Link to='/'><h2>Blog_App</h2></Link>
+        <Link to='/'>
+          <Logo />
+        </Link>
       </div>
       <div className='login-container'>
         <div className='login-fm-header'>

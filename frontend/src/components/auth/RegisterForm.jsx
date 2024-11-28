@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { TailSpin } from 'react-loader-spinner';
 import InputComponent from '../ui/InputComponent';
+import Logo from '../Logo';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ const RegisterForm = () => {
     <div className='register-div'>
       <div className='register-branding'>
         <Link to='/'>
-          <h2>Blog_App</h2>
+          <Logo />
         </Link>
       </div>
       <div className='register-container'>
