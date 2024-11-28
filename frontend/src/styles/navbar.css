@@ -143,6 +143,14 @@
   flex-direction: column;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.navbar .navbar-avatar .navbar-dropdown .only-mb-d {
+  display: none;
+}
+@media screen and (max-width: 540px){
+  .navbar .navbar-avatar .navbar-dropdown .only-mb-d {
+    display: block;
+  }
+}
 .navbar-avatar .navbar-dropdown p {
   font-weight: 300;
   display: inline-block;
