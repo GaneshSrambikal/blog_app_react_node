@@ -96,6 +96,8 @@
   .ldp-herosection-desp-c
   .ldp-herosection-desp-action-btn-c {
   margin-top: 3rem;
+  width: 100%;
+  display: flex;
 }
 .ldp-herosection-desp-c .ldp-herosection-desp-action-btn-c a {
   text-decoration: none;
@@ -218,6 +220,7 @@
 }
 .ldp-about-c .ldp-about-desp p {
   font-size: 1.1rem;
+  font-weight: 300;
   color: #333;
   margin-top: 1rem;
   line-height: 2;

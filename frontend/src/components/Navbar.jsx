@@ -7,6 +7,7 @@ import { RxAvatar, RxDashboard } from 'react-icons/rx';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { MdAddCircleOutline } from 'react-icons/md';
 import '../styles/navbar.css';
+import Logo from './Logo';
 const react_base_url = import.meta.env.VITE_API_BASE_URL;
 const Navbar = () => {
   const { logout, user } = useContext(AuthContext);
@@ -47,7 +48,7 @@ const Navbar = () => {
       <nav className='navbar'>
         <div className='navbar-brand'>
           <Link to='/'>
-            <h2>Blog_App</h2>
+            <Logo />
           </Link>
         </div>
         {!user ? (

@@ -1,0 +1,30 @@
+@keyframes globe-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.logo-c {
+  display: flex;
+  align-items: center;
+}
+.logo-c svg {
+  color: rgb(174, 0, 255);
+  position: relative;
+  margin-right: 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 100;
+  animation: globe-spin 15s linear infinite;
+}
+.logo-c svg:nth-child(2) {
+  color: rgb(73, 103, 236);
+  margin-left: -0.4rem;
+}
+.logo-c p {
+  color: #2d2d2e;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
