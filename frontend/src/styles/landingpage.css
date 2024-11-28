@@ -195,11 +195,31 @@
 
 /* about */
 .landingpage-container .landingpage-about-container {
-  height: 80vh;
+  padding: 5rem 0;
   background: rgb(34, 75, 195);
   background: linear-gradient(
     0deg,
     rgba(34, 75, 195, 0.11817226890756305) 2%,
     rgba(255, 255, 255, 1) 100%
   );
+}
+.ldp-about-c .ldp-about-header {
+  display: flex;
+  justify-content: center;
+}
+.ldp-about-c .ldp-about-header h3 {
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+.ldp-about-c .ldp-about-desp {
+  max-width: 1024px;
+  margin: auto;
+  padding: 1rem;
+}
+.ldp-about-c .ldp-about-desp p {
+  font-size: 1.1rem;
+  color: #333;
+  margin-top: 1rem;
+  line-height: 2;
+  letter-spacing: 0.5px;
 }

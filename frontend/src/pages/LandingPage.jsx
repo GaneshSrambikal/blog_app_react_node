@@ -9,6 +9,7 @@ import { FaHouseUser } from 'react-icons/fa';
 import { SiGooglegemini, SiRazorpay } from 'react-icons/si';
 import { GrMoney } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 const LandingPage = () => {
   return (
     <>
@@ -119,9 +120,26 @@ const LandingPage = () => {
           </div>
         </section>
         <section className='landingpage-about-container'>
-          <div className='ldp-about-c'></div>
+          <div className='ldp-about-c'>
+            <div className='ldp-about-header'>
+              <h3>About</h3>
+            </div>
+            <div className='ldp-about-desp'>
+              <p>
+                {`BlogAI is an innovative platform that leverages artificial
+                intelligence to simplify content creation with google's gemini ai. Whether you're a
+                professional writer or a hobbyist, our tools help you craft
+                compelling blogs, manage images, and reach your audience
+                efficiently.
+                `}
+              </p>
+              <p>{`Complete user management lets you manage your profile details, reset passwords and more. Besides creating new posts user get rewards point which later can be redeem to ai credits. User also gets rewards for liking and commenting on post.
+                `}</p>
+              <p>{`Purchase Ai credits with seemless payment through razorpay payment gateway.`}</p>
+            </div>
+          </div>
         </section>
-        <footer>footer</footer>
+        <Footer />
       </div>
     </>
   );
