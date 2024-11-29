@@ -77,7 +77,7 @@ exports.registerUser = async (req, res, next) => {
 exports.loginUser = async (req, res, next) => {
   // validate the req.body data {email, password}
   const { error } = userLoginSchema.validate(req.body);
-  // console.log(`${req.protocol}://${req.get(`host`)}`);
+  
   // if error in validation
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
@@ -88,7 +88,7 @@ exports.loginUser = async (req, res, next) => {
   try {
     // find user
     const user = await User.findOne({ email }).select('+password');
-    // console.log(user);
+
     // User not found
     if (!user) {
       return res.status(400).json({ message: 'Invalid Email / Password' });
@@ -96,7 +96,7 @@ exports.loginUser = async (req, res, next) => {
       // if user exist compare the password
       // const isMatch = await user.comparePassword(password);
       const isMatch = await bcrypt.compare(password, user.password);
-      // console.log(isMatch);
+     
       // wrong/mismatch password
       if (!isMatch) {
         return res.status(400).json({ message: 'Invalid email or password' });
@@ -139,9 +139,7 @@ exports.loginUser = async (req, res, next) => {
 
 exports.logoutUser = async (req, res, next) => {
   try {
-    // req.headers.authorization = undefined;
-    // res.clearCookie('token');
-    // console.log(req.headers.authorization);
+ 
     res.set('Cache-Control', 'no-store');
     res.status(200).json({ message: 'User Logged out' });
   } catch (error) {
