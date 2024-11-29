@@ -1,5 +1,3 @@
-const { openai } = require('../config/openai');
-const { uploadToCloudinary } = require('../middlewares/uploadMiddleware');
 const Blog = require('../models/blogModel');
 const User = require('../models/userModel');
 const {
@@ -9,7 +7,7 @@ const {
   deleteCommentSchema,
 } = require('../validators/blogValidator');
 const { objectIdSchema } = require('../validators/userValidator');
-const cloudinary = require('cloudinary').v2;
+
 // Get all Blogs
 exports.getAllBlogs = async (req, res, next) => {
   try {
@@ -73,10 +71,6 @@ exports.createBlog = async (req, res, next) => {
   }
 };
 
-// exports.uploadBlogImage = async (req,res,next) =>{
-
-// }
-
 // GEt Blogs by Id
 exports.getBlogById = async (req, res, next) => {
   const { error } = objectIdSchema.validate(req.params);
@@ -132,11 +126,7 @@ exports.updateBlogById = async (req, res, next) => {
     }
 
     const { title, content, excerpt, category, heroImage } = req.body;
-    // let imageUrl;
-    // if (req.file) {
-    //   const newFileUpload = await uploadToCloudinary(req.file.path);
-    //   imageUrl = newFileUpload;
-    // }
+    
     if (blog.author.id.toString() === req.user.id) {
       const updatedBlog = await Blog.findByIdAndUpdate(
         req.params.id,
@@ -219,7 +209,7 @@ exports.likeBlogById = async (req, res, next) => {
     if (blog.likes.includes(req.user.id)) {
       // unLike the blog post
       blog.likes = blog.likes.filter((like) => like.toString() !== req.user.id);
-      console.log(blog.likes);
+     
       await blog.save();
       return res.status(200).json({
         message: `Un Like the blog post ${req.params.id}`,
@@ -433,21 +423,6 @@ exports.searchBlogByCategory = async (req, res, next) => {
     const blogs = await Blog.find({}).select(['-__v']);
     const byCategory = blogs.filter((blog) => blog.category === category);
 
-    // const totalBlogCount = await Blog.countDocuments({
-    //   title: { $regex: searchTerm, $options: 'i' },
-    // });
-
-    // if (byCategory.length === 0) {
-    //   return res
-    //     .status(400)
-    //     .json({ message: `No Blogs found with ${category} category` });
-    // }
-    // const totalPages = Math.ceil(totalBlogCount / limit);
-    // if (page > totalPages) {
-    //   return res.status(404).json({
-    //     message: `Page ${page} does not exist. Only ${totalPages} available.`,
-    //   });
-    // }
 
     return res.status(200).json({
       blogs: byCategory,

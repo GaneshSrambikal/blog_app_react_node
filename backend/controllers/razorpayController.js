@@ -16,7 +16,7 @@ exports.initialOrders = async (req, res, next) => {
         .status(400)
         .json({ message: 'Failed to place order. Bad request' });
     }
-    console.log(orders);
+    // console.log(orders);
     return res.status(200).json(orders);
   } catch (error) {
     next(error);
@@ -26,8 +26,7 @@ exports.initialOrders = async (req, res, next) => {
 };
 
 exports.validateRazPayment = async (req, res, next) => {
-  console.log(req.body);
-  console.log(process.env.RAZORPAY_KEY_SECRET);
+  
   try {
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
       req.body;
@@ -61,7 +60,7 @@ exports.validateRazPayment = async (req, res, next) => {
       { new: true }
     );
 
-    console.log('updatedUser', updateUser);
+    // console.log('updatedUser', updateUser);
     return res.json({
       message: 'Transaction is legit',
       orderId: razorpay_order_id,

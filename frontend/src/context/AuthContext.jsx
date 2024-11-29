@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
       const { token } = res.data;
       setToken(token);
       const decoded = jwtDecode(token);
-      console.log(decoded);
+      // console.log(decoded);
       dispatch({
         type: actionTypes.LOGIN,
         payload: { decoded, token },
