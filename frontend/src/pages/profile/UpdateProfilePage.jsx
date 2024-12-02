@@ -6,7 +6,7 @@ import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 
 import { validateUpdateForm } from '../../validators/profile/updateValidator';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TbPhotoEdit } from 'react-icons/tb';
 import { resizeImage } from '../../utils/resizeImage';
 import { useToast } from '../../context/ToastContext';
@@ -29,11 +29,9 @@ const UpdateProfilePage = () => {
   const avatarActionRef = useRef(null);
   useEffect(() => {
     loadUser();
-    console.log('runs');
   }, []);
   useEffect(() => {
     setFormData(user);
-    console.log('user runs');
   }, []);
   // listen for outside div clicks
   useEffect(() => {
@@ -175,27 +173,32 @@ const UpdateProfilePage = () => {
   };
   const handleAiAbout = async () => {
     setAiLoading(true);
-    if (user?.totalAiCredits > 20) {
-      try {
-        const res = await model.generateContent(
-          `Write a short bio for ${formData.title}. be creative and limit the response to 150 characters.`
-        );
-        setFormData({
-          ...formData,
-          about: res.response.text(),
-        });
-        console.log(res.response.text());
-        setAiLoading(false);
-        // update user ai credits
-        await axios.post(
-          `${react_base_url}/users/update-credits`,
-          {},
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        loadUser();
-      } catch (error) {
-        setAiLoading(false);
-        console.log(error);
+    if (!formData?.title || formData?.title === '') {
+      setErrors({ title: 'Please select title' });
+      setAiLoading(false);
+    } else {
+      if (user?.totalAiCredits > 20) {
+        try {
+          const res = await model.generateContent(
+            `Write a short bio for ${formData.title}. be creative and limit the response to 150 characters.`
+          );
+          setFormData({
+            ...formData,
+            about: res.response.text(),
+          });
+          console.log(res.response.text());
+          setAiLoading(false);
+          // update user ai credits
+          await axios.post(
+            `${react_base_url}/users/update-credits`,
+            {},
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          loadUser();
+        } catch (error) {
+          setAiLoading(false);
+          console.log(error);
+        }
       }
     }
   };
@@ -282,7 +285,9 @@ const UpdateProfilePage = () => {
                     style={{
                       color: user?.totalAiCredits < 20 ? 'red' : 'blue',
                     }}
-                  >{`(${user?.totalAiCredits} credits left)`}</span>
+                  >
+                    {user && `(${user?.totalAiCredits} credits left)`}
+                  </span>
                 </label>
                 <button
                   type='button'
@@ -314,6 +319,9 @@ const UpdateProfilePage = () => {
                     </>
                   )}
                 </button>
+                {formData?.totalAiCredits < 20 && (
+                  <Link to='/dashboard'>buy more credits</Link>
+                )}
               </div>
               {/* title */}
               <InputComponent
