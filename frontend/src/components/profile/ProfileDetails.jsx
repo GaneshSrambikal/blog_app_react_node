@@ -46,11 +46,15 @@ const ProfileDetails = ({ ...props }) => {
           <>loading..</>
         ) : (
           <>
-            {blogs.slice(0, 3).map((blog, index) => (
-              <p key={index}>
-                <Link to={`/blogs/blog/${blog._id}`}>{blog.title}</Link>
-              </p>
-            ))}
+            {blogs.length > 0 ? (
+              blogs.slice(0, 3).map((blog, index) => (
+                <p key={index}>
+                  <Link to={`/blogs/blog/${blog._id}`}>{blog.title}</Link>
+                </p>
+              ))
+            ) : (
+              <p>no blog posts.</p>
+            )}
           </>
         )}
       </div>

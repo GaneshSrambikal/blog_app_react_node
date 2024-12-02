@@ -8,17 +8,28 @@ import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
 import RedeemRewardButton from '../../components/dashboard/RedeemRewardButton';
 import { Helmet } from 'react-helmet';
+import axios from 'axios';
 const DashboardPage = () => {
-  const { user, loadUser, allBlogs } = useContext(AuthContext);
-  const [userBlogs, setUserBlogs] = useState(allBlogs.length);
-  const fetchUserBlogs = () => {
-    const blogs = allBlogs.filter((blog) => blog.author.id === user._id);
-    setUserBlogs(blogs.length);
+  const react_base_url = import.meta.env.VITE_API_BASE_URL;
+  const { user, loadUser } = useContext(AuthContext);
+  const [userBlogs, setUserBlogs] = useState(0);
+
+  const fetchUserBlogs = async () => {
+    try {
+      const res = await axios.get(`${react_base_url}/blogs`);
+      const blogs = await res?.data?.blogs?.filter(
+        (blog) => blog.author.id === user._id
+      );
+      setUserBlogs(blogs.length);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
   useEffect(() => {
     loadUser();
     fetchUserBlogs();
-  }, [allBlogs]);
+  }, []);
   return (
     <>
       <Helmet>
