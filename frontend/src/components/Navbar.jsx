@@ -21,7 +21,7 @@ const Navbar = () => {
     e.preventDefault();
     try {
       logout();
-      navigate('/login');
+      navigate('/');
       await axios.post(`${react_base_url}/users/logout`);
       // console.log(response.data);
     } catch (error) {
