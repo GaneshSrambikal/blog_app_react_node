@@ -64,18 +64,22 @@ const ProfileBlogs = ({ ...props }) => {
       <div className='profile-blogs-container'>
         <h2>{`${props.user.name.split(' ')[0]}'s`} Blogs</h2>
         <div className='profile-blogs-c'>
-          <ul>
-            {blogs &&
-              blogs.map((blog, index) => (
-                <li key={index}>
-                  <ProfileBlogCard
-                    blog={blog}
-                    showModal={showModal}
-                    handleModal={handleModal}
-                  />
-                </li>
-              ))}
-          </ul>
+          {blogs.length > 0 ? (
+            <ul>
+              {blogs &&
+                blogs.map((blog, index) => (
+                  <li key={index}>
+                    <ProfileBlogCard
+                      blog={blog}
+                      showModal={showModal}
+                      handleModal={handleModal}
+                    />
+                  </li>
+                ))}
+            </ul>
+          ) : (
+            <p>no blog posts.</p>
+          )}
         </div>
       </div>
       {showModal && (

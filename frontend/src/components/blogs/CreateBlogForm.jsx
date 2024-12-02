@@ -63,16 +63,16 @@ const CreateBlogForm = ({ ...props }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(formData, selectedImage);
+    // console.log(formData, selectedImage);
     const validationErrors = validateCreateBlogForm(formData);
     if (validationErrors) {
-      console.log(validationErrors);
+      // console.log(validationErrors);
       setErrors(validationErrors);
       setIsLoading(false);
     } else {
       try {
         setIsLoading(true);
-        console.log(URL.revokeObjectURL(formData.heroImage));
+        // console.log(URL.revokeObjectURL(formData.heroImage));
         // 1. upload image to cloudinary
         const imageData = new FormData();
         imageData.append('file', fileInputRef.current.files[0]);
@@ -121,7 +121,7 @@ const CreateBlogForm = ({ ...props }) => {
   };
   const handleAIOutput = async () => {
     setAiLoading(true);
-    console.log(formData.title, formData.category);
+  
     const validationErrors = validateGeminiInput(
       formData.title,
       formData.category
@@ -135,7 +135,7 @@ const CreateBlogForm = ({ ...props }) => {
           `Write a short blog on ${formData.title} and based on category ${formData.category} . Return response in plain text`
         );
         setAiLoading(false);
-        console.log(res.response.text());
+        
         setFormData(formData, (formData.content = res.response.text()));
         // update user credits and successfully creating content. Each new generate spends 20 credits
         await axios.post(
