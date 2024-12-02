@@ -306,6 +306,7 @@ exports.uploadAvatar = async (req, res, next) => {
         joined: newData.joined,
         following: newData.following,
         followers: newData.followers,
+        totalAiCredits: newData.totalAiCredits,
       },
     });
   } catch (error) {
