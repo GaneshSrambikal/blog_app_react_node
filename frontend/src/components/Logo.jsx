@@ -6,7 +6,7 @@ const Logo = () => {
     <div className='logo-c'>
       <SlGlobe />
       <SlGlobe />
-      <p>BLOGSHPERE</p>
+      <p>BLOGSPHERE</p>
     </div>
   );
 };

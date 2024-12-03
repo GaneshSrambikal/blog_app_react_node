@@ -37,7 +37,7 @@ const Footer = () => {
           <div className='footer-logo-c'>
             <SlGlobe />
             <SlGlobe />
-            <p>BLOGSHPERE</p>
+            <p>BLOGSPHERE</p>
           </div>
           <div className='footer-credits-c'>
             <p>© 2024 - 2026</p>
