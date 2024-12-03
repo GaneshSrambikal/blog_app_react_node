@@ -5,24 +5,13 @@ const userRouter = require('./routes/users/userRoutes');
 const adminRouter = require('./routes/users/adminRoutes');
 const blogRouter = require('./routes/blog/blogRoutes');
 const razorpayRouter = require('./routes/payment/razorpay/razorpayRoutes');
-const { allowedOrigins } = require('./utils/constants/corsOrigins');
+const { corsOrigins } = require('./utils/constants/corsOrigins');
 const app = express();
 
 app.use(express.json());
+
 // Middleware setup
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-  })
-);
+app.use(corsOrigins);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,6 +25,7 @@ app.use((err, req, res, next) => {
   next(err);
   res.status(500).json({ message: 'Server error', error: err.message });
 });
+
 // Routes
 app.get('/api', (req, res) => {
   res.send('Blog app react + node api @GITHUB/GANESHSRAMBIKAL');
