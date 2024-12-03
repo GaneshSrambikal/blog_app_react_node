@@ -1,6 +1,6 @@
 const cors = require('cors');
 const allowedOrigins = [
-  'https://blogshpere-react-node.vercel.app', // production frontend URL
+  'https://blogsphere-react-node.vercel.app', // production frontend URL
   'http://localhost:5173', // for local development
 ];
 const corsOrigins = cors({
