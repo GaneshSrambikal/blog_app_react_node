@@ -5,7 +5,7 @@ import {
   Routes,
   Navigate,
 } from 'react-router-dom';
-
+import { Analytics } from '@vercel/analytics/react';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 // import ResetPassword from './pages/ForgotPasswordPage';
@@ -67,6 +67,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      <Analytics />
     </>
   );
 }
