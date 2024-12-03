@@ -20,7 +20,7 @@ const CommentCard = ({ comment, ...props }) => {
       `${base_url}/users/user/${comment?.author?.id}/get-avatar-url`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    console.log(res.data);
+    // console.log(res.data);
     setUserAvatar(res.data.avatar_url);
     // return currentAvatar;
     
