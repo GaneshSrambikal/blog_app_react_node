@@ -66,7 +66,7 @@ const BlogSchema = mongoose.Schema({
 // pre-save middleware for calculating the read time of the blog
 BlogSchema.pre('save', function (next) {
   this.readingTime = getReadingTime(this.content);
-  console.log(getReadingTime(this.content));
+  // console.log(getReadingTime(this.content));
   next();
 });
 
