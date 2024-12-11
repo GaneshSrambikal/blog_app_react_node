@@ -21,6 +21,7 @@
 ### Other Stacks available
 
 If you want a more progressive at backend checkout the Nestjs + React Repo
+
 **React + Nestjs** : [github.com/GaneshSrambikal/blog_app_react_nestjs](https://github.com/GaneshSrambikal/blog_app_react_nestjs)
 
 ## Authors
