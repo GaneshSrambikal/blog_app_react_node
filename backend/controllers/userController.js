@@ -153,7 +153,6 @@ exports.logoutUser = async (req, res, next) => {
 // Profile Management
 // Get User Profile (protected)
 exports.getProfile = async (req, res, next) => {
-  console.log('this is coming from backend', req.user.id, req.params.id);
   try {
     const user = await User.findById(req.user.id).select(['-password', '-__v']); // -password excludes the password
     if (!user) {
@@ -171,7 +170,6 @@ exports.getProfile = async (req, res, next) => {
 };
 // Get Users Profile by id (protected)
 exports.getUsersProfile = async (req, res, next) => {
-  console.log('this is coming from backend', req.user.id, req.params.id);
   const { error } = objectIdSchema.validate(req.params);
   if (error) {
     return res.status(400).json({

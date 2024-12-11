@@ -1,14 +1,10 @@
-
 ## Blogsphere (Create AI-powered blogs effortlessly)
 
 #### blogging website made with reactjs, express and mongdb. create blog content with google's gemini.
+
 #### Includes complete user management, google's gemini ai and razorpay integrations.
 
-
-
-
 ![App Screenshot](https://mir-s3-cdn-cf.behance.net/project_modules/disp/69027e213638185.6749b426d2268.png)
-
 
 ## Tech Stack
 
@@ -22,11 +18,14 @@
 
 **Deployment:** Vercel
 
+### Other Stacks available
+
+If you want a more progressive at backend checkout the Nestjs + React Repo
+**React + Nestjs** : [github.com/GaneshSrambikal/blog_app_react_nestjs](https://github.com/GaneshSrambikal/blog_app_react_nestjs)
 
 ## Authors
 
 - [@GaneshSrambikal](https://github.com/GaneshSrambikal)
-
 
 ## About
 
@@ -36,39 +35,36 @@ Complete user management lets you manage your profile details, reset passwords a
 
 Purchase Ai credits with seemless payment through razorpay payment gateway.
 
-*Earn rewards*
+_Earn rewards_
 |Action | Rewards |
 |-------|---------|
 | 1 🗎 Blog post | 10 🪙 rewards|
 | 1 ❤️ Like | 1 🪙 reward|
 | 1 💬 comment | 5 🪙 reward |
 
-
-*Redeem Rewards to AI Credits*
+_Redeem Rewards to AI Credits_
 | Rewards |Redeem to => | AI credits |
 |--------|--------|------------|
 | 100 🪙 | 100 👉🏻| 100 💳|
 
-*Buy AI Credits*
+_Buy AI Credits_
 | Price (Rs) | AI Credits |
 |-------|------------|
 | 100 💸 | 100 💳 |
 
-
 ## Packages Used
+
 **Frontend:**
 
-
-
-| Packages | npm links |
-|----------|-----------|
-| axios    | https://www.npmjs.com/package/axios|
-|joi   |https://www.npmjs.com/package/joi |
-|jwt-decode|https://www.npmjs.com/package/jwt-decode|
-|google/generate-ai|https://www.npmjs.com/package/@google/generative-ai|
-|react-confetti | https://www.npmjs.com/package/react-confetti |
-| react-icons |https://www.npmjs.com/package/react-icons |
-|react-router-dom | https://www.npmjs.com/package/react-router-dom |
+| Packages           | npm links                                           |
+| ------------------ | --------------------------------------------------- |
+| axios              | https://www.npmjs.com/package/axios                 |
+| joi                | https://www.npmjs.com/package/joi                   |
+| jwt-decode         | https://www.npmjs.com/package/jwt-decode            |
+| google/generate-ai | https://www.npmjs.com/package/@google/generative-ai |
+| react-confetti     | https://www.npmjs.com/package/react-confetti        |
+| react-icons        | https://www.npmjs.com/package/react-icons           |
+| react-router-dom   | https://www.npmjs.com/package/react-router-dom      |
 
 **Backend:**
 |Packages | npm links |
@@ -85,27 +81,30 @@ Purchase Ai credits with seemless payment through razorpay payment gateway.
 |joi|https://www.npmjs.com/package/joi|
 |bcryptjs|https://www.npmjs.com/package/bcryptjs|
 
-
 ## Installation
 
 #### Clone / fork the repo
+
 ```bash
-  git clone https://github.com/GaneshSrambikal/blog_app_react_node.git 
+  git clone https://github.com/GaneshSrambikal/blog_app_react_node.git
 ```
 
 #### Frontend (cd frontend)
 
 ```bash
-  npm install 
+  npm install
 ```
+
 #### Backend (cd backend)
+
 ```bash
-  npm install 
+  npm install
 ```
 
 #### Set your .env variable key and value
 
-*for backend*
+_for backend_
+
 ```code
 PORT=5000
 MONGO_URI=''
@@ -122,7 +121,9 @@ VITE_CLOUDINARY_PRESET=''
 RAZORPAY_KEY_ID=''
 RAZORPAY_KEY_SECRET=''
 ```
-*for frontend*
+
+_for frontend_
+
 ```code
 VITE_API_BASE_URL='http://localhost:5000/api'
 NODE_ENV=development
@@ -131,8 +132,8 @@ VITE_CLOUDINARY_PRESET=''
 VITE_GEMINI_API_KEY=''
 
 ```
-## Run Locally
 
+## Run Locally
 
 Start the server
 
@@ -141,6 +142,7 @@ Start the server
 ```
 
 Start the client
+
 ```bash
 npm run dev
 ```
