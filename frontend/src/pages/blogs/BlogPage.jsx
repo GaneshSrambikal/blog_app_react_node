@@ -42,6 +42,24 @@ const BlogPage = () => {
     setUserAvatar(res.data.avatar_url);
     // return currentAvatar;
   };
+
+  // Format the content
+
+  const MarkdownParser = ({ content }) => {
+    const convertMarkdownToHTML = (text) => {
+      let formatted = String(text).replace(/^\* (.*)$/gm, '<li>$1</li>');
+      formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      if (formatted.includes('<li>')) {
+        formatted = `<ul>${formatted}</ul>`;
+      }
+      return formatted;
+    };
+
+    const formattedHTML = convertMarkdownToHTML(content);
+
+    return <div dangerouslySetInnerHTML={{ __html: formattedHTML }} />;
+  };
+
   useEffect(() => {
     fetchBlog();
   }, []);
@@ -109,7 +127,7 @@ const BlogPage = () => {
               <p>{blog?.excerpt}</p>
             </div>
             <div className='bm-content'>
-              <p>{blog?.content}</p>
+              {blog && <MarkdownParser content={blog?.content} />}
             </div>
           </div>
           {/* Like and comment counts */}
