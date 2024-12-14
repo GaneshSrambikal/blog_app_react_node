@@ -173,14 +173,14 @@
   font-weight: 300;
   color: #333;
 }
-.bm-image-content-c .bm-content p {
+.bm-image-content-c .bm-content div {
   white-space: pre-line;
 }
 @media screen and (max-width: 640px) {
   .bm-image-content-c .bm-content {
     font-size: 1rem;
   }
-  .bm-image-content-c .bm-excerpt p {
+  .bm-image-content-c .bm-excerpt div {
     font-size: 15px;
   }
 }
