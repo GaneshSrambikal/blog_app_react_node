@@ -27,7 +27,7 @@ const BlogComments = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(res.data.comments)
       setComments(res.data.comments);
     } catch (error) {
       console.log(error);
